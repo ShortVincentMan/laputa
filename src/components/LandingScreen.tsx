@@ -17,17 +17,36 @@ export default function LandingScreen() {
   return (
     <main className="landing" onClick={() => setEntered(true)}>
         <div className="stage">
-            <img className = "bg" src="/background.webp" alt="" />
+            <img className = "bg" src="/assets/landing/background.webp" alt="" />
             
             <Image
-            src="/cyan-bar.png"
+            src="/assets/landing/cyan-bar.png"
             alt=""
             width={1700}
             height={450}
             className="cyan-bars"
             loading="eager"
             />
-            <img className="logo" src="/assets/logo.png" alt="" />
+
+            <div className="topright-wrap">
+            <Image
+                src="/assets/landing/topright.png"
+                alt=""
+                width={1700}
+                height={450}
+                className="topright"
+            />
+            </div>
+            <div className="lowerRightBarWrap">
+            <div className="lowerRightBar" />
+            <Image
+                src="/assets/landing/lowerright.png"
+                alt=""
+                width={1700}
+                height={450}
+                className="lowerRightBar"
+            />
+            </div>
             <div className="scroll-grid">
             {Array.from({ length: 6 }).map((_, block) => (
                 <div className="scroll-panel" key={block}>
@@ -39,9 +58,12 @@ export default function LandingScreen() {
                 </div>
             ))}
             </div>
+            <div className="grunge">
 
-            <div className= "scratches" />
-            <div className="scanlines" />
+            </div>
+            <div className="scratches">
+                
+            </div>
             <div className="grain" />
 
             <button className="prompt">

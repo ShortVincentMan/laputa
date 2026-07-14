@@ -183,15 +183,244 @@
     filter:
     drop-shadow(0 0 2px #00eaff)
     drop-shadow(0 0 20px rgba(0, 234, 255, 0.8));
-  animation: cyanFloat 4s ease-in-out infinite alternate;
+    animation: cyanFloat 12s ease-in-out infinite;
 }
 
 @keyframes cyanFloat {
-  from {
-    transform: translateY(-20px);
+  0%,
+  30% {
+    transform: translate(-40px,60px);
   }
 
-  to {
-    transform: translateY(10px);
+  40% {
+    transform: translate(20px, -30px);
   }
+
+  70% {
+    transform: translate(20px, -30px);
+  }
+
+  80%,
+  100% {
+    transform: translate(-40px, 60px);
+  }
+}
+
+/* Top Right */
+
+.topright {
+  position: absolute;
+
+  top: -95px;
+  right: -260px;
+  width: 58vw;
+  height: auto;
+
+  transform-origin: top right;
+  transform:
+    perspective(900px)
+    rotateX(30deg)
+    rotateY(-6deg)
+    rotateZ(6deg)
+    scale(0.72)
+    translate(-300, -30);
+    
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 3;
+
+  mix-blend-mode: screen;
+
+  filter:
+    drop-shadow(0 0 2px #00eaff)
+    drop-shadow(0 0 12px rgba(0,234,255,.6));
+
+  animation: topRightFlicker 6s infinite;
+
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 20%,
+    black 58%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse at center,
+    black 20%,
+    black 58%,
+    transparent 100%
+  );
+}
+@keyframes topRightFlicker {
+  0%, 100% {
+    opacity: .82;
+    filter:
+      brightness(1)
+      drop-shadow(0 0 2px #00eaff)
+      drop-shadow(0 0 12px rgba(0,234,255,.6));
+  }
+
+  47% {
+    opacity: .95;
+  }
+
+  48% {
+    opacity: .55;
+    filter:
+      brightness(.7)
+      drop-shadow(0 0 2px #00eaff);
+  }
+
+  49% {
+    opacity: .9;
+  }
+
+  72% {
+    opacity: .78;
+  }
+
+  73% {
+    opacity: .45;
+  }
+
+  74% {
+    opacity: .86;
+  }
+}
+.topright-wrap { animation: topRightGlow 4s infinite; } 
+@keyframes topRightGlow { 
+    0%,
+    100% { filter: brightness(1); } 
+    48% { filter: brightness(.6); } 
+    49% { filter: brightness(1.1); } 
+}
+/* Lower Right Bar Crop Wrapper */
+.lowerRightBarWrap {
+  position: absolute;
+  left: 35%;
+  bottom: 3%;
+
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 4;
+
+  transform-origin: center;
+  transform:
+    perspective(1000px)
+    rotateX(30deg)
+    rotateY(5deg)
+    rotateZ(11deg)
+    scaleX(-1)
+    scale(1);
+
+  mix-blend-mode: screen;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+/* Scrolling Inner Bar */
+.lowerRightBar {
+  width: 200%;
+  height: 100%;
+
+  background-image: url("/assets/landing/lowerright.png");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+
+  opacity: 0.9;
+
+  filter:
+    drop-shadow(0 0 4px #7ffcff)
+    drop-shadow(0 0 14px rgba(127,252,255,.55));
+
+  animation: dataBarScroll 5s linear infinite;
+}
+
+@keyframes dataBarScroll {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -500px;
+  }
+}
+
+/* Grunge Overlay */
+.grunge {
+  position: absolute;
+  inset: 0;
+
+    transform:
+    perspective(10000px)
+    translate(0, 0)
+    rotateX(30deg)
+    rotateY(-6deg)
+    rotateZ(13deg)
+    scale(1.25);
+  background-image:
+    url("/assets/landing/grunge1.jpg"),
+    url("/assets/landing/grunge2.jpg"),
+    url("/assets/landing/scratches.png");
+
+  background-size:
+    cover,
+    120% 120%,
+    cover;
+
+  background-position:
+    center,
+    center,
+    center;
+
+  mix-blend-mode: screen;
+  opacity: .5;
+
+  pointer-events: none;
+  z-index: 20;
+
+  animation: grungeFlicker 4s steps(2) infinite;
+}
+.scratches {
+  position: absolute;
+  inset: 0;
+
+    transform:
+    perspective(1000px)
+    translate(-10, -200)
+    rotateX(30deg)
+    rotateY(-6deg)
+    rotateZ(13deg)
+    scale(-1.25);
+  background-image:
+    url("/assets/landing/scratches.png");
+
+  background-size:
+    cover,
+    120% 120%,
+    cover;
+
+  background-position:
+    center,
+    center,
+    center;
+
+  mix-blend-mode: screen;
+  opacity: .5;
+
+  pointer-events: none;
+  z-index: 20;
+
+  animation: grungeFlicker 4s steps(2) infinite;
 }
