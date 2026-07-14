@@ -1,0 +1,197 @@
+.landing {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: black;
+  cursor: pointer;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.bg,
+.ui-bars,
+.logo,
+.scratches,
+.scanlines,
+.grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bg {
+  object-fit: cover;
+}
+
+.ui-bars {
+  object-fit: cover;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+.logo {
+  object-fit: contain;
+  width: 55%;
+  height: auto;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  animation: logoFlicker 7s infinite;
+}
+
+.scratches {
+  background-image: url("/assets/scratches.png");
+  background-size: cover;
+  mix-blend-mode: screen;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.08) 0px,
+    rgba(255,255,255,0.08) 1px,
+    transparent 2px,
+    transparent 5px
+  );
+  opacity: 0.18;
+  animation: scanMove 10s linear infinite;
+  pointer-events: none;
+}
+
+.grain {
+  background-image: url("/assets/grain.png");
+  background-size: 300px 300px;
+  opacity: 0.08;
+  animation: grainFlicker 0.18s steps(2) infinite;
+  pointer-events: none;
+}
+
+.prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  transform: translateX(-50%);
+  padding: 8px 18px;
+  border: 1px solid #ff4b4b;
+  background: rgba(20, 0, 0, 0.35);
+  color: #ff5a5a;
+  font-family: "Rajdhani", sans-serif;
+  font-size: clamp(16px, 1.4vw, 28px);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  animation: promptFlicker 1.4s infinite;
+}
+
+@keyframes promptFlicker {
+  0%, 100% { opacity: 0.65; text-shadow: 0 0 4px #ff4b4b; }
+  45% { opacity: 1; text-shadow: 0 0 12px #ff4b4b; }
+  48% { opacity: 0.35; }
+  52% { opacity: 1; }
+}
+
+@keyframes logoFlicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.75; }
+  98% { opacity: 1; }
+}
+
+@keyframes drift {
+  from { transform: translateX(-16px); }
+  to { transform: translateX(16px); }
+}
+
+@keyframes scanMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(20px); }
+}
+
+@keyframes grainFlicker {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-3px, 2px); }
+}
+
+.main-site {
+  min-height: 100vh;
+  background: black;
+  color: white;
+}
+
+
+/* Scroll Panel Styles */
+.scroll-grid {
+  position: absolute;
+  top: 20%;
+  left: 4%;
+  width: 90%;
+  height: 40%;
+
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 42px;
+
+  transform-origin: center;
+  transform:
+    perspective(900px)
+    rotateX(30deg)
+    rotateY(-6deg)
+    rotateZ(13deg)
+    scale(1.25);
+
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.scroll-panel {
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.65;
+}
+
+.scroll-text {
+  color: #ff003c;
+  font-family: monospace;
+  font-size: 10px;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: upp   ercase;
+  text-shadow: 0 0 5px #ff003c;
+  animation: scrollText 5s linear infinite;
+}
+
+.scroll-text p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+@keyframes scrollText {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+/* Additional Styles for the Landing Page */
+.cyan-bars {
+  position: absolute;
+  left: 50px;
+  scale: 1.1;
+    filter:
+    drop-shadow(0 0 2px #00eaff)
+    drop-shadow(0 0 20px rgba(0, 234, 255, 0.8));
+  animation: cyanFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes cyanFloat {
+  from {
+    transform: translateY(-20px);
+  }
+
+  to {
+    transform: translateY(10px);
+  }
+}

@@ -1,10 +1,7 @@
-import Image from "next/image";
+import LandingScreen from "@/components/LandingScreen";
 
 export default function Home() {
   return (
-    <main>
-      <h1>Vincent Le</h1>
-      <p> Computer Engineer</p>
-    </main>
-  )
+    <LandingScreen />
+  );
 }
