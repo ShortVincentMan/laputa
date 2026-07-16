@@ -6,11 +6,48 @@
   cursor: pointer;
 }
 
-.stage {
+.camera {
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
+
+.stage {
+  position: absolute;
+  width: 106%;
+  height: 106%;
+
+  left: -3%;
+  top: -3%;
+
+  animation: cameraDrift 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes cameraDrift {
+
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  20% {
+    transform: translate(-12px, -6px) scale(1.01);
+  }
+
+  45% {
+    transform: translate(8px, -12px) scale(1.015);
+  }
+
+  70% {
+    transform: translate(18px, 4px) scale(1.008);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
 
 .bg,
 .ui-bars,
@@ -77,14 +114,22 @@
   left: 50%;
   bottom: 10%;
   transform: translateX(-50%);
+
   padding: 8px 18px;
+
   border: 1px solid #ff4b4b;
   background: rgba(20, 0, 0, 0.35);
+
   color: #ff5a5a;
+
   font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+
   font-size: clamp(16px, 1.4vw, 28px);
+
   letter-spacing: 1px;
   text-transform: uppercase;
+
   animation: promptFlicker 1.4s infinite;
 }
 
@@ -175,11 +220,15 @@
   to { transform: translateY(-50%); }
 }
 
-/* Additional Styles for the Landing Page */
+/* Neon Bar */
 .cyan-bars {
   position: absolute;
-  left: 50px;
-  scale: 1.1;
+  left: 150px;
+  scale: 1.2;
+  transform:
+  rotateX('angle')
+  rotateY('angle')
+  rotateZ('angle');
     filter:
     drop-shadow(0 0 2px #00eaff)
     drop-shadow(0 0 20px rgba(0, 234, 255, 0.8));
@@ -189,7 +238,7 @@
 @keyframes cyanFloat {
   0%,
   30% {
-    transform: translate(-40px,60px);
+    transform: translate(-80px,200px);
   }
 
   40% {
@@ -202,7 +251,7 @@
 
   80%,
   100% {
-    transform: translate(-40px, 60px);
+    transform: translate(-80px, 200px);
   }
 }
 
@@ -389,8 +438,6 @@
 
   pointer-events: none;
   z-index: 20;
-
-  animation: grungeFlicker 4s steps(2) infinite;
 }
 .scratches {
   position: absolute;
@@ -417,10 +464,123 @@
     center;
 
   mix-blend-mode: screen;
-  opacity: .5;
+  opacity: .1;
 
   pointer-events: none;
   z-index: 20;
+}
 
-  animation: grungeFlicker 4s steps(2) infinite;
+/* Title */
+.landingTitle {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+
+  transform:
+    translate(-50%, -100%)
+    perspective(900px)
+    rotateX(24deg)
+    rotateY(-5deg)
+    rotateZ(6deg);
+
+  z-index: 30;
+
+  font-family: "Cyberpunk", sans-serif;
+  font-size: clamp(64px, 9vw, 150px);
+  font-weight: normal;
+
+  color: #030303;
+
+  white-space: nowrap;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+  text-transform: uppercase;
+
+  pointer-events: none;
+  user-select: none;
+
+  animation: titleFlicker 4.8s infinite steps(1);
+}
+
+@keyframes titleFlicker {
+  0%, 100% {
+    opacity: 1;
+    filter: none;
+  }
+
+  4% {
+    opacity: 0.85;
+    filter: blur(0.3px);
+  }
+
+  5% {
+    opacity: 0.25;
+    filter: blur(1px);
+  }
+
+  6% {
+    opacity: 1;
+    filter: none;
+  }
+
+  38% {
+    opacity: 1;
+  }
+
+  39% {
+    opacity: 0.45;
+    transform:
+      translate(calc(-50% + 3px), calc(-100% - 1px))
+      perspective(900px)
+      rotateX(24deg)
+      rotateY(-5deg)
+      rotateZ(6deg);
+  }
+
+  40% {
+    opacity: 1;
+    transform:
+      translate(calc(-50% - 2px), calc(-50% + 1px))
+      perspective(900px)
+      rotateX(24deg)
+      rotateY(-5deg)
+      rotateZ(6deg);
+  }
+
+  41% {
+    opacity: 0.7;
+  }
+
+  42% {
+    opacity: 1;
+    transform:
+      translate(-50%, -100%)
+      perspective(900px)
+      rotateX(24deg)
+      rotateY(-5deg)
+      rotateZ(6deg);
+  }
+
+  72% {
+    opacity: 1;
+    filter: none;
+  }
+
+  73% {
+    opacity: 0.15;
+    filter: blur(1.2px);
+  }
+
+  74% {
+    opacity: 1;
+    filter: none;
+  }
+
+  76% {
+    opacity: 0.55;
+  }
+
+  77% {
+    opacity: 1;
+  }
 }

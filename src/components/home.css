@@ -1,0 +1,84 @@
+.home {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(40,0,10,.75), transparent 45%),
+    url("/assets/landing/background.webp") center / cover no-repeat;
+  color: #ff5a5a;
+}
+
+.homePanel {
+  position: absolute;
+  left: 7%;
+  top: 8%;
+  width: 26vw;
+  min-width: 320px;
+  height: 82vh;
+  padding: 36px 32px;
+
+  border-left: 1px solid rgba(255,75,75,.45);
+  border-right: 1px solid rgba(255,75,75,.25);
+  background: rgba(30, 0, 8, .38);
+  box-shadow: 0 0 40px rgba(255,0,60,.12);
+}
+
+.homeLogo {
+  font-family: "Cyberpunk", sans-serif;
+  font-size: clamp(42px, 4vw, 82px);
+  color: #f4ef3a;
+  margin: 0 0 36px;
+}
+
+.homeMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.homeMenu a {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+  font-size: clamp(18px, 1.4vw, 28px);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ff6b6b;
+  letter-spacing: .04em;
+}
+
+.homeMenu a.active {
+  color: #8ffcff;
+  border: 1px solid #8ffcff;
+  padding: 10px 14px;
+  text-shadow: 0 0 8px #00eaff;
+}
+
+.homeUser {
+  position: absolute;
+  left: 32px;
+  bottom: 36px;
+
+  font-family: "Rajdhani", sans-serif;
+  color: #8ffcff;
+  text-transform: uppercase;
+}
+
+.homeUser span {
+  display: block;
+  color: #ff5a5a;
+}
+
+.homeRewards {
+  position: absolute;
+  right: 8%;
+  bottom: 8%;
+
+  border: 1px solid rgba(143,252,255,.7);
+  padding: 8px 24px;
+
+  color: #ff5a5a;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
