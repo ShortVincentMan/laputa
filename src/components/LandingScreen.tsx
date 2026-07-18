@@ -1,87 +1,68 @@
-"use client";
-
-import { useState } from "react";
-import Image from "next/image";
 import "./landing.css";
+import ScrollingText from "./ScrollingText";
 
-export default function LandingScreen() {
-  const [entered, setEntered] = useState(false);
-
-  if (entered) {
-    return null;
-  }
-
+export default function Landing() {
   return (
-    <main className="landing" onClick={() => setEntered(true)}>
-        <div className="camera">
+    <main className="landing">
+      <div className="scene">
+        <div className="uiStack">
+            <img
+                className="staticUi"
+                src="/assets/landing/static-ui.png"
+                alt=""
+                draggable={false}
+            />
 
-      <div className="stage">
+            <img
+                className="assetLayer topRedShape"
+                src="/assets/landing/top-red-shape.png"
+                alt=""
+            />
 
-        {/* Background */}
-        <Image
-          src="/assets/landing/background.webp"
-          alt=""
-          fill
-          priority
-          className="bg"
-        />
+            <img
+                className="assetLayer topRight"
+                src="/assets/landing/top-right.png"
+                alt=""
+            />
 
-        {/* Left cyan interface */}
-        <Image
-          src="/assets/landing/cyan-bar.png"
-          alt=""
-          width={1700}
-          height={450}
-          priority
-          className="cyan-bars"
-        />
+            <img
+                className="assetLayer scrollingLines"
+                src="/assets/landing/scrolling-lines.png"
+                alt=""
+            />
 
-        {/* Scrolling red columns */}
-        <div className="scroll-grid">
-          {Array.from({ length: 6 }).map((_, block) => (
-            <div className="scroll-panel" key={block}>
-              <div className="scroll-text">
-                {Array.from({ length: 35 }).map((_, i) => (
-                  <p key={i}>MEMORY INDEX // DATA STREAM {i + 1}</p>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+            <img
+                className="assetLayer pulseRedBar"
+                src="/assets/landing/pulse-red-bar.png"
+                alt=""
+            />
 
-        {/* Lower scrolling cyan bar */}
-        <div className="lowerRightBarWrap">
-          <div className="lowerRightBar"></div>
-        </div>
+            <img
+                className="assetLayer blueBar"
+                src="/assets/landing/blue-bar.png"
+                alt=""
+            />
 
-        {/* Top right UI */}
-        <div className="topright-wrap">
-          <Image
-            src="/assets/landing/topright.png"
-            alt=""
-            width={1700}
-            height={450}
-            className="topright"
-          />
-        </div>
+            <img
+                className="assetLayer bottomGrid"
+                src="/assets/landing/bottom-grid.png"
+                alt=""
+            />
 
-        {/* Landing title */}
-        <div className="landingTitle">
-          Vincent Le
-        </div>
+            <img
+                className="assetLayer bottomLeftOne"
+                src="/assets/landing/bottom-left.png"
+                alt=""
+            />
 
-        {/* Continue prompt */}
-        <div className="prompt">
-          CLICK TO CONTINUE
-        </div>
+            <img
+                className="assetLayer bottomLeftTwo"
+                src="/assets/landing/bottom-left-rectangles.png"
+                alt=""
+            />
 
-        {/* Display effects */}
-        <div className="scratches" />
-        <div className="grunge" />
-        <div className="scanlines" />
-        <div className="grain" />
-
-      </div>
+            <ScrollingText />
+</div>
       </div>
     </main>
   );
