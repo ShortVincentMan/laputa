@@ -1,0 +1,248 @@
+.cpNav {
+  position: absolute;
+  top: 0;
+  left: clamp(28px, 6vw, 110px);
+  bottom: 0;
+  z-index: 300;
+
+  width: clamp(310px, 27vw, 520px);
+  padding:
+    clamp(72px, 8vh, 120px)
+    clamp(24px, 2vw, 42px)
+    clamp(36px, 5vh, 72px);
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: "Rajdhani", sans-serif;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(40, 6, 14, 0.9) 0%,
+      rgba(30, 5, 12, 0.8) 72%,
+      rgba(20, 4, 10, 0.15) 100%
+    );
+
+  border-left: 1px solid rgba(255, 65, 85, 0.28);
+  border-right: 1px solid rgba(255, 65, 85, 0.2);
+
+  box-shadow:
+    0 0 45px rgba(85, 0, 20, 0.15),
+    inset 0 0 60px rgba(255, 35, 60, 0.04);
+}
+
+.cpNav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 70, 90, 0.045) 0,
+      rgba(255, 70, 90, 0.045) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+
+  mix-blend-mode: screen;
+  opacity: 0.45;
+}
+
+.cpNavHeader {
+  position: relative;
+  z-index: 1;
+  margin-bottom: clamp(36px, 5vh, 66px);
+}
+
+.cpNavLogo {
+  color: #f1e600;
+
+  font-family: "Cyberpunk", "Rajdhani", sans-serif;
+  font-size: clamp(38px, 4.2vw, 76px);
+  line-height: 0.86;
+  letter-spacing: -0.08em;
+
+  text-shadow:
+    2px 2px 0 rgba(255, 30, 65, 0.5),
+    0 0 12px rgba(240, 230, 0, 0.1);
+}
+
+.cpNavSubtitle {
+  margin-top: 12px;
+
+  color: rgba(95, 235, 245, 0.8);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+}
+
+.cpNavList {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cpNavItem {
+  position: relative;
+
+  min-height: 58px;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: rgba(255, 95, 105, 0.82);
+  text-decoration: none;
+
+  border: 1px solid transparent;
+  background: transparent;
+
+  transition:
+    color 130ms ease,
+    border-color 130ms ease,
+    background 130ms ease,
+    transform 130ms ease;
+}
+
+.cpNavItem::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    0 100%
+  );
+
+  border: 1px solid transparent;
+  pointer-events: none;
+}
+
+.cpNavItem:hover,
+.cpNavItemActive {
+  color: #82faff;
+  border-color: rgba(85, 235, 245, 0.8);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 160, 175, 0.08),
+      rgba(0, 160, 175, 0.025)
+    );
+
+  text-shadow: 0 0 8px rgba(90, 245, 255, 0.45);
+  transform: translateX(4px);
+}
+
+.cpNavItemActive::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+
+  width: 28px;
+  height: 18px;
+
+  transform: translateY(-50%);
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(100, 250, 255, 0.95) 0,
+      rgba(100, 250, 255, 0.95) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+
+  opacity: 0.7;
+}
+
+.cpNavLabel {
+  font-size: clamp(19px, 1.8vw, 31px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.cpNavMeta {
+  margin-right: 44px;
+
+  color: rgba(105, 235, 240, 0.45);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.cpNavFooter {
+  position: relative;
+  z-index: 1;
+
+  margin-top: auto;
+  padding-top: 26px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  border-top: 1px solid rgba(255, 60, 80, 0.35);
+}
+
+.cpNavVersion {
+  color: rgba(255, 80, 95, 0.7);
+  font-size: 17px;
+}
+
+.cpNavUser {
+  color: #79f6ff;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.cpNavAccount {
+  margin-top: 8px;
+  width: fit-content;
+  min-width: 230px;
+  padding: 7px 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: rgba(255, 100, 115, 0.78);
+  border: 1px solid rgba(255, 70, 90, 0.42);
+}
+
+.cpNavAccountIcon {
+  width: 22px;
+  height: 22px;
+
+  display: grid;
+  place-items: center;
+
+  color: #071014;
+  background: #74f7ff;
+  border-radius: 50%;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+@media (max-width: 850px) {
+  .cpNav {
+    left: 0;
+    width: min(88vw, 420px);
+    padding-top: 56px;
+  }
+
+  .cpNavLogo {
+    font-size: 50px;
+  }
+}

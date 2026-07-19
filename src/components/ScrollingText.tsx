@@ -24,7 +24,7 @@ const shortBlocks = [
   "PORT OPEN",
 ];
 
-const ROW_COUNT = 10;
+const ROW_COUNT = 35;
 
 const rows = Array.from({ length: ROW_COUNT }, (_, rowIndex) => [
   longBlocks[rowIndex % longBlocks.length],

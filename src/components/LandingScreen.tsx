@@ -10,6 +10,7 @@ import ScrollingText from "./ScrollingText";
 
 const ASSET_ROOT = "/assets/landing";
 
+
 type LayerProps = {
   src: string;
   className: string;
@@ -34,13 +35,18 @@ function UiLayer({ src, className, sizes }: LayerProps) {
 export default function LandingScreen() {
   const router = useRouter();
   const [isLeaving, setIsLeaving] = useState(false);
-
+  const [promptText, setPromptText] = useState("CLICK TO CONTINUE");
+  
   const continueToSite = useCallback(() => {
-    if (isLeaving) return;
+  if (isLeaving) return;
 
-    setIsLeaving(true);
-    window.setTimeout(() => router.push("/home"), 550);
-  }, [isLeaving, router]);
+  setIsLeaving(true);
+  setPromptText("BREACHING...");
+
+  window.setTimeout(() => {
+    router.push("/home");
+  }, 500);
+}, [isLeaving, router]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -167,13 +173,10 @@ export default function LandingScreen() {
       <div className="scanlines" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
       <div className="vignette" aria-hidden="true" />
-
-      <div className="prompt" aria-hidden="true">
-        <span>CLICK TO CONTINUE</span>
+    <div className={`prompt ${isLeaving ? "promptBreaching" : ""}`}>
+        <span>{promptText}</span>
         <span className="promptCursor">▮</span>
       </div>
-
-      <div className="fadeOverlay" aria-hidden="true" />
     </main>
   );
 }
