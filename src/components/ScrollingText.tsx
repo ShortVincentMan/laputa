@@ -24,39 +24,29 @@ const shortBlocks = [
   "PORT OPEN",
 ];
 
-const ROW_COUNT = 18;
+const ROW_COUNT = 10;
 
 const rows = Array.from({ length: ROW_COUNT }, (_, rowIndex) => [
   longBlocks[rowIndex % longBlocks.length],
   shortBlocks[rowIndex % shortBlocks.length],
-
   longBlocks[(rowIndex + 2) % longBlocks.length],
   shortBlocks[(rowIndex + 2) % shortBlocks.length],
-
   longBlocks[(rowIndex + 4) % longBlocks.length],
   shortBlocks[(rowIndex + 4) % shortBlocks.length],
-
   longBlocks[(rowIndex + 6) % longBlocks.length],
   shortBlocks[(rowIndex + 6) % shortBlocks.length],
 ]);
-function ScrollGroup({ duplicate = false }: { duplicate?: boolean }) {
+
+function ScrollGroup() {
   return (
-    <div
-      className="scrollGroup"
-      aria-hidden={duplicate ? true : undefined}
-    >
+    <div className="scrollGroup">
       {rows.map((row, rowIndex) => (
-        <div
-          className="scrollRow"
-          key={`${duplicate ? "copy" : "original"}-${rowIndex}`}
-        >
+        <div className="scrollRow" key={rowIndex}>
           {row.map((text, blockIndex) => (
             <span
-              className={
-                blockIndex % 2 === 0
-                  ? "scrollBlock scrollBlockLong"
-                  : "scrollBlock scrollBlockShort"
-              }
+              className={`scrollBlock ${
+                blockIndex % 2 === 0 ? "scrollBlockLong" : "scrollBlockShort"
+              }`}
               key={blockIndex}
             >
               {text}
@@ -70,11 +60,10 @@ function ScrollGroup({ duplicate = false }: { duplicate?: boolean }) {
 
 export default function ScrollingText() {
   return (
-    <div className="scrollWindow">
+    <div className="scrollWindow" aria-hidden="true">
       <div className="verticalTrack">
         <ScrollGroup />
-        <ScrollGroup duplicate />
-        <ScrollGroup duplicate />
+        <ScrollGroup />
       </div>
     </div>
   );

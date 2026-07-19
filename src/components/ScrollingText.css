@@ -7,14 +7,13 @@
   overflow: hidden;
   z-index: 40;
   pointer-events: none;
-  contain: paint;
+  contain: strict;
 }
 
 .verticalTrack {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 0;
   animation: verticalScroll 10s linear infinite;
   will-change: transform;
 }
@@ -22,8 +21,6 @@
 .scrollGroup {
   flex: none;
   width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .scrollRow {
@@ -37,38 +34,24 @@
 }
 
 .scrollBlock {
-  display: block;
   min-width: 0;
   overflow: hidden;
   color: #ff1838;
   font-family: "Rajdhani", monospace;
-  font-size: clamp(10px, 0.28vw, 8px);
+  font-size: clamp(8px, 0.28vw, 10px);
   font-weight: 400;
   line-height: 0.9rem;
   white-space: nowrap;
-  text-overflow: clip;
-}
-
-.scrollBlockLong {
-  width: 100%;
-}
-
-.scrollBlockShort {
-  width: 100%;
 }
 
 @keyframes verticalScroll {
-  from {
-    transform: translateY(0);
-  }
-
   to {
-    transform: translateY(-33.333333%);
+    transform: translate3d(0, -50%, 0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .verticalTrack {
-    animation-play-state: paused;
+    animation: none;
   }
 }

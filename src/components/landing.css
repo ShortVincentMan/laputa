@@ -6,9 +6,7 @@ body,
   margin: 0;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   overflow: hidden;
@@ -22,6 +20,8 @@ body {
   overflow: hidden;
   background: #000;
   isolation: isolate;
+  cursor: pointer;
+  outline: none;
 }
 
 .background {
@@ -32,127 +32,54 @@ body {
   user-select: none;
 }
 
-/* =========================================================
-   CAMERA / VIEW CONTROLS
-
-   Toggle flat mode:
-   <div className="scene">
-
-   Toggle camera mode:
-   <div className="scene perspectiveEnabled">
-
-   Main values to edit:
-   --canvas-width
-   --flat-x / --flat-y / --flat-scale
-   --camera-perspective
-   --camera-origin-x / --camera-origin-y
-   --camera-x / --camera-y / --camera-z
-   --camera-rotate-x / y / z
-   --camera-scale
-   ========================================================= */
-
 .scene {
-  /* ---------- Base canvas size ---------- */
   --canvas-width: 210vw;
-
-  /* ---------- Flat editing mode ---------- */
   --flat-x: 0%;
   --flat-y: 0%;
   --flat-scale: 1;
-
-  /* ---------- Camera mode ---------- */
   --camera-perspective: 1500px;
   --camera-origin-x: 45%;
   --camera-origin-y: 55%;
-  
   --camera-x: -26%;
   --camera-y: -28%;
   --camera-z: 0;
-  --camera-scale: 0.95;
-
+  --camera-scale: .95;
   --camera-rotate-x: 21deg;
   --camera-rotate-y: -20deg;
   --camera-rotate-z: 18deg;
 
   position: absolute;
   inset: 0;
-
   display: grid;
   place-items: center;
-
   overflow: hidden;
   z-index: 1;
-
-  /* Flat mode by default */
-  perspective: none;
+  contain: layout paint;
 }
-
-/* =========================================================
-   ENTIRE UI CANVAS
-   All static and animated elements live inside this wrapper.
-   ========================================================= */
 
 .uiStack {
   position: relative;
   width: var(--canvas-width);
   aspect-ratio: 16 / 9;
   flex: none;
-
   transform-origin: center;
   transform-style: preserve-3d;
   will-change: transform;
-    filter:
-    drop-shadow(0 0 4px rgba(0,255,255,0.2))
-    drop-shadow(0 0 8px rgba(255,0,40,0.15));
-
-  /* Flat editing state */
-  transform:
-    translate3d(var(--flat-x), var(--flat-y), 0)
-    scale(var(--flat-scale));
+  transform: translate3d(var(--flat-x), var(--flat-y), 0) scale(var(--flat-scale));
 }
-
-/* =========================================================
-   CAMERA / PERSPECTIVE STATE
-   Add "perspectiveEnabled" to .scene to activate.
-   ========================================================= */
 
 .scene.perspectiveEnabled {
   perspective: var(--camera-perspective);
-  perspective-origin:
-    var(--camera-origin-x)
-    var(--camera-origin-y);
+  perspective-origin: var(--camera-origin-x) var(--camera-origin-y);
 }
-
-.scene.perspectiveEnabled .uiStack {
-  transform:
-    translate3d(
-      var(--camera-x),
-      var(--camera-y),
-      var(--camera-z)
-    )
-    rotateX(var(--camera-rotate-x))
-    rotateY(var(--camera-rotate-y))
-    rotateZ(var(--camera-rotate-z))
-    scale(var(--camera-scale));
-}
-
-/* =========================================================
-   STATIC UI IMAGE
-   ========================================================= */
 
 .staticUi {
   object-fit: contain;
   object-position: center;
-
   pointer-events: none;
   user-select: none;
   z-index: 1;
 }
-
-/* =========================================================
-   CROPPED ASSET WRAPPERS
-   Change left/top/width to reposition or resize each element.
-   ========================================================= */
 
 .assetLayer {
   position: absolute;
@@ -167,111 +94,130 @@ body {
   user-select: none;
 }
 
-/* =========================================================
-   INDIVIDUAL ASSETS
-   ========================================================= */
+.topRedShape { left: 23.5%; top: 30%; width: 18%; aspect-ratio: 716 / 409; z-index: 30; transform: scale(4); }
+.topRight { left: 47%; top: 12%; width: 31%; aspect-ratio: 1029 / 518; z-index: 25; transform: scale(.7); }
+.scrollingLines { left: 17%; bottom: 12%; width: 68%; aspect-ratio: 2048 / 699; z-index: 20; overflow: hidden; clip-path: inset(0 0 0 23%); transform: scale(.5); }
+.scrollingLinesTrail { left: 17%; bottom: 12%; width: 68%; aspect-ratio: 2048 / 699; z-index: 20; transform: scale(.5); }
+.pulseRedBar { left: 44.5%; top: 26%; width: 3%; aspect-ratio: 72 / 63; z-index: 35; transform: scale(.8); }
+.blueBar { left: 16.5%; top: 31%; width: 50%; aspect-ratio: 2048 / 699; z-index: 15; transform: scale(1.3); }
+.bottomGrid { left: 40%; bottom: 15%; width: 18%; aspect-ratio: 670 / 323; z-index: 18; }
+.bottomLeftOne, .bottomLeftTwo { left: 16%; width: 24%; aspect-ratio: 891 / 334; z-index: 18; }
+.bottomLeftOne { top: 6%; }
+.bottomLeftTwo { top: 65%; }
+.bottomLettersOne { left: 16%; top: 66.2%; width: 24%; aspect-ratio: 891 / 334; z-index: 19; transform: scale(1.8); }
+.bottomLettersTwo { left: 12%; top: 64%; width: 24%; aspect-ratio: 891 / 334; z-index: 19; transform: scale(1.6); opacity: 0; }
 
-/* Red polygon near the title */
-.topRedShape {
-  left: 23.5%;
-  top: 30%;
-  width: 18%;
-  aspect-ratio: 716 / 409;
-  z-index: 30;
-
-  /* Local asset scale only */
-  transform: scale(4);
+.backgroundGlowOverlay,
+.topLeftGlowOverlay,
+.uiGrungeOne,
+.uiGrungeTwo,
+.bottomFogOverlay,
+.scratchesOverlay {
+  pointer-events: none;
+  user-select: none;
 }
 
-/* Cyan crosses in the upper-right */
-.topRight {
-  left: 47%;
-  top: 12%;
-  width: 31%;
-  aspect-ratio: 1029 / 518;
-  z-index: 25;
+.backgroundGlowOverlay { object-fit: cover; z-index: 10; opacity: .1; mix-blend-mode: screen; }
+.topLeftGlowOverlay { object-fit: cover; object-position: top left; z-index: 90; opacity: .55; mix-blend-mode: screen; }
+.uiGrungeOne, .uiGrungeTwo { position: absolute; inset: 0; object-fit: cover; }
+.uiGrungeOne { z-index: 70; opacity: .14; mix-blend-mode: screen; }
+.uiGrungeTwo { z-index: 71; opacity: .10; mix-blend-mode: screen; }
+.bottomFogOverlay { object-fit: cover; object-position: center bottom; z-index: 95; opacity: .16; mix-blend-mode: screen; }
+.scratchesOverlay { object-fit: cover; z-index: 102; opacity: .18; mix-blend-mode: screen; }
 
-  transform: scale(0.7)
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 120;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.035) 0 1px, transparent 2px 4px);
+  mix-blend-mode: overlay;
+  opacity: .45;
+  animation: scanDrift 8s linear infinite;
 }
 
-/* Cyan horizontal scrolling-line block */
-.scrollingLines {
-  left: 17%;
-  bottom: 12%;
-  width: 68%;
-  aspect-ratio: 2048 / 699;
-  z-index: 20;
-
-  /* Local asset scale only */
-  transform: scale(0.5);
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 130;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,.15) 68%, rgba(0,0,0,.45) 100%),
+    radial-gradient(ellipse at center, transparent 10%, rgba(255,25,45,.1) 80%, rgba(255,25,45,.65) 100%);
 }
 
-/* Small pulsing red indicator */
-.pulseRedBar {
-  left: 40%;
-  top: 22%;
-  width: 3%;
-  aspect-ratio: 72 / 63;
-  z-index: 35;
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 121;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: .15;
 }
 
-/* Large cyan bar system */
-.blueBar {
-  left: 16.5%;
-  top: 25%;
-  width: 50%;
-  aspect-ratio: 2048 / 699;
-  z-index: 15;
-
-  /* Local asset scale only */
-  transform: scale(1.3);
+.landingTitle {
+  position: absolute;
+  left: 26%;
+  top: 40%;
+  z-index: 110;
+  font-family: "Cyberpunk", sans-serif;
+  font-size: clamp(100px, 9vw, 150px);
+  font-weight: normal;
+  transform: scale(1.2);
+  color: #030303;
+  white-space: nowrap;
+  letter-spacing: -.08em;
+  line-height: .8;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  animation: titleFlicker 4.8s infinite steps(1);
 }
 
-/* Lower-center grid */
-.bottomGrid {
-  left: 40%;
-  bottom: 15%;
-  width: 18%;
-  aspect-ratio: 670 / 323;
-  z-index: 18;
+.prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  z-index: 160;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: 1px solid #ff4b4b;
+  background: rgba(20,0,0,.65);
+  color: #ff5a5a;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+  font-size: clamp(16px, 1.4vw, 28px);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 
-/* Lower-left animation states */
-.bottomLeftOne,
-.bottomLeftTwo {
-  left: 16%;
-  width: 24%;
-  aspect-ratio: 891 / 334;
-  z-index: 18;
+.screenGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 85;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(130,255,255,.08), transparent 70%),
+    radial-gradient(ellipse at top left, rgba(255,80,80,.12), transparent 45%);
+  mix-blend-mode: screen;
 }
 
-.bottomLeftOne {
-  top: 65%;
+.fadeOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background: #000;
+  opacity: 0;
+  transition: opacity 550ms ease;
 }
 
-.bottomLeftTwo {
-  top: 68%;
+@media (max-width: 900px) {
+  .scene { --canvas-width: 260vw; }
+  .landingTitle { font-size: clamp(64px, 12vw, 110px); }
 }
-
-/* =========================================================
-   QUICK PRESETS
-
-   Smaller flat canvas:
-   .scene {
-     --canvas-width: 160vw;
-     --flat-x: -20%;
-     --flat-y: -15%;
-   }
-
-   Pull camera farther away:
-   .scene {
-     --camera-scale: 0.8;
-     --camera-perspective: 6500px;
-   }
-
-   Move camera view:
-   .scene {
-     --camera-x: -20%;
-     --camera-y: -18%;
-   }
-   ========================================================= */
