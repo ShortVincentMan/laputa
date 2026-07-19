@@ -1,6 +1,6 @@
 // app/(main)/layout.tsx
 
-import SiteMenu from "@/components/navigation/SiteMenu";
+import SiteMenu from "@/components/navigation/MainMenu";
 
 export default function MainLayout({
   children,
