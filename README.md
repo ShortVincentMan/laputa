@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Laputa
 
-## Getting Started
+> A Cyberpunk 2077-inspired interactive portfolio built with
+> **Next.js**, **React**, and **TypeScript**.
 
-First, run the development server:
+------------------------------------------------------------------------
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Laputa is an interactive portfolio that recreates the feeling of
+navigating a futuristic operating system rather than browsing a
+traditional website.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Instead of presenting projects through static webpages, the site uses
+persistent backgrounds, animated HUD elements, reusable windows, and
+game-inspired interfaces to showcase engineering projects, research, and
+experience.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project is both a personal portfolio and a software engineering
+project focused on modern frontend architecture, reusable components,
+animation, and performance.
 
-## Learn More
+------------------------------------------------------------------------
 
-To learn more about Next.js, take a look at the following resources:
+## Goals
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   Build a polished, production-quality web application.
+-   Showcase engineering work through an immersive interface.
+-   Recreate the design language of Cyberpunk 2077 while adapting it
+    into an original portfolio experience.
+-   Prioritize performance, accessibility, and maintainability.
+-   Build a reusable desktop/window system instead of traditional page
+    navigation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+------------------------------------------------------------------------
 
-## Deploy on Vercel
+## Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   Cyberpunk-inspired desktop interface
+-   Animated HUD background
+-   Persistent desktop environment
+-   Reusable window and panel system
+-   Cyberware-inspired hardware showcase
+-   Quickhack-inspired software showcase
+-   Research Codex
+-   Responsive design
+-   TypeScript-first architecture
+-   Optimized animations and rendering
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+------------------------------------------------------------------------
+
+## Tech Stack
+
+-   Next.js
+-   React
+-   TypeScript
+-   CSS
+-   Vercel
+
+------------------------------------------------------------------------
+
+## Planned Sections
+
+### Home
+
+Interactive desktop interface.
+
+### Projects
+
+-   Cyberware
+-   Quickhacks
+-   Research
+-   Archive
+
+### Experience
+
+Engineering timeline and work history.
+
+### Personnel Record
+
+Resume, education, certifications, and technical skills.
+
+### Contacts
+
+GitHub, LinkedIn, email, and other contact information.
+
+------------------------------------------------------------------------
+
+## Design Philosophy
+
+Traditional portfolios present information as independent webpages.
+
+Laputa instead treats the portfolio as an operating system. Navigation
+occurs through persistent UI elements and animated windows while the
+background remains alive throughout the experience.
+
+Every visual decision is balanced against usability, responsiveness, and
+performance.
+
+------------------------------------------------------------------------
+
+## Disclaimer
+
+This project is an original fan-inspired portfolio that draws visual
+inspiration from *Cyberpunk 2077*. It is not affiliated with, endorsed
+by, or associated with CD PROJEKT RED. All trademarks, logos, and
+original assets belong to their respective owners.
+
+------------------------------------------------------------------------
+
+## License
+
+This project is intended for educational and portfolio purposes.
