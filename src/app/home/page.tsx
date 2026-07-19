@@ -1,5 +1,5 @@
 import CyberpunkBackground from "@/components/background/CyberpunkBackground";
-import HomeMenu from "@/components/Menu";
+import HomeMenu from "@/components/navigation/MainMenu";
 
 import styles from "./home.module.css";
 

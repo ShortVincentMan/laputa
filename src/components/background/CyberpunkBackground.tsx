@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import ScrollingText from "../ScrollingText";
+import ScrollingText from "../shared/ScrollingText";
 
 import "./cyberpunk-background.css";
-import "@/components/landing.css";
+import "@/components/landing/landing.css";
 
 const ASSET_ROOT = "/assets/landing";
 

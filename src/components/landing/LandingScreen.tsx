@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import "./landing.css";
-import ScrollingText from "./ScrollingText";
+import ScrollingText from "../shared/ScrollingText";
 
 const ASSET_ROOT = "/assets/landing";
 

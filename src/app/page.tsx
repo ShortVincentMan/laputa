@@ -1,4 +1,4 @@
-import LandingScreen from "@/components/LandingScreen";
+import LandingScreen from "@/components/landing/LandingScreen";
 
 export default function Home() {
   return (
