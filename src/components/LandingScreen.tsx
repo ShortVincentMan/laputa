@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import "./landing.css";
-import "./animations.css";
 import ScrollingText from "./ScrollingText";
 
 const ASSET_ROOT = "/assets/landing";
@@ -95,8 +94,28 @@ export default function LandingScreen() {
 
           <UiLayer src="top-red-shape.png" className="topRedShape" sizes="76vw" />
           <UiLayer src="top-right.png" className="topRight" sizes="46vw" />
-          <UiLayer src="scrolling-lines.png" className="scrollingLines" sizes="72vw" />
-          <UiLayer src="scrolling-lines.png" className="scrollingLinesTrail" sizes="72vw" />
+          <div className="scrollingLines">
+            <div className="scrollingLinesTrack">
+              <Image
+                className="scrollingLinesTrail"
+                src={`${ASSET_ROOT}/scrolling-lines.png`}
+                alt=""
+                width={2048}
+                height={699}
+                draggable={false}
+              />
+
+              <Image
+                className="scrollingLinesTrail"
+                src={`${ASSET_ROOT}/scrolling-lines.png`}
+                alt=""
+                width={2048}
+                height={699}
+                draggable={false}
+                aria-hidden="true"
+              />
+            </div>
+          </div>
           <UiLayer src="pulse-red-bar.png" className="pulseRedBar" sizes="6vw" />
           <UiLayer src="blue-bar.png" className="blueBar" sizes="137vw" />
           <UiLayer src="bottom-grid.png" className="bottomGrid" sizes="38vw" />

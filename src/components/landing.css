@@ -96,16 +96,45 @@ body {
 
 .topRedShape { left: 23.5%; top: 30%; width: 18%; aspect-ratio: 716 / 409; z-index: 30; transform: scale(4); }
 .topRight { left: 47%; top: 12%; width: 31%; aspect-ratio: 1029 / 518; z-index: 25; transform: scale(.7); }
-.scrollingLines { left: 17%; bottom: 12%; width: 68%; aspect-ratio: 2048 / 699; z-index: 20; overflow: hidden; clip-path: inset(0 0 0 23%); transform: scale(.5); }
-.scrollingLinesTrail { left: 17%; bottom: 12%; width: 68%; aspect-ratio: 2048 / 699; z-index: 20; transform: scale(.5); }
+.scrollingLines {
+  position: absolute;
+  left: 17%;
+  bottom: 12%;
+  width: 68%;
+  aspect-ratio: 2048 / 699;
+  z-index: 20;
+  overflow: hidden;
+  clip-path: inset(0 0 0 23%);
+  transform: scale(.6);
+  transform-origin: center;
+}
+
+.scrollingLinesTrack {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  animation: scrollingLinesMove 3s linear infinite;
+  will-change: transform;
+}
+
+.scrollingLinesTrail {
+  display: block;
+  width: 50%;
+  height: 100%;
+  object-fit: contain;
+  flex: 0 0 50%;
+}
+
+
+
 .pulseRedBar { left: 44.5%; top: 26%; width: 3%; aspect-ratio: 72 / 63; z-index: 35; transform: scale(.8); }
 .blueBar { left: 16.5%; top: 31%; width: 50%; aspect-ratio: 2048 / 699; z-index: 15; transform: scale(1.3); }
 .bottomGrid { left: 40%; bottom: 15%; width: 18%; aspect-ratio: 670 / 323; z-index: 18; }
 .bottomLeftOne, .bottomLeftTwo { left: 16%; width: 24%; aspect-ratio: 891 / 334; z-index: 18; }
-.bottomLeftOne { top: 6%; }
+.bottomLeftOne { top: 65%; transform: scaleX(-1) scaleY(-1);}
 .bottomLeftTwo { top: 65%; }
 .bottomLettersOne { left: 16%; top: 66.2%; width: 24%; aspect-ratio: 891 / 334; z-index: 19; transform: scale(1.8); }
-.bottomLettersTwo { left: 12%; top: 64%; width: 24%; aspect-ratio: 891 / 334; z-index: 19; transform: scale(1.6); opacity: 0; }
+.bottomLettersTwo { left: 12%; top: 62.5%; width: 24%; aspect-ratio: 891 / 334; z-index: 19; transform: scale(1.6); opacity: .5; }
 
 .backgroundGlowOverlay,
 .topLeftGlowOverlay,
@@ -215,4 +244,189 @@ body {
 @media (max-width: 900px) {
   .scene { --canvas-width: 260vw; }
   .landingTitle { font-size: clamp(64px, 12vw, 110px); }
+}
+
+
+/* Animations */
+.topRight {
+  animation: topRightGlow 2.8s ease-in-out infinite;
+}
+
+@keyframes topRightGlow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+
+.bottomGrid {
+  overflow: hidden;
+}
+
+.bottomGrid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
+  mix-blend-mode: screen;
+  transform: translate3d(-140%, 0, 0);
+  animation: gridSweep 2.8s linear infinite;
+}
+
+@keyframes gridSweep {
+  to { transform: translate3d(140%, 0, 0); }
+}
+
+.bottomLeftOne { animation: bottomLeftOne 4s steps(1) infinite; }
+.bottomLeftTwo { animation: bottomLeftTwo 5.4s steps(1) infinite; }
+
+@keyframes bottomLeftOne {
+  0%, 16%, 32%, 100% { opacity: 1; }
+  20%, 28% { opacity: .12; }
+}
+
+@keyframes bottomLeftTwo {
+  0%, 42%, 68%, 100% { opacity: 1; }
+  45%, 64% { opacity: .08; }
+}
+
+.bottomLettersOne { animation: lettersOne 12s steps(1) infinite; }
+.bottomLettersTwo { animation: lettersTwo 12s steps(1) infinite; }
+
+@keyframes lettersOne {
+  0%, 100% { opacity: 0; }
+  6%, 21%, 53% { opacity: 1; }
+  7%, 22%, 54% { opacity: 0; }
+}
+
+@keyframes lettersTwo {
+  0%, 100% { opacity: 0; }
+  13%, 37%, 65% { opacity: 1; }
+  14%, 38%, 72% { opacity: 0; }
+}
+
+.pulseRedBar { animation: redPulse 1.6s ease-in-out infinite; }
+
+@keyframes redPulse {
+  0%, 100% { opacity: .25; transform: scale(.8); }
+  50% { opacity: 1; transform: scale(.86); }
+}
+
+@keyframes scrollingLinesMove {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.blueBar { animation: blueBarFloat 10s ease-in-out infinite; }
+
+@keyframes blueBarFloat {
+  0%, 15%, 80%, 100% { transform: translate3d(0, 0, 0) scale(1.3); }
+  30%, 65% { transform: translate3d(0, -28%, 0) scale(1.3); }
+}
+
+.backgroundGlowOverlay { animation: backgroundGlowPulse 7s ease-in-out infinite; }
+.topLeftGlowOverlay { animation: topLeftGlowPulse 5s ease-in-out infinite; }
+
+@keyframes backgroundGlowPulse {
+  0%, 100% { opacity: .08; }
+  50% { opacity: .14; }
+}
+
+@keyframes topLeftGlowPulse {
+  0%, 100% { opacity: .45; }
+  50% { opacity: .65; }
+}
+
+.uiGrungeOne { animation: grungeDriftOne 14s steps(2) infinite; }
+.uiGrungeTwo { animation: grungeDriftTwo 19s steps(2) infinite; }
+
+
+@keyframes grungeDriftOne {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.04); }
+  50% { transform: translate3d(-1%, 1%, 0) scale(1.06); }
+}
+
+@keyframes grungeDriftTwo {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.06); }
+  50% { transform: translate3d(1%, -1%, 0) scale(1.08); }
+}
+
+
+
+.bottomFogOverlay { animation: bottomFogFloat 10s ease-in-out infinite; }
+
+@keyframes bottomFogFloat {
+  0%, 100% { opacity: .12; transform: translate3d(0, 3%, 0) scale(1.03); }
+  50% { opacity: .22; transform: translate3d(0, -1%, 0) scale(1.05); }
+}
+
+@keyframes scanDrift {
+  to { background-position-y: 4px; }
+}
+
+.scene.perspectiveEnabled .uiStack {
+  animation: cameraDrift 8s ease-in-out infinite alternate;
+}
+
+@keyframes cameraDrift {
+  0% {
+    transform: translate3d(calc(var(--camera-x) - 1%), calc(var(--camera-y) - .5%), var(--camera-z))
+      rotateX(calc(var(--camera-rotate-x) - .4deg))
+      rotateY(calc(var(--camera-rotate-y) - .6deg))
+      rotateZ(calc(var(--camera-rotate-z) - .3deg))
+      scale(var(--camera-scale));
+  }
+  50% {
+    transform: translate3d(calc(var(--camera-x) + .5%), calc(var(--camera-y) + .8%), var(--camera-z))
+      rotateX(var(--camera-rotate-x)) rotateY(var(--camera-rotate-y))
+      rotateZ(var(--camera-rotate-z)) scale(var(--camera-scale));
+  }
+  100% {
+    transform: translate3d(calc(var(--camera-x) + 1.2%), calc(var(--camera-y) - .3%), var(--camera-z))
+      rotateX(calc(var(--camera-rotate-x) + .4deg))
+      rotateY(calc(var(--camera-rotate-y) + .6deg))
+      rotateZ(calc(var(--camera-rotate-z) + .3deg))
+      scale(var(--camera-scale));
+  }
+}
+
+.prompt { animation: promptEnter 1.4s ease both, promptFlicker 7s steps(1) 2s infinite; }
+.promptCursor { animation: cursorBlink .85s steps(1) infinite; }
+
+@keyframes promptEnter {
+  from { opacity: 0; transform: translate3d(-50%, 8px, 0); }
+  to { opacity: 1; transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes cursorBlink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+@keyframes promptFlicker {
+  0%, 19%, 22%, 61%, 64%, 100% { opacity: 1; }
+  20%, 21%, 62%, 63% { opacity: .18; }
+}
+
+@keyframes titleFlicker {
+  0%, 4%, 6%, 38%, 40%, 42%, 72%, 74%, 77%, 100% { opacity: 1; }
+  5%, 73% { opacity: .2; }
+  39%, 76% { opacity: .5; }
+  41% { opacity: .7; }
+}
+
+.landingLeaving {
+  pointer-events: none;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .landing *,
+  .landing *::before,
+  .landing *::after {
+    animation: none !important;
+  }
 }
