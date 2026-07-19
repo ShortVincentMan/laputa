@@ -20,7 +20,7 @@ type MainMenuProps = {
 };
 
 export default function MainMenu({
-  variant = "drawer",
+  variant = "home",
   defaultOpen = false,
 }: MainMenuProps) {
   const pathname = usePathname();
@@ -60,8 +60,8 @@ export default function MainMenu({
       )}
 
       <header className="mainMenuHeader">
-        <p className="mainMenuEyebrow">PORTFOLIO INTERFACE</p>
         <h2 className="mainMenuLogo">VINCENT LE</h2>
+        <p className="mainMenuEyebrow">PORTFOLIO INTERFACE</p>
       </header>
 
       <nav className="mainMenuNav" aria-label="Primary navigation">

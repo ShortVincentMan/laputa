@@ -1,11 +1,23 @@
+/* =========================================================
+   BASE MENU
+   ========================================================= */
+
 .mainMenu {
-  z-index: 600;
-  padding: clamp(70px, 9vh, 110px) 32px 38px;
+  position: relative;
+  z-index: 300;
 
   display: flex;
   flex-direction: column;
 
-  color: #ff6377;
+  width: clamp(360px, 28vw, 520px);
+  height: 100dvh;
+
+  padding:
+    clamp(68px, 8vh, 105px)
+    clamp(30px, 2.4vw, 44px)
+    clamp(32px, 4vh, 52px);
+
+  color: #ff6474;
   font-family: "Rajdhani", sans-serif;
 
   background:
@@ -18,33 +30,52 @@
     ),
     linear-gradient(
       90deg,
-      rgba(47, 5, 15, 0.97),
-      rgba(29, 5, 13, 0.95)
+      rgba(42, 5, 15, 0.94) 0%,
+      rgba(32, 5, 13, 0.88) 72%,
+      rgba(20, 3, 10, 0.3) 100%
     );
 
-  border-right: 1px solid rgba(255, 72, 94, 0.45);
+  border-left: 1px solid rgba(255, 65, 85, 0.28);
+  border-right: 1px solid rgba(255, 65, 85, 0.22);
+
+  box-shadow:
+    0 0 45px rgba(85, 0, 20, 0.18),
+    inset 0 0 65px rgba(255, 35, 60, 0.035);
 }
+
+.mainMenu::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 40, 65, 0.04),
+      transparent 28%,
+      transparent 74%,
+      rgba(255, 40, 65, 0.04)
+    );
+
+  opacity: 0.8;
+}
+
+/* =========================================================
+   VARIANTS
+   ========================================================= */
 
 .mainMenuHome {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: clamp(28px, 6vw, 110px);
-
-  width: clamp(310px, 27vw, 520px);
-  z-index: 300;
-
-  border-left: 1px solid rgba(255, 65, 85, 0.28);
-  box-shadow:
-    0 0 45px rgba(85, 0, 20, 0.15),
-    inset 0 0 60px rgba(255, 35, 60, 0.04);
+  left: clamp(24px, 5.7vw, 96px);
 }
 
 .mainMenuDrawer {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0 auto 0 0;
 
   width: min(440px, 90vw);
 
@@ -61,4 +92,367 @@
 .mainMenuOpen {
   transform: translateX(0);
   visibility: visible;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.mainMenuHeader {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+
+  margin-bottom: clamp(38px, 5vh, 58px);
+}
+
+.mainMenuEyebrow {
+  margin-top: 10px;
+  margin-left: 4px;
+
+  color: rgba(105, 240, 247, 0.8);
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.mainMenuLogo {
+  margin: 0;
+
+  color: #f1e600;
+
+  font-family: "Cyberpunk", "Rajdhani", sans-serif;
+  font-size: clamp(54px, 4.8vw, 78px);
+  font-weight: 400;
+  line-height: 0.78;
+  letter-spacing: -0.075em;
+
+  text-shadow:
+    2px 2px 0 rgba(255, 30, 65, 0.55),
+    0 0 12px rgba(240, 230, 0, 0.12);
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.mainMenuNav {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mainMenuLink {
+  position: relative;
+
+  min-height: 56px;
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns: 28px 1fr 32px;
+  align-items: center;
+  gap: 8px;
+
+  color: rgba(255, 95, 105, 0.82);
+  text-decoration: none;
+
+  border: 1px solid transparent;
+  background: transparent;
+
+  transition:
+    color 130ms ease,
+    border-color 130ms ease,
+    background 130ms ease,
+    transform 130ms ease,
+    text-shadow 130ms ease;
+}
+
+.mainMenuLink::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    0 100%
+  );
+
+  border: 1px solid transparent;
+  pointer-events: none;
+}
+
+.mainMenuLink:hover,
+.mainMenuLink:focus-visible,
+.mainMenuLinkActive {
+  color: #82faff;
+
+  border-color: rgba(85, 235, 245, 0.78);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 160, 175, 0.085),
+      rgba(0, 160, 175, 0.025)
+    );
+
+  text-shadow: 0 0 8px rgba(90, 245, 255, 0.42);
+  transform: translateX(4px);
+  outline: none;
+}
+
+.mainMenuIndex {
+  color: rgba(255, 95, 105, 0.4);
+
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+
+.mainMenuLinkActive .mainMenuIndex {
+  color: rgba(130, 250, 255, 0.75);
+}
+
+.mainMenuLabel {
+  font-size: clamp(21px, 1.8vw, 30px);
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+
+.mainMenuGlyph {
+  width: 26px;
+  height: 17px;
+
+  justify-self: end;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      currentColor 0,
+      currentColor 2px,
+      transparent 2px,
+      transparent 4px
+    );
+
+  opacity: 0.28;
+}
+
+.mainMenuLinkActive .mainMenuGlyph {
+  opacity: 0.85;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.mainMenuFooter {
+  position: relative;
+  z-index: 1;
+
+  margin-top: auto;
+  padding-top: 26px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  border-top: 1px solid rgba(255, 60, 80, 0.32);
+}
+
+.mainMenuVersion {
+  color: rgba(255, 80, 95, 0.7);
+  font-size: 16px;
+}
+
+.mainMenuUser {
+  color: #79f6ff;
+
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.mainMenuStatus {
+  margin-top: 8px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: rgba(255, 99, 118, 0.65);
+
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.mainMenuStatusDot {
+  width: 7px;
+  height: 7px;
+
+  background: #71f7ff;
+  box-shadow: 0 0 8px #71f7ff;
+}
+
+/* =========================================================
+   DRAWER CONTROLS
+   ========================================================= */
+
+.menuTrigger {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 500;
+
+  width: 112px;
+  height: 42px;
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #72f7ff;
+  background: rgba(6, 11, 17, 0.82);
+  border: 1px solid rgba(91, 239, 247, 0.68);
+
+  font-family: "Rajdhani", sans-serif;
+  cursor: pointer;
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.menuTrigger:hover,
+.menuTrigger:focus-visible {
+  background: rgba(15, 52, 58, 0.75);
+  box-shadow: 0 0 14px rgba(70, 235, 245, 0.35);
+  outline: none;
+}
+
+.menuTriggerCode {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.menuTriggerLines {
+  width: 19px;
+  display: grid;
+  gap: 4px;
+}
+
+.menuTriggerLines span {
+  display: block;
+  height: 1px;
+  background: currentColor;
+}
+
+.menuTriggerLines span:nth-child(2) {
+  width: 70%;
+  margin-left: auto;
+}
+
+.menuBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 590;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  background: rgba(0, 0, 0, 0.52);
+  backdrop-filter: blur(2px);
+
+  transition:
+    opacity 220ms ease,
+    visibility 220ms ease;
+}
+
+.menuBackdropVisible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.menuClose {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 2;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  color: #71f7ff;
+  background: rgba(0, 25, 30, 0.35);
+  border: 1px solid rgba(93, 240, 248, 0.65);
+
+  font-family: inherit;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.menuClose:hover,
+.menuClose:focus-visible {
+  color: #071013;
+  background: #71f7ff;
+  outline: none;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 850px) {
+  .mainMenuHome {
+    left: 0;
+    width: min(88vw, 420px);
+  }
+
+  .mainMenuLogo {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 600px) {
+  .menuTrigger {
+    top: 16px;
+    left: 16px;
+  }
+
+  .mainMenuDrawer {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mainMenuDrawer,
+  .menuBackdrop,
+  .mainMenuLink {
+    transition: none;
+  }
 }
