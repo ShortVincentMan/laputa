@@ -1,35 +1,74 @@
-
 .scrollWindow {
   position: absolute;
-  left: 24%;
-  top: 20%;
-  width: 48%;
-  height: 25%;
+  left: 15%;
+  top: 34%;
+  width: 66%;
+  height: 23%;
   overflow: hidden;
   z-index: 40;
   pointer-events: none;
+  contain: paint;
 }
 
-.scrollTrack {
+.verticalTrack {
   display: flex;
   flex-direction: column;
-  animation: scrollText 12s linear infinite;
+  width: 100%;
+  gap: 0;
+  animation: verticalScroll 10s linear infinite;
+  will-change: transform;
+}
+
+.scrollGroup {
+  flex: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .scrollRow {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 1.2rem;
-  min-height: 1.2rem;
+  grid-template-columns: repeat(4, 4fr 1fr);
+  column-gap: 0.35rem;
+  width: 100%;
+  height: 0.9rem;
+  overflow: hidden;
+  align-items: center;
 }
 
-.scrollCell {
+.scrollBlock {
+  display: block;
+  min-width: 0;
   overflow: hidden;
   color: #ff1838;
   font-family: "Rajdhani", monospace;
-  font-size: clamp(5px, 0.38vw, 10px);
-  line-height: 1.05;
+  font-size: clamp(10px, 0.28vw, 8px);
+  font-weight: 400;
+  line-height: 0.9rem;
   white-space: nowrap;
   text-overflow: clip;
 }
 
+.scrollBlockLong {
+  width: 100%;
+}
+
+.scrollBlockShort {
+  width: 100%;
+}
+
+@keyframes verticalScroll {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-33.333333%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verticalTrack {
+    animation-play-state: paused;
+  }
+}

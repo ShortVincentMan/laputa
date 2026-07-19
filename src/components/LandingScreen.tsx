@@ -1,68 +1,95 @@
+import Image from "next/image";
 import "./landing.css";
 import ScrollingText from "./ScrollingText";
 
-export default function Landing() {
+const ASSET_ROOT = "/assets/landing";
+
+type LayerProps = {
+  src: string;
+  className: string;
+};
+
+function UiLayer({ src, className }: LayerProps) {
+  return (
+    <div className={`assetLayer ${className}`}>
+      <Image
+        src={`${ASSET_ROOT}/${src}`}
+        alt=""
+        fill
+        sizes="100vw"
+        draggable={false}
+      />
+    </div>
+  );
+}
+
+export default function LandingScreen() {
   return (
     <main className="landing">
+      <Image
+        className="background"
+        src={`${ASSET_ROOT}/bg.png`}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        draggable={false}
+      />
+
       <div className="scene">
+        <div className="scene perspectiveEnabled"> {/**/}
         <div className="uiStack">
-            <img
-                className="staticUi"
-                src="/assets/landing/static-ui.png"
-                alt=""
-                draggable={false}
-            />
-
-            <img
-                className="assetLayer topRedShape"
-                src="/assets/landing/top-red-shape.png"
-                alt=""
-            />
-
-            <img
-                className="assetLayer topRight"
-                src="/assets/landing/top-right.png"
-                alt=""
-            />
-
-            <img
-                className="assetLayer scrollingLines"
-                src="/assets/landing/scrolling-lines.png"
-                alt=""
-            />
-
-            <img
-                className="assetLayer pulseRedBar"
-                src="/assets/landing/pulse-red-bar.png"
-                alt=""
-            />
-
-            <img
-                className="assetLayer blueBar"
-                src="/assets/landing/blue-bar.png"
-                alt=""
-            />
-
-            <img
-                className="assetLayer bottomGrid"
-                src="/assets/landing/bottom-grid.png"
-                alt=""
-            />
-
-            <img
-                className="assetLayer bottomLeftOne"
-                src="/assets/landing/bottom-left.png"
-                alt=""
-            />
-
-            <img
-                className="assetLayer bottomLeftTwo"
-                src="/assets/landing/bottom-left-rectangles.png"
-                alt=""
-            />
-
+          <Image
+            className="staticUi"
+            src={`${ASSET_ROOT}/screen4.png`}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            draggable={false}
+          />
             <ScrollingText />
-</div>
+          <UiLayer
+            src="top-red-shape.png"
+            className="topRedShape"
+          />
+
+          <UiLayer
+            src="top-right.png"
+            className="topRight"
+          />
+
+          <UiLayer
+            src="scrolling-lines.png"
+            className="scrollingLines"
+          />
+
+          <UiLayer
+            src="pulse-red-bar.png"
+            className="pulseRedBar"
+          />
+
+          <UiLayer
+            src="blue-bar.png"
+            className="blueBar"
+          />
+
+          <UiLayer
+            src="bottom-grid.png"
+            className="bottomGrid"
+          />
+
+          <UiLayer
+            src="bottom-left.png"
+            className="bottomLeftOne"
+          />
+
+          <UiLayer
+            src="bottom-left-rectangle.png"
+            className="bottomLeftTwo"
+          />
+        </div>
+        </div>
       </div>
     </main>
   );
