@@ -1,16 +1,21 @@
-// app/(main)/layout.tsx
+import type { Metadata } from "next";
+import "./globals.css";
 
-import SiteMenu from "@/components/navigation/MainMenu";
+export const metadata: Metadata = {
+  title: "Laputa OS",
+  description: "Vincent Le engineering portfolio",
+};
 
-export default function MainLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <SiteMenu />
-      {children}
-    </>
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full flex flex-col">
+        {children}
+      </body>
+    </html>
   );
 }
