@@ -2,85 +2,86 @@
    BASE MENU
    ========================================================= */
 
-.mainMenu {
+.cpNav {
   position: relative;
   z-index: 300;
+
+  width: clamp(310px, 27vw, 520px);
+  padding:
+    clamp(72px, 8vh, 120px)
+    clamp(24px, 2vw, 42px)
+    clamp(36px, 5vh, 72px);
 
   display: flex;
   flex-direction: column;
 
-  width: clamp(360px, 28vw, 520px);
-  height: 100dvh;
-
-  padding:
-    clamp(68px, 8vh, 105px)
-    clamp(30px, 2.4vw, 44px)
-    clamp(32px, 4vh, 52px);
-
-  color: #ff6474;
   font-family: "Rajdhani", sans-serif;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(40, 6, 14, 0.9) 0%,
+      rgba(30, 5, 12, 0.8) 72%,
+      rgba(20, 4, 10, 0.15) 100%
+    );
+
+  border-left: 1px solid rgba(255, 65, 85, 0.28);
+  border-right: 1px solid rgba(255, 65, 85, 0.2);
+
+  box-shadow:
+    0 0 45px rgba(85, 0, 20, 0.15),
+    inset 0 0 60px rgba(255, 35, 60, 0.04);
+}
+
+.cpNav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 
   background:
     repeating-linear-gradient(
       to bottom,
-      rgba(255, 70, 90, 0.035) 0,
-      rgba(255, 70, 90, 0.035) 1px,
+      rgba(255, 70, 90, 0.045) 0,
+      rgba(255, 70, 90, 0.045) 1px,
       transparent 1px,
       transparent 4px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(42, 5, 15, 0.94) 0%,
-      rgba(32, 5, 13, 0.88) 72%,
-      rgba(20, 3, 10, 0.3) 100%
     );
 
-  border-left: 1px solid rgba(255, 65, 85, 0.28);
-  border-right: 1px solid rgba(255, 65, 85, 0.22);
-
-  box-shadow:
-    0 0 45px rgba(85, 0, 20, 0.18),
-    inset 0 0 65px rgba(255, 35, 60, 0.035);
-}
-
-.mainMenu::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 40, 65, 0.04),
-      transparent 28%,
-      transparent 74%,
-      rgba(255, 40, 65, 0.04)
-    );
-
-  opacity: 0.8;
+  mix-blend-mode: screen;
+  opacity: 0.45;
 }
 
 /* =========================================================
-   VARIANTS
+   HOME / DRAWER VARIANTS
    ========================================================= */
 
-.mainMenuHome {
+.cpNavHome {
   position: absolute;
   top: 0;
+  left: clamp(28px, 6vw, 110px);
   bottom: 0;
-  left: clamp(24px, 5.7vw, 96px);
 }
 
-.mainMenuDrawer {
+.cpNavDrawer {
   position: fixed;
-  inset: 0 auto 0 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 600;
 
   width: min(440px, 90vw);
 
   transform: translateX(-105%);
   visibility: hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(40, 6, 14, 0.98) 0%,
+      rgba(30, 5, 12, 0.97) 72%,
+      rgba(20, 4, 10, 0.92) 100%
+    );
 
   box-shadow: 20px 0 60px rgba(0, 0, 0, 0.55);
 
@@ -89,7 +90,7 @@
     visibility 260ms;
 }
 
-.mainMenuOpen {
+.cpNavDrawerOpen {
   transform: translateX(0);
   visibility: visible;
 }
@@ -98,65 +99,56 @@
    HEADER
    ========================================================= */
 
-.mainMenuHeader {
+.cpNavHeader {
   position: relative;
-  display: inline-block;
   z-index: 1;
-
-  margin-bottom: clamp(38px, 5vh, 58px);
+  margin-bottom: clamp(36px, 5vh, 66px);
 }
 
-.mainMenuEyebrow {
-  margin-top: 10px;
-  margin-left: 4px;
-
-  color: rgba(105, 240, 247, 0.8);
-
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.mainMenuLogo {
-  margin: 0;
-
+.cpNavLogo {
   color: #f1e600;
 
   font-family: "Cyberpunk", "Rajdhani", sans-serif;
-  font-size: clamp(54px, 4.8vw, 78px);
-  font-weight: 400;
-  line-height: 0.78;
-  letter-spacing: -0.075em;
+  font-size: clamp(38px, 4.2vw, 76px);
+  line-height: 0.86;
+  letter-spacing: -0.08em;
 
   text-shadow:
-    2px 2px 0 rgba(255, 30, 65, 0.55),
-    0 0 12px rgba(240, 230, 0, 0.12);
+    2px 2px 0 rgba(255, 30, 65, 0.5),
+    0 0 12px rgba(240, 230, 0, 0.1);
+}
+
+.cpNavSubtitle {
+  margin-top: 12px;
+
+  color: rgba(95, 235, 245, 0.8);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
 }
 
 /* =========================================================
    NAVIGATION
    ========================================================= */
 
-.mainMenuNav {
+.cpNavList {
   position: relative;
   z-index: 1;
 
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 
-.mainMenuLink {
+.cpNavItem {
   position: relative;
 
-  min-height: 56px;
-  padding: 0 16px;
+  min-height: 58px;
+  padding: 0 18px;
 
-  display: grid;
-  grid-template-columns: 28px 1fr 32px;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
 
   color: rgba(255, 95, 105, 0.82);
   text-decoration: none;
@@ -168,11 +160,10 @@
     color 130ms ease,
     border-color 130ms ease,
     background 130ms ease,
-    transform 130ms ease,
-    text-shadow 130ms ease;
+    transform 130ms ease;
 }
 
-.mainMenuLink::before {
+.cpNavItem::before {
   content: "";
   position: absolute;
   inset: -1px;
@@ -189,69 +180,66 @@
   pointer-events: none;
 }
 
-.mainMenuLink:hover,
-.mainMenuLink:focus-visible,
-.mainMenuLinkActive {
+.cpNavItem:hover,
+.cpNavItem:focus-visible,
+.cpNavItemActive {
   color: #82faff;
-
-  border-color: rgba(85, 235, 245, 0.78);
+  border-color: rgba(85, 235, 245, 0.8);
 
   background:
     linear-gradient(
       90deg,
-      rgba(0, 160, 175, 0.085),
+      rgba(0, 160, 175, 0.08),
       rgba(0, 160, 175, 0.025)
     );
 
-  text-shadow: 0 0 8px rgba(90, 245, 255, 0.42);
+  text-shadow: 0 0 8px rgba(90, 245, 255, 0.45);
   transform: translateX(4px);
   outline: none;
 }
 
-.mainMenuIndex {
-  color: rgba(255, 95, 105, 0.4);
+.cpNavItemActive::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
 
-  font-size: 9px;
-  letter-spacing: 0.1em;
-}
+  width: 28px;
+  height: 18px;
 
-.mainMenuLinkActive .mainMenuIndex {
-  color: rgba(130, 250, 255, 0.75);
-}
-
-.mainMenuLabel {
-  font-size: clamp(21px, 1.8vw, 30px);
-  font-weight: 500;
-  letter-spacing: 0.015em;
-}
-
-.mainMenuGlyph {
-  width: 26px;
-  height: 17px;
-
-  justify-self: end;
+  transform: translateY(-50%);
 
   background:
     repeating-linear-gradient(
       90deg,
-      currentColor 0,
-      currentColor 2px,
+      rgba(100, 250, 255, 0.95) 0,
+      rgba(100, 250, 255, 0.95) 2px,
       transparent 2px,
       transparent 4px
     );
 
-  opacity: 0.28;
+  opacity: 0.7;
 }
 
-.mainMenuLinkActive .mainMenuGlyph {
-  opacity: 0.85;
+.cpNavLabel {
+  font-size: clamp(19px, 1.8vw, 31px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.cpNavMeta {
+  margin-right: 44px;
+
+  color: rgba(105, 235, 240, 0.45);
+  font-size: 10px;
+  letter-spacing: 0.15em;
 }
 
 /* =========================================================
    FOOTER
    ========================================================= */
 
-.mainMenuFooter {
+.cpNavFooter {
   position: relative;
   z-index: 1;
 
@@ -260,47 +248,53 @@
 
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 
-  border-top: 1px solid rgba(255, 60, 80, 0.32);
+  border-top: 1px solid rgba(255, 60, 80, 0.35);
 }
 
-.mainMenuVersion {
+.cpNavVersion {
   color: rgba(255, 80, 95, 0.7);
-  font-size: 16px;
+  font-size: 17px;
 }
 
-.mainMenuUser {
+.cpNavUser {
   color: #79f6ff;
-
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 600;
-  letter-spacing: 0.02em;
 }
 
-.mainMenuStatus {
+.cpNavAccount {
   margin-top: 8px;
+  width: fit-content;
+  min-width: 230px;
+  padding: 7px 12px;
 
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
 
-  color: rgba(255, 99, 118, 0.65);
-
-  font-size: 10px;
-  letter-spacing: 0.15em;
+  color: rgba(255, 100, 115, 0.78);
+  border: 1px solid rgba(255, 70, 90, 0.42);
 }
 
-.mainMenuStatusDot {
-  width: 7px;
-  height: 7px;
+.cpNavAccountIcon {
+  width: 22px;
+  height: 22px;
 
-  background: #71f7ff;
-  box-shadow: 0 0 8px #71f7ff;
+  display: grid;
+  place-items: center;
+
+  color: #071014;
+  background: #74f7ff;
+  border-radius: 50%;
+
+  font-size: 12px;
+  font-weight: 800;
 }
 
 /* =========================================================
-   DRAWER CONTROLS
+   DRAWER TRIGGER
    ========================================================= */
 
 .menuTrigger {
@@ -331,6 +325,10 @@
     100% 100%,
     0 100%
   );
+
+  box-shadow:
+    0 0 12px rgba(70, 235, 245, 0.12),
+    inset 0 0 10px rgba(70, 235, 245, 0.05);
 }
 
 .menuTrigger:hover,
@@ -363,6 +361,10 @@
   margin-left: auto;
 }
 
+/* =========================================================
+   DRAWER BACKDROP
+   ========================================================= */
+
 .menuBackdrop {
   position: fixed;
   inset: 0;
@@ -385,6 +387,10 @@
   visibility: visible;
   pointer-events: auto;
 }
+
+/* =========================================================
+   DRAWER CLOSE BUTTON
+   ========================================================= */
 
 .menuClose {
   position: absolute;
@@ -428,13 +434,14 @@
    ========================================================= */
 
 @media (max-width: 850px) {
-  .mainMenuHome {
+  .cpNavHome {
     left: 0;
     width: min(88vw, 420px);
+    padding-top: 56px;
   }
 
-  .mainMenuLogo {
-    font-size: 56px;
+  .cpNavLogo {
+    font-size: 50px;
   }
 }
 
@@ -444,15 +451,15 @@
     left: 16px;
   }
 
-  .mainMenuDrawer {
+  .cpNavDrawer {
     width: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mainMenuDrawer,
+  .cpNavDrawer,
   .menuBackdrop,
-  .mainMenuLink {
+  .cpNavItem {
     transition: none;
   }
 }

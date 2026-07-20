@@ -1,13 +1,35 @@
 .homePage {
   position: relative;
   width: 100vw;
-  min-height: 100dvh;
+  height: 100dvh;
   overflow: hidden;
-  background: #030408;
+  isolation: isolate;
 }
 
 .homeContent {
   position: relative;
-  z-index: 10;
-  padding: 140px 6vw 60px;
+  z-index: 2;
+}
+
+.windowLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+
+  display: grid;
+  place-items: center;
+
+  padding: 2rem 2rem 2rem 15rem;
+
+  pointer-events: none;
+}
+
+.windowLayer > * {
+  pointer-events: auto;
+}
+
+@media (max-width: 900px) {
+  .windowLayer {
+    padding: 5rem 1rem 1rem;
+  }
 }
