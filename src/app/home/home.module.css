@@ -6,30 +6,14 @@
   isolation: isolate;
 }
 
-.homeContent {
-  position: relative;
-  z-index: 2;
-}
-
 .windowLayer {
   position: fixed;
   inset: 0;
-  z-index: 20;
+  z-index: 30;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
 
-  padding: 2rem 2rem 2rem 15rem;
-
-  pointer-events: none;
-}
-
-.windowLayer > * {
-  pointer-events: auto;
-}
-
-@media (max-width: 900px) {
-  .windowLayer {
-    padding: 5rem 1rem 1rem;
-  }
+  padding: clamp(1rem, 2.5vw, 3rem);
 }

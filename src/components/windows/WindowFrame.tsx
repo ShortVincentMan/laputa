@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  type PointerEvent as ReactPointerEvent,
-  type ReactNode,
-  useRef,
-  useState,
-} from "react";
+import type { ReactNode } from "react";
 
 import "./window-frame.css";
 
@@ -15,13 +10,9 @@ type WindowFrameProps = {
   subtitle?: string;
   tabs?: ReactNode;
   footer?: ReactNode;
+  sideActions?: ReactNode;
   className?: string;
   onClose?: () => void;
-};
-
-type Position = {
-  x: number;
-  y: number;
 };
 
 export default function WindowFrame({
@@ -30,120 +21,33 @@ export default function WindowFrame({
   subtitle,
   tabs,
   footer,
+  sideActions,
   className = "",
   onClose,
 }: WindowFrameProps) {
-  const windowRef = useRef<HTMLElement>(null);
-
-  const dragOffset = useRef({
-    x: 0,
-    y: 0,
-  });
-
-  const [position, setPosition] = useState<Position>({
-    x: 0,
-    y: 0,
-  });
-
-  const [isDragging, setIsDragging] = useState(false);
-
-  function handlePointerDown(
-    event: ReactPointerEvent<HTMLElement>
-  ) {
-    if (event.button !== 0) return;
-
-    const target = event.target as HTMLElement;
-
-    if (target.closest("button, a, input, textarea, select")) {
-      return;
-    }
-
-    dragOffset.current = {
-      x: event.clientX - position.x,
-      y: event.clientY - position.y,
-    };
-
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setIsDragging(true);
-  }
-
-  function handlePointerMove(
-    event: ReactPointerEvent<HTMLElement>
-  ) {
-    if (!isDragging || !windowRef.current) return;
-
-    const rect = windowRef.current.getBoundingClientRect();
-
-    const nextX =
-      event.clientX - dragOffset.current.x;
-
-    const nextY =
-      event.clientY - dragOffset.current.y;
-
-    const minimumVisibleWidth = 120;
-    const headerVisibleHeight = 60;
-
-    const minX =
-      -rect.left - rect.width + minimumVisibleWidth;
-
-    const maxX =
-      window.innerWidth - rect.left - minimumVisibleWidth;
-
-    const minY =
-      -rect.top;
-
-    const maxY =
-      window.innerHeight - rect.top - headerVisibleHeight;
-
-    setPosition({
-      x: Math.min(Math.max(nextX, minX), maxX),
-      y: Math.min(Math.max(nextY, minY), maxY),
-    });
-  }
-
-  function handlePointerUp(
-    event: ReactPointerEvent<HTMLElement>
-  ) {
-    if (!isDragging) return;
-
-    event.currentTarget.releasePointerCapture(
-      event.pointerId
-    );
-
-    setIsDragging(false);
-  }
-
   return (
     <section
-      ref={windowRef}
-      className={`windowFrame ${
-        isDragging ? "windowFrame--dragging" : ""
-      } ${className}`}
-      style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-      }}
+      className={`windowFrame ${className}`}
       role="dialog"
+      aria-modal="true"
       aria-label={title}
     >
-      <div className="windowFrame__corner windowFrame__corner--topLeft" />
-      <div className="windowFrame__corner windowFrame__corner--bottomRight" />
+      <div className="windowFrame__topBar">
+        <div className="windowFrame__protocol">
+          PROTOCOL 6520-A44
+        </div>
 
-      <header
-        className="windowFrame__header"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
-      >
+        <div className="windowFrame__status">
+          SYSTEM LINK // ACTIVE
+        </div>
+      </div>
+
+      <header className="windowFrame__header">
         <div className="windowFrame__heading">
-          <span className="windowFrame__eyebrow">
-            SYSTEM INTERFACE
-          </span>
+          <span className="windowFrame__index">01</span>
 
           <div>
-            <h2 className="windowFrame__title">
-              {title}
-            </h2>
+            <h1 className="windowFrame__title">{title}</h1>
 
             {subtitle && (
               <p className="windowFrame__subtitle">
@@ -160,7 +64,8 @@ export default function WindowFrame({
             onClick={onClose}
             aria-label={`Close ${title}`}
           >
-            <span aria-hidden="true">×</span>
+            <span>ESC</span>
+            <strong>CLOSE</strong>
           </button>
         )}
       </header>
@@ -171,15 +76,40 @@ export default function WindowFrame({
         </nav>
       )}
 
-      <div className="windowFrame__body">
-        {children}
+      <div className="windowFrame__layout">
+        <main className="windowFrame__body">
+          {children}
+        </main>
+
+        {sideActions && (
+          <aside className="windowFrame__sideActions">
+            {sideActions}
+          </aside>
+        )}
       </div>
 
-      {footer && (
-        <footer className="windowFrame__footer">
-          {footer}
-        </footer>
-      )}
+      <footer className="windowFrame__footer">
+        <div className="windowFrame__footerData">
+          {footer ?? "DATABASE ONLINE"}
+        </div>
+
+        <div className="windowFrame__controls">
+          <button type="button" onClick={onClose}>
+            <span>ESC</span>
+            Close
+          </button>
+
+          <div>
+            <span>F1</span>
+            Help
+          </div>
+
+          <div>
+            <span>◉</span>
+            Select
+          </div>
+        </div>
+      </footer>
     </section>
   );
 }

@@ -4,9 +4,13 @@ import { useState } from "react";
 
 import CyberpunkBackground from "@/components/background/CyberpunkBackground";
 import MainMenu from "@/components/navigation/MainMenu";
-import ProjectsWindow from "@/components/windows/ProjectsWindow";
+import ProjectsWindow from "@/components/projects/ProjectsWindow";
+import AboutWindow from "@/components/windows/AboutWindow";
+import ContactWindow from "@/components/windows/ContactWindow";
+import ExperienceWindow from "@/components/windows/ExperienceWindow";
 
 import styles from "./home.module.css";
+import "@/components/windows/information-windows.css";
 
 type WindowType =
   | "projects"
@@ -18,10 +22,6 @@ export default function HomePage() {
   const [activeWindow, setActiveWindow] =
     useState<WindowType | null>(null);
 
-  function openWindow(window: WindowType) {
-    setActiveWindow(window);
-  }
-
   function closeWindow() {
     setActiveWindow(null);
   }
@@ -30,16 +30,14 @@ export default function HomePage() {
     <main className={styles.homePage}>
       <CyberpunkBackground muted />
 
-      <MainMenu
-        variant="home"
-        activeWindow={activeWindow}
-        onNavigate={openWindow}
-        onHome={closeWindow}
-      />
-
-      <section className={styles.homeContent}>
-        {/* Default desktop content */}
-      </section>
+      {!activeWindow && (
+        <MainMenu
+          variant="home"
+          activeWindow={activeWindow}
+          onNavigate={setActiveWindow}
+          onHome={closeWindow}
+        />
+      )}
 
       {activeWindow && (
         <div className={styles.windowLayer}>
@@ -48,15 +46,15 @@ export default function HomePage() {
           )}
 
           {activeWindow === "experience" && (
-            <div>Experience window</div>
+            <ExperienceWindow onClose={closeWindow} />
           )}
 
           {activeWindow === "about" && (
-            <div>About window</div>
+            <AboutWindow onClose={closeWindow} />
           )}
 
           {activeWindow === "contact" && (
-            <div>Contact window</div>
+            <ContactWindow onClose={closeWindow} />
           )}
         </div>
       )}

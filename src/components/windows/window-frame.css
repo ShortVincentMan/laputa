@@ -1,56 +1,53 @@
 .windowFrame {
-  --window-accent: #fcee0a;
-  --window-accent-secondary: #00f0ff;
-  --window-background: rgba(8, 10, 14, 0.94);
-  --window-border: rgba(252, 238, 10, 0.68);
+  --cp-red: #ef5459;
+  --cp-red-muted: rgba(239, 84, 89, 0.34);
+  --cp-cyan: #68e7f1;
+  --cp-yellow: #fcee0a;
+  --cp-bg: rgba(4, 7, 12, 0.9);
 
   position: relative;
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
 
-  width: min(1100px, calc(100vw - 7rem));
-  height: min(720px, calc(100dvh - 5rem));
+  width: 100%;
+  height: 100%;
 
   overflow: hidden;
-  will-change: transform;
 
-  color: #f5f5f5;
+  color: #d8d8d8;
+
   background:
     linear-gradient(
-      135deg,
-      rgba(0, 240, 255, 0.04),
-      transparent 35%
+      to bottom,
+      rgba(87, 13, 23, 0.48),
+      rgba(4, 7, 12, 0.94) 34%
     ),
-    var(--window-background);
+    var(--cp-bg);
 
-  border: 1px solid var(--window-border);
+  border-top: 1px solid var(--cp-red-muted);
+  border-bottom: 1px solid var(--cp-red-muted);
 
   clip-path: polygon(
-    0 22px,
-    22px 0,
-    calc(100% - 70px) 0,
-    calc(100% - 52px) 18px,
-    100% 18px,
-    100% calc(100% - 22px),
-    calc(100% - 22px) 100%,
-    70px 100%,
-    52px calc(100% - 18px),
-    0 calc(100% - 18px)
+    0 20px,
+    20px 0,
+    calc(100% - 30px) 0,
+    100% 30px,
+    100% calc(100% - 24px),
+    calc(100% - 24px) 100%,
+    24px 100%,
+    0 calc(100% - 24px)
   );
 
   box-shadow:
-    0 0 0 1px rgba(252, 238, 10, 0.12),
-    0 0 30px rgba(0, 0, 0, 0.7),
-    0 0 26px rgba(0, 240, 255, 0.08);
-
-  backdrop-filter: blur(12px);
+    0 0 45px rgba(0, 0, 0, 0.8),
+    inset 0 0 80px rgba(0, 0, 0, 0.55);
 }
 
 .windowFrame::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 5;
+  z-index: 10;
 
   pointer-events: none;
 
@@ -62,232 +59,226 @@
   );
 }
 
-.windowFrame::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 22px;
+.windowFrame__topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  width: 160px;
-  height: 3px;
+  min-height: 42px;
+  padding: 0 2rem;
 
-  background: var(--window-accent);
-  box-shadow: 0 0 12px rgba(252, 238, 10, 0.5);
+  color: rgba(239, 84, 89, 0.7);
+
+  border-bottom: 1px solid rgba(239, 84, 89, 0.18);
+
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .windowFrame__header {
-  position: relative;
-  z-index: 2;
-  cursor:grab;
-  touch-action: none;
-  user-select: none;
-
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 2rem;
 
-  min-height: 88px;
-  padding: 1.2rem 1.5rem 1rem 2rem;
+  padding: 1.5rem 2rem 1.25rem;
 
-  border-bottom: 1px solid rgba(252, 238, 10, 0.24);
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(252, 238, 10, 0.08),
-      transparent 45%
-    );
+  border-bottom: 1px solid rgba(239, 84, 89, 0.23);
 }
 
 .windowFrame__heading {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-.windowFrame__eyebrow {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+.windowFrame__index {
+  display: grid;
+  place-items: center;
 
-  color: var(--window-accent-secondary);
+  width: 30px;
+  height: 30px;
 
-  font-size: 0.56rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  color: var(--cp-cyan);
+  border: 1px solid var(--cp-cyan);
+
+  font-size: 0.75rem;
 }
 
 .windowFrame__title {
   margin: 0;
 
-  color: var(--window-accent);
+  color: var(--cp-yellow);
 
-  font-size: clamp(1.45rem, 2.4vw, 2.4rem);
-  font-weight: 700;
+  font-size: clamp(1.7rem, 3vw, 3rem);
   line-height: 1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .windowFrame__subtitle {
-  margin: 0.45rem 0 0;
+  margin: 0.55rem 0 0;
 
-  color: rgba(255, 255, 255, 0.56);
+  color: rgba(255, 255, 255, 0.46);
 
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .windowFrame__close {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  padding: 0.65rem 0.9rem;
+
+  color: var(--cp-red);
+  background: transparent;
+
+  border: 1px solid var(--cp-red-muted);
+
+  cursor: pointer;
+  font: inherit;
+  text-transform: uppercase;
+}
+
+.windowFrame__close span {
   display: grid;
   place-items: center;
 
-  width: 44px;
-  height: 36px;
+  min-width: 30px;
+  height: 28px;
 
-  color: var(--window-accent);
-  background: transparent;
+  color: var(--cp-cyan);
+  border: 1px solid var(--cp-cyan);
 
-  border: 1px solid rgba(252, 238, 10, 0.55);
-
-  cursor: pointer;
-
-  font: inherit;
-  font-size: 1.5rem;
-  line-height: 1;
-
-  transition:
-    color 150ms ease,
-    background 150ms ease,
-    box-shadow 150ms ease;
+  font-size: 0.65rem;
 }
 
 .windowFrame__close:hover {
-  color: #090909;
-  background: var(--window-accent);
-
-  box-shadow: 0 0 18px rgba(252, 238, 10, 0.35);
-}
-
-.windowFrame__close:focus-visible {
-  outline: 2px solid var(--window-accent-secondary);
-  outline-offset: 4px;
+  color: var(--cp-cyan);
+  border-color: var(--cp-cyan);
 }
 
 .windowFrame__tabs {
-  position: relative;
-  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 
-  min-height: 52px;
+  min-height: 56px;
   padding: 0 2rem;
 
-  border-bottom: 1px solid rgba(0, 240, 255, 0.18);
+  border-bottom: 1px solid rgba(239, 84, 89, 0.2);
+}
 
-  background: rgba(0, 0, 0, 0.2);
+.windowFrame__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+
+  min-height: 0;
 }
 
 .windowFrame__body {
-  position: relative;
-  z-index: 1;
-
+  min-width: 0;
   min-height: 0;
   overflow: auto;
 
   padding: 2rem;
 }
 
+.windowFrame__sideActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+
+  width: 260px;
+  padding: 2rem;
+
+  border-left: 1px solid rgba(239, 84, 89, 0.14);
+}
+
 .windowFrame__footer {
-  position: relative;
-  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
 
-  min-height: 44px;
-  padding: 0.75rem 2rem;
+  min-height: 58px;
+  padding: 0.8rem 2rem;
 
-  color: rgba(255, 255, 255, 0.48);
-  background: rgba(0, 0, 0, 0.28);
+  border-top: 1px solid rgba(239, 84, 89, 0.22);
+}
 
-  border-top: 1px solid rgba(252, 238, 10, 0.18);
+.windowFrame__footerData {
+  color: rgba(255, 255, 255, 0.34);
 
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
-.windowFrame__corner {
-  position: absolute;
-  z-index: 6;
+.windowFrame__controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 
-  width: 34px;
-  height: 34px;
+  color: var(--cp-red);
 
-  pointer-events: none;
+  text-transform: uppercase;
 }
 
-.windowFrame__corner--topLeft {
-  top: 7px;
-  left: 7px;
+.windowFrame__controls button,
+.windowFrame__controls div {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
 
-  border-top: 2px solid var(--window-accent-secondary);
-  border-left: 2px solid var(--window-accent-secondary);
+  color: inherit;
+  background: transparent;
+  border: 0;
+
+  font: inherit;
+  cursor: pointer;
 }
 
-.windowFrame__corner--bottomRight {
-  right: 7px;
-  bottom: 7px;
-
-  border-right: 2px solid var(--window-accent);
-  border-bottom: 2px solid var(--window-accent);
-}
-
-.windowFrame--dragging {
-  transition: none;
-}
-
-.windowFrame--dragging .windowFrame__header {
-  cursor: grabbing;
-}
-
-.windowLayer {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-
+.windowFrame__controls span {
   display: grid;
   place-items: center;
 
-  padding: 2rem 2rem 2rem 15rem;
+  min-width: 25px;
+  height: 25px;
 
-  pointer-events: none;
-}
+  color: var(--cp-cyan);
+  border: 1px solid var(--cp-cyan);
 
-.windowLayer > * {
-  pointer-events: auto;
+  font-size: 0.62rem;
 }
 
 @media (max-width: 800px) {
-  .windowFrame {
-    width: calc(100vw - 2rem);
-    height: calc(100dvh - 2rem);
+  .windowFrame__layout {
+    grid-template-columns: 1fr;
   }
 
-  .windowFrame__header {
-    padding-inline: 1.25rem;
-  }
-
-  .windowFrame__eyebrow {
+  .windowFrame__sideActions {
     display: none;
   }
 
+  .windowFrame__topBar,
+  .windowFrame__header,
   .windowFrame__tabs,
   .windowFrame__body,
   .windowFrame__footer {
-    padding-inline: 1.25rem;
+    padding-inline: 1rem;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .windowFrame__close {
-    transition: none;
+  .windowFrame__footerData {
+    display: none;
+  }
+
+  .windowFrame__footer {
+    justify-content: flex-end;
   }
 }

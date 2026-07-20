@@ -1,0 +1,305 @@
+.recordList {
+  display: grid;
+  gap: 1rem;
+}
+
+.recordCard {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1.25rem;
+
+  padding: 1.4rem;
+
+  background:
+    linear-gradient(
+      100deg,
+      rgba(239, 84, 89, 0.1),
+      rgba(4, 8, 13, 0.52)
+    );
+
+  border: 1px solid rgba(239, 84, 89, 0.25);
+  clip-path: polygon(
+    0 12px,
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%
+  );
+}
+
+.recordCard:hover {
+  border-color: rgba(104, 231, 241, 0.65);
+  background:
+    linear-gradient(
+      100deg,
+      rgba(104, 231, 241, 0.12),
+      rgba(4, 8, 13, 0.64)
+    );
+}
+
+.recordCard__index {
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  color: #68e7f1;
+  border: 1px solid #68e7f1;
+
+  font-size: 0.7rem;
+}
+
+.recordCard__eyebrow {
+  color: #ef5459;
+
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.recordCard h2 {
+  margin: 0.35rem 0 0;
+
+  color: #fcee0a;
+
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  text-transform: uppercase;
+}
+
+.recordCard h3 {
+  margin: 0.25rem 0 0;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.recordCard p {
+  max-width: 760px;
+  margin: 0.8rem 0 0;
+
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.65;
+}
+
+.recordCard__status {
+  display: flex;
+  align-items: center;
+  align-self: start;
+  gap: 0.45rem;
+
+  color: rgba(104, 231, 241, 0.72);
+
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+
+.recordCard__status span {
+  width: 6px;
+  height: 6px;
+
+  background: #68e7f1;
+  border-radius: 50%;
+  box-shadow: 0 0 9px #68e7f1;
+}
+
+.aboutLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+  gap: clamp(2rem, 5vw, 6rem);
+
+  min-height: 100%;
+  align-items: center;
+}
+
+.aboutProfile__label {
+  color: #ef5459;
+
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+}
+
+.aboutProfile h2 {
+  max-width: 800px;
+  margin: 1rem 0 2rem;
+
+  color: #fcee0a;
+
+  font-size: clamp(2rem, 5vw, 5rem);
+  line-height: 0.94;
+}
+
+.aboutProfile p {
+  max-width: 720px;
+  margin: 0 0 1rem;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  line-height: 1.75;
+}
+
+.systemData {
+  border-top: 1px solid rgba(104, 231, 241, 0.55);
+  border-bottom: 1px solid rgba(104, 231, 241, 0.25);
+}
+
+.systemData__header {
+  padding: 0.8rem 0;
+
+  color: #68e7f1;
+
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+}
+
+.systemData__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 1rem 0;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.systemData__row span {
+  color: rgba(255, 255, 255, 0.35);
+
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.systemData__row strong {
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.contactLayout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
+  gap: clamp(2rem, 6vw, 7rem);
+
+  min-height: 100%;
+  align-items: center;
+}
+
+.contactIntro__status {
+  color: #68e7f1;
+
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+}
+
+.contactIntro h2 {
+  margin: 1rem 0;
+
+  color: #fcee0a;
+
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  line-height: 0.95;
+}
+
+.contactIntro p {
+  max-width: 480px;
+
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.7;
+}
+
+.contactGrid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.contactCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1.25rem;
+
+  color: inherit;
+  text-decoration: none;
+
+  background: rgba(8, 12, 18, 0.64);
+  border: 1px solid rgba(239, 84, 89, 0.26);
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+a.contactCard:hover {
+  transform: translateX(6px);
+
+  background: rgba(104, 231, 241, 0.1);
+  border-color: #68e7f1;
+}
+
+.contactCard--disabled {
+  opacity: 0.55;
+}
+
+.contactCard__index {
+  color: #ef5459;
+
+  font-size: 0.68rem;
+}
+
+.contactCard__label {
+  display: block;
+  margin-bottom: 0.35rem;
+
+  color: rgba(255, 255, 255, 0.35);
+
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.contactCard strong {
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+}
+
+.contactCard__arrow {
+  color: #68e7f1;
+
+  font-size: 1.25rem;
+}
+
+@media (max-width: 800px) {
+  .aboutLayout,
+  .contactLayout {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .recordCard {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .recordCard__status {
+    display: none;
+  }
+
+  .aboutProfile h2 {
+    font-size: clamp(2rem, 11vw, 3.5rem);
+  }
+}
