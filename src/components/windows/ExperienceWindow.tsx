@@ -64,8 +64,8 @@ const records: ExperienceRecord[] = [
       "Documenting design decisions and experimental results for continued research.",
     ],
     technologies: [
-      "IMU",
-      "EMG",
+      "Inertial Measurement Units (IMU)",
+      "Electromyography (EMG)",
       "Feedback Control",
       "Embedded Systems",
       "Wearable Robotics",

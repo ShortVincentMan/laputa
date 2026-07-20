@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-ui: "Rajdhani", sans-serif;
+  --font-display: "Rajdhani", sans-serif;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-weight: 500;
 }
 
 @theme inline {
@@ -24,12 +29,6 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Rajdhani", sans-serif;
-}
-
 @font-face {
   font-family: "Cyberpunk";
   src: url("/assets/fonts/Cyberpunk-Regular.ttf") format("truetype");
@@ -40,22 +39,36 @@ body {
 
 @font-face {
   font-family: "Rajdhani";
-  src: url("/assets/fonts/Rajdhani/Rajdhani-Regular.ttf") format("truetype");
+  src: url("/assets/fonts/Rajdhani/Rajdhani-Regular.ttf")
+    format("truetype");
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Rajdhani";
-  src: url("/assets/fonts/Rajdhani/Rajdhani-Medium.ttf") format("truetype");
+  src: url("/assets/fonts/Rajdhani/Rajdhani-Medium.ttf")
+    format("truetype");
   font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
   font-family: "Rajdhani";
-  src: url("/assets/fonts/Rajdhani/Rajdhani-SemiBold.ttf") format("truetype");
+  src: url("/assets/fonts/Rajdhani/Rajdhani-SemiBold.ttf")
+    format("truetype");
   font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
   font-family: "Rajdhani";
-  src: url("/assets/fonts/Rajdhani/Rajdhani-Bold.ttf") format("truetype");
+  src: url("/assets/fonts/Rajdhani/Rajdhani-Bold.ttf")
+    format("truetype");
   font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
