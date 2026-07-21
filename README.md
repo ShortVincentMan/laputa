@@ -25,18 +25,18 @@ Laputa serves two purposes:
 
 - Animated landing sequence
 - Cyberpunk-inspired Home interface
-- Journal-based Projects screen
+- Journal-based Projects database
 - Journal-based Experience archive
+- Cyberware database for wearable/cybernetic projects
+- Reusable Project Record framework
 - Data-driven project architecture
 - Data-driven experience architecture
-- Reusable project detail framework
 - Keyboard navigation
 - Desktop-first responsive layouts
 
 ## In Progress
 
-- Cyberware-inspired project detail interface
-- Character/About screen
+- Character / About interface
 - Contacts interface
 - Skills interface
 - Resume archive
@@ -44,20 +44,21 @@ Laputa serves two purposes:
 - Music interface
 - Vehicle interface
 - Credits
+- Global UI polish
 
 ---
 
 # Interface Mapping
 
-Each major page recreates the visual language of a specific Cyberpunk 2077 interface.
+Each portfolio section recreates the composition of a specific Cyberpunk 2077 interface.
 
-| Portfolio Section | Reference |
-|-------------------|-----------|
+| Portfolio Section | Cyberpunk Reference |
+| ----------------- | ------------------- |
 | Landing | `landing.webp` |
 | Home | `menu.webp` |
 | Projects | `journal-main.webp` |
 | Experience | `journal-datashards-menu.webp` |
-| Project Detail | `cyberware.webp` |
+| Cyberware | `cyberware.webp` |
 | About | `character-ui.webp` |
 | Skills | `skills.webp` |
 | Contact | `contacts-ui.webp` |
@@ -66,9 +67,9 @@ Each major page recreates the visual language of a specific Cyberpunk 2077 inter
 | Media | `music-ui.webp` |
 | Large Hardware Projects | `vehicle-ui.webp` |
 | Credits | `credits-page.webp` |
-| Patch / News Records | `patches-window.webp` |
+| Patch / News | `patches-window.webp` |
 
-Reference images are used only as visual design guides and are never embedded directly into the website.
+Reference images are used strictly as visual design references and are never embedded directly into the portfolio.
 
 ---
 
@@ -77,11 +78,11 @@ Reference images are used only as visual design guides and are never embedded di
 - Recreate the interface language of Cyberpunk 2077
 - Showcase multidisciplinary engineering work
 - Build reusable UI systems instead of page-specific layouts
-- Prioritize maintainability through data-driven architecture
+- Keep all portfolio content data-driven
 - Support keyboard/controller-style navigation
-- Maintain smooth performance despite complex visual effects
-- Keep layouts responsive while targeting a desktop-first experience
-- Balance visual fidelity with accessibility
+- Prioritize maintainability and scalability
+- Maintain smooth performance despite complex UI
+- Target desktop-first while supporting responsive layouts
 
 ---
 
@@ -98,15 +99,14 @@ styles/
 The project separates:
 
 - Application data
-- Presentation components
+- Reusable interface components
 - Interaction logic
 - Styling
 - Assets
 
-This allows entire interface shells to be reused while only changing the underlying data.
+This architecture allows entire interface shells to be reused while only replacing the underlying data.
 
 ---
-
 # Tech Stack
 
 - Next.js
@@ -119,32 +119,37 @@ This allows entire interface shells to be reused while only changing the underly
 
 # Roadmap
 
-## Phase 1 — Foundation
-- ✅ Landing
-- ✅ Home
-- ✅ Projects
-- ✅ Experience
+## Phase 1 — Foundation ✅
 
-## Phase 2 — Core Systems
-- Cyberware Project Detail
-- Character Screen
-- Contacts Screen
+- Landing
+- Home
+- Projects
+- Experience
+- Cyberware
 
-## Phase 3 — Remaining Interfaces
+## Phase 2 — Core Interfaces
+
+- Character
+- Contacts
 - Skills
-- Resume Archive
+- Resume
+
+## Phase 3 — Supporting Interfaces
+
 - Settings
 - Music
 - Vehicle
 - Credits
 
 ## Phase 4 — Polish
+
 - Cyberpunk cursor system
-- Controller-style navigation improvements
-- Additional interface animations
+- Shared HUD components
+- Additional UI animations
 - Sound design
 - Performance optimization
-- Accessibility refinements
+- Accessibility improvements
+- Pixel-perfect recreation pass
 
 ---
 
@@ -152,18 +157,13 @@ This allows entire interface shells to be reused while only changing the underly
 
 Most engineering portfolios are collections of independent webpages.
 
-Laputa instead treats the portfolio as a persistent operating system.
+Laputa OS instead treats the portfolio as a persistent operating system.
 
-Navigation occurs through immersive interface screens inspired by Cyberpunk 2077 while presenting real engineering work including:
+Projects, research, experience, and technical documentation exist as interconnected systems that visitors explore through immersive interfaces inspired by Cyberpunk 2077.
 
-- Robotics
-- Embedded systems
-- Mechanical design
-- Wearable technology
-- Research
-- Software engineering
+Cyberware is reserved exclusively for wearable and cybernetic engineering projects, while other work is presented through dedicated interface metaphors suited to its content.
 
-Every screen is designed to feel like a functional part of a cohesive system rather than a standalone webpage.
+The long-term goal is to create a portfolio that is as memorable for its engineering and interaction design as it is for the projects it showcases.
 
 ---
 
