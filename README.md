@@ -157,7 +157,7 @@ This architecture allows entire interface shells to be reused while only replaci
 
 Most engineering portfolios are collections of independent webpages.
 
-Laputa OS instead treats the portfolio as a persistent operating system.
+Laputa instead treats the portfolio as a persistent operating system.
 
 Projects, research, experience, and technical documentation exist as interconnected systems that visitors explore through immersive interfaces inspired by Cyberpunk 2077.
 

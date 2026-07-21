@@ -43,10 +43,11 @@ next-env.d.ts
 # local agent instructions
 AGENTS.md
 agents.md
+CLAUDE.md
+claude.mmd
 
 public.zip
 .gitignore
 src.zip
-src/data/projects.ts
-src 2.zip
 public/assets/reference.zip
+
