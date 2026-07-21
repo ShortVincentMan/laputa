@@ -447,10 +447,10 @@
 
 .cpNavHome {
   top: 0;
-  left: clamp(1rem, 4vw, 5rem);
+  left: clamp(2rem, 6.7vw, 8rem);
   bottom: 0;
-  width: clamp(22rem, 31vw, 39rem);
-  padding: clamp(3rem, 7vh, 6.5rem) clamp(1.5rem, 3vw, 3.75rem) clamp(2rem, 5vh, 4.5rem);
+  width: clamp(24rem, 22.5vw, 32rem);
+  padding: clamp(8rem, 24vh, 14rem) clamp(1.5rem, 2vw, 2.75rem) clamp(1.25rem, 3vh, 2.75rem);
 
   background:
     linear-gradient(90deg, rgba(38, 4, 13, 0.94), rgba(31, 4, 12, 0.8) 75%, rgba(31, 4, 12, 0.15));
@@ -461,12 +461,13 @@
 }
 
 .cpNavHome .cpNavHeader {
-  margin-bottom: clamp(2rem, 5vh, 4.5rem);
+  margin-bottom: clamp(2rem, 4.5vh, 3.75rem);
+  transform: translateX(clamp(-4.5rem, -3.5vw, -2rem));
 }
 
 .cpNavHome .cpNavLogo {
   max-width: 100%;
-  font-size: clamp(3.2rem, 5.8vw, 7.5rem);
+  font-size: clamp(2.8rem, 3.6vw, 5rem);
   line-height: 0.8;
 }
 
@@ -476,11 +477,12 @@
 }
 
 .cpNavHome .cpNavList {
-  gap: clamp(0.1rem, 0.45vh, 0.45rem);
+  gap: 0;
 }
 
 .cpNavHome .cpNavItem {
-  min-height: clamp(3rem, 5.3vh, 4.4rem);
+  width: min(100%, 22rem);
+  min-height: clamp(2.5rem, 4.8vh, 3.25rem);
   padding: 0 clamp(0.75rem, 1vw, 1.25rem);
   border-color: transparent;
   transform: none;
@@ -490,28 +492,39 @@
 .cpNavHome .cpNavItem:focus-visible,
 .cpNavHome .cpNavItemActive {
   transform: none;
-  border-color: rgba(88, 242, 250, 0.8);
-  background: linear-gradient(90deg, rgba(25, 155, 166, 0.22), rgba(18, 91, 100, 0.05));
+  color: #f4e700;
+  border-color: rgba(244, 231, 0, 0.86);
+  background: linear-gradient(90deg, rgba(155, 135, 0, 0.2), rgba(80, 68, 0, 0.04));
+  text-shadow: 0 0 8px rgba(244, 231, 0, 0.4);
 }
 
 .cpNavHome .cpNavItemActive::after {
   right: clamp(0.8rem, 1.4vw, 1.6rem);
   width: clamp(1.5rem, 2.2vw, 2.25rem);
   height: 1.2rem;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(244, 231, 0, 0.95) 0,
+      rgba(244, 231, 0, 0.95) 2px,
+      transparent 2px,
+      transparent 4px
+    );
 }
 
 .cpNavHome .cpNavLabel {
-  font-size: clamp(1.45rem, 2.2vw, 2.35rem);
+  font-size: clamp(1.15rem, 1.55vw, 1.95rem);
   letter-spacing: 0.04em;
 }
 
 .cpNavHome .cpNavMeta {
   margin-right: clamp(2.75rem, 4vw, 4.25rem);
-  font-size: clamp(0.68rem, 0.9vw, 0.95rem);
+  font-size: clamp(0.58rem, 0.66vw, 0.75rem);
 }
 
 .cpNavHome .cpNavFooter {
   padding-top: clamp(1.5rem, 3vh, 2.75rem);
+  margin-left: clamp(-1.5rem, -1vw, -0.75rem);
 }
 
 .cpNavHome .cpNavVersion {
@@ -524,13 +537,33 @@
 
 .homeMenuPreview {
   position: absolute;
-  top: 31%;
-  left: clamp(39%, 40vw, 50rem);
-  width: min(30vw, 31rem);
-  min-width: 20rem;
+  top: 40%;
+  left: calc(clamp(2rem, 6.7vw, 8rem) + clamp(24rem, 22.5vw, 32rem) + clamp(1rem, 1.5vw, 2rem));
+  width: min(22vw, 26rem);
+  min-width: 18rem;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.98);
   border: 1px solid rgba(255, 66, 82, 0.8);
   background: rgba(18, 5, 11, 0.78);
   box-shadow: 0 0 30px rgba(255, 30, 50, 0.08);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 1.25rem) 0,
+    100% 1.25rem,
+    100% 100%,
+    0 100%
+  );
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms ease;
+}
+
+.homeMenuPreview--visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .homeMenuPreview__image {
@@ -550,6 +583,20 @@
 .homeMenuPreview__image img {
   object-fit: cover;
   filter: saturate(0.8) contrast(1.05);
+}
+
+.homeMenuPreview__image--placeholder {
+  display: grid;
+  place-items: center;
+  color: rgba(113, 247, 255, 0.5);
+  background:
+    linear-gradient(rgba(255, 45, 72, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 45, 72, 0.08) 1px, transparent 1px),
+    rgba(8, 13, 20, 0.85);
+  background-size: 1.25rem 1.25rem;
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  letter-spacing: 0.1em;
+  text-align: center;
 }
 
 .homeMenuPreview__content {
