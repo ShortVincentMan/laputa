@@ -1,0 +1,326 @@
+.projectDetailFrame .windowFrame__content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.projectDetailBack {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.8rem;
+  color: rgba(255, 255, 255, 0.52);
+  font: inherit;
+  font-size: 0.54rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(237, 76, 85, 0.05);
+  border: 1px solid rgba(237, 76, 85, 0.2);
+  cursor: pointer;
+}
+
+.projectDetailBack span {
+  color: #ed4c55;
+}
+
+.projectDetailBack:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(237, 76, 85, 0.6);
+}
+
+.projectDetail {
+  display: grid;
+  grid-template-columns:
+    minmax(340px, 1fr)
+    minmax(320px, 0.72fr);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background:
+    radial-gradient(
+      circle at 48% 45%,
+      rgba(237, 76, 85, 0.12),
+      transparent 32%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(70, 5, 14, 0.25),
+      transparent 28%
+    );
+}
+
+.projectDetail__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 2rem;
+  overflow: hidden;
+  border-right: 1px solid rgba(237, 76, 85, 0.16);
+}
+
+.projectDetail__stage::before,
+.projectDetail__stage::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.projectDetail__stage::before {
+  inset: 8% 10%;
+  border: 1px solid rgba(237, 76, 85, 0.12);
+  clip-path: polygon(
+    0 12px,
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%
+  );
+}
+
+.projectDetail__stage::after {
+  width: min(70%, 520px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(104, 231, 241, 0.14);
+  border-radius: 50%;
+  box-shadow: 0 0 70px rgba(104, 231, 241, 0.05);
+}
+
+.projectDetail__scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 5px,
+    rgba(255, 255, 255, 0.012) 6px
+  );
+  pointer-events: none;
+}
+
+.projectDetail__stageLabel {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.4rem;
+  z-index: 2;
+  color: #ed4c55;
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.projectDetail__heroAsset {
+  position: relative;
+  z-index: 1;
+  width: min(82%, 650px);
+  min-height: min(58vh, 560px);
+  background: rgba(4, 7, 10, 0.3);
+}
+
+.projectDetail__heroAsset--image {
+  overflow: hidden;
+  border: 1px solid rgba(237, 76, 85, 0.18);
+}
+
+.projectDetail__heroAsset--image img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.projectDetail__coordinates {
+  position: absolute;
+  right: 1.4rem;
+  bottom: 1.2rem;
+  left: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: rgba(104, 231, 241, 0.48);
+  font-size: 0.47rem;
+  letter-spacing: 0.11em;
+}
+
+.projectDetail__specs {
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(1.3rem, 2.4vw, 2.3rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color:
+    rgba(237, 76, 85, 0.35)
+    transparent;
+}
+
+.projectDetail__specs header {
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid rgba(237, 76, 85, 0.2);
+}
+
+.projectDetail__specs header > span {
+  color: #68e7f1;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+}
+
+.projectDetail__specs h2 {
+  margin: 0.6rem 0 0;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: clamp(1.8rem, 3vw, 3.4rem);
+  font-weight: 600;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.projectDetail__specs header p,
+.projectDetail__specs section p {
+  margin: 0.8rem 0 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.projectDetail__specs section {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid rgba(237, 76, 85, 0.12);
+}
+
+.projectDetail__sectionNumber {
+  color: #ed4c55;
+  font-size: 0.52rem;
+}
+
+.projectDetail__specs h3 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.62rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.projectDetail__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.projectDetail__tech span {
+  padding: 0.42rem 0.55rem;
+  color: rgba(255, 255, 255, 0.54);
+  border: 1px solid rgba(237, 76, 85, 0.2);
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.projectDetail__sectionImage {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  margin-top: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(237, 76, 85, 0.18);
+  background: rgba(5, 7, 10, 0.5);
+}
+
+.projectDetail__sectionImage img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.projectDetail__mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.8rem;
+}
+
+.projectDetail__mediaGrid figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.projectDetail__mediaImage {
+  position: relative;
+  min-height: 140px;
+  overflow: hidden;
+  border: 1px solid rgba(237, 76, 85, 0.18);
+  background: rgba(5, 7, 10, 0.5);
+}
+
+.projectDetail__mediaImage img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.projectDetail__mediaGrid figcaption {
+  margin-top: 0.45rem;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.5rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.projectDetail__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.projectDetail__links a {
+  padding: 0.5rem 0.7rem;
+  color: rgba(255, 255, 255, 0.56);
+  border: 1px solid rgba(237, 76, 85, 0.25);
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.projectDetail__links a:hover {
+  color: white;
+  border-color: rgba(237, 76, 85, 0.65);
+}
+
+@media (max-width: 1050px) {
+  .projectDetail {
+    grid-template-columns: minmax(0, 1fr);
+    overflow-y: auto;
+  }
+
+  .projectDetail__stage {
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(237, 76, 85, 0.18);
+  }
+
+  .projectDetail__specs {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 700px) {
+  .projectDetail__stage {
+    min-height: 420px;
+    padding: 1rem;
+  }
+
+  .projectDetail__heroAsset {
+    width: 92%;
+    min-height: 330px;
+  }
+
+  .projectDetail__mediaGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .projectDetail__coordinates {
+    display: none;
+  }
+}
