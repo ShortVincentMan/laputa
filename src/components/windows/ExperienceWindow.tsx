@@ -16,48 +16,76 @@ type ExperienceWindowProps = {
 };
 
 export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
-  const [activeCategory, setActiveCategory] =
+  const [focusedCategory, setFocusedCategory] =
     useState<ExperienceCategory>("experience");
-  const initialRecord = getExperienceRecords("experience")[0];
-  const [selectedId, setSelectedId] = useState(initialRecord?.id ?? "");
+  const [openCategories, setOpenCategories] = useState<Set<ExperienceCategory>>(
+    () => new Set()
+  );
+  const [selectedId, setSelectedId] = useState("");
 
   const visibleRecords = useMemo(
-    () => getExperienceRecords(activeCategory),
-    [activeCategory]
+    () =>
+      experienceCategoryOrder.flatMap((category) =>
+        openCategories.has(category) ? getExperienceRecords(category) : []
+      ),
+    [openCategories]
   );
 
   const selectedRecord =
-    visibleRecords.find((record) => record.id === selectedId) ??
-    visibleRecords[0];
+    visibleRecords.find((record) => record.id === selectedId) ?? null;
 
-  const selectCategory = useCallback((category: ExperienceCategory) => {
-    const nextRecords = getExperienceRecords(category);
-    setActiveCategory(category);
-    setSelectedId(nextRecords[0]?.id ?? "");
+  const toggleCategory = useCallback((category: ExperienceCategory) => {
+    setFocusedCategory(category);
+    setOpenCategories((current) => {
+      const next = new Set(current);
+
+      if (next.has(category)) {
+        next.delete(category);
+
+        setSelectedId((currentSelectedId) => {
+          const belongsToClosedCategory = getExperienceRecords(category).some(
+            (record) => record.id === currentSelectedId
+          );
+          return belongsToClosedCategory ? "" : currentSelectedId;
+        });
+      } else {
+        next.add(category);
+      }
+
+      return next;
+    });
   }, []);
 
   const moveCategory = useCallback(
     (direction: 1 | -1) => {
-      const index = experienceCategoryOrder.indexOf(activeCategory);
+      const index = experienceCategoryOrder.indexOf(focusedCategory);
       const nextIndex =
         (index + direction + experienceCategoryOrder.length) %
         experienceCategoryOrder.length;
-      selectCategory(experienceCategoryOrder[nextIndex]);
+      setFocusedCategory(experienceCategoryOrder[nextIndex]);
     },
-    [activeCategory, selectCategory]
+    [focusedCategory]
   );
 
   const moveSelection = useCallback(
     (direction: 1 | -1) => {
-      if (!selectedRecord || visibleRecords.length === 0) return;
+      if (visibleRecords.length === 0) return;
+
       const index = visibleRecords.findIndex(
-        (record) => record.id === selectedRecord.id
+        (record) => record.id === selectedId
       );
       const nextIndex =
-        (index + direction + visibleRecords.length) % visibleRecords.length;
-      setSelectedId(visibleRecords[nextIndex].id);
+        index === -1
+          ? direction === 1
+            ? 0
+            : visibleRecords.length - 1
+          : (index + direction + visibleRecords.length) % visibleRecords.length;
+
+      const nextRecord = visibleRecords[nextIndex];
+      setSelectedId(nextRecord.id);
+      setFocusedCategory(nextRecord.category);
     },
-    [selectedRecord, visibleRecords]
+    [selectedId, visibleRecords]
   );
 
   useEffect(() => {
@@ -88,10 +116,17 @@ export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
           event.preventDefault();
           moveCategory(1);
           break;
+        case " ":
+          event.preventDefault();
+          toggleCategory(focusedCategory);
+          break;
         case "Enter":
           if (selectedRecord?.link) {
             event.preventDefault();
             window.open(selectedRecord.link.href, "_blank", "noopener,noreferrer");
+          } else {
+            event.preventDefault();
+            toggleCategory(focusedCategory);
           }
           break;
         case "Escape":
@@ -103,7 +138,14 @@ export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [moveCategory, moveSelection, onClose, selectedRecord]);
+  }, [
+    focusedCategory,
+    moveCategory,
+    moveSelection,
+    onClose,
+    selectedRecord,
+    toggleCategory,
+  ]);
 
   return (
     <section
@@ -118,11 +160,11 @@ export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
         <div className="experienceHud__identity">
           <div>
             <strong>{String(visibleRecords.length).padStart(2, "0")}</strong>
-            <span>RECORDS</span>
+            <span>VISIBLE</span>
           </div>
           <div>
-            <strong>{String(experienceCategoryOrder.length).padStart(2, "0")}</strong>
-            <span>ARCHIVES</span>
+            <strong>{String(openCategories.size).padStart(2, "0")}</strong>
+            <span>OPEN</span>
           </div>
         </div>
 
@@ -144,55 +186,77 @@ export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
         <aside className="experienceIndex" aria-label="Experience categories">
           {experienceCategoryOrder.map((category) => {
             const records = getExperienceRecords(category);
-            const active = activeCategory === category;
+            const isOpen = openCategories.has(category);
+            const isFocused = focusedCategory === category;
 
             return (
-              <div key={category} className="experienceIndex__group">
+              <div
+                key={category}
+                className={
+                  isOpen
+                    ? "experienceIndex__group is-open"
+                    : "experienceIndex__group"
+                }
+              >
                 <button
                   type="button"
-                  className={
-                    active
-                      ? "experienceIndex__category is-active"
-                      : "experienceIndex__category"
-                  }
-                  onClick={() => selectCategory(category)}
-                  aria-expanded={active}
+                  className={[
+                    "experienceIndex__category",
+                    isOpen ? "is-active" : "",
+                    isFocused ? "is-focused" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  onClick={() => toggleCategory(category)}
+                  onFocus={() => setFocusedCategory(category)}
+                  aria-expanded={isOpen}
+                  aria-controls={`experience-drawer-${category}`}
                 >
                   <span>{experienceCategoryLabels[category]}</span>
                   <small>({String(records.length).padStart(2, "0")})</small>
-                  <b aria-hidden="true">{active ? "▽" : "▷"}</b>
+                  <b aria-hidden="true">▷</b>
                 </button>
 
-                {active && (
-                  <div className="experienceIndex__records">
-                    {records.map((record) => {
-                      const selected = selectedRecord?.id === record.id;
+                <div
+                  id={`experience-drawer-${category}`}
+                  className="experienceIndex__drawer"
+                  aria-hidden={!isOpen}
+                >
+                  <div className="experienceIndex__drawerInner">
+                    <div className="experienceIndex__records">
+                      {records.map((record) => {
+                        const selected = selectedRecord?.id === record.id;
 
-                      return (
-                        <button
-                          key={record.id}
-                          type="button"
-                          className={
-                            selected
-                              ? "experienceIndex__record is-selected"
-                              : "experienceIndex__record"
-                          }
-                          onClick={() => setSelectedId(record.id)}
-                          aria-pressed={selected}
-                        >
-                          <strong>{record.title}</strong>
-                          <span>{record.organization}</span>
-                        </button>
-                      );
-                    })}
+                        return (
+                          <button
+                            key={record.id}
+                            type="button"
+                            className={
+                              selected
+                                ? "experienceIndex__record is-selected"
+                                : "experienceIndex__record"
+                            }
+                            onClick={() => {
+                              setFocusedCategory(category);
+                              setSelectedId(record.id);
+                            }}
+                            aria-pressed={selected}
+                            tabIndex={isOpen ? 0 : -1}
+                          >
+                            <strong>{record.title}</strong>
+                            <span>{record.organization}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
         </aside>
 
-        {selectedRecord && (
+        {selectedRecord ? (
           <article className="experienceDocument" key={selectedRecord.id}>
             <header className="experienceDocument__header">
               <span>{selectedRecord.status ?? "ARCHIVED"}</span>
@@ -236,13 +300,18 @@ export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
               </a>
             )}
           </article>
+        ) : (
+          <div className="experienceDocument experienceDocument--empty">
+            <span>NO DATASHARD SELECTED</span>
+            <p>Open an archive drawer and select a record.</p>
+          </div>
         )}
       </div>
 
       <footer className="experienceControls">
         <div><span>↑ ↓</span>Navigate</div>
         <div><span>← →</span>Category</div>
-        <div><span>ENTER</span>Open link</div>
+        <div><span>SPACE</span>Open link</div>
         <button type="button" onClick={onClose}><span>ESC</span>Close</button>
       </footer>
     </section>

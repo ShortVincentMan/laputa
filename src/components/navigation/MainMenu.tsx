@@ -386,7 +386,7 @@ export default function MainMenu({
 
       <footer className="cpNavFooter">
         <span className="cpNavVersion">
-          BUILD 01.00
+          Welcome V // LAPUTA OS // BUILD 01.00
         </span>
 
         <strong className="cpNavUser">
