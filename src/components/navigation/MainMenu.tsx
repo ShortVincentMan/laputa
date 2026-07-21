@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,7 +15,8 @@ export type WindowType =
   | "projects"
   | "experience"
   | "about"
-  | "contact";
+  | "contact"
+  | "credits";
 
 type MainMenuProps = {
   variant?: "home" | "drawer";
@@ -43,6 +45,10 @@ const homeNavItems: {
   {
     label: "CONTACT",
     window: "contact",
+  },
+  {
+    label: "CREDITS",
+    window: "credits",
   },
 ];
 
@@ -325,12 +331,48 @@ export default function MainMenu({
 
   if (isHomeVariant) {
     return (
-      <aside
-        className="cpNav cpNavHome"
-        aria-label="Main menu"
-      >
-        {menuContent}
-      </aside>
+      <div className="cpNavHomeShell">
+        <aside
+          className="cpNav cpNavHome"
+          aria-label="Main menu"
+        >
+          {menuContent}
+        </aside>
+
+        <section
+          className="homeMenuPreview"
+          aria-label="Featured portfolio record"
+        >
+          <div className="homeMenuPreview__image">
+            <Image
+              src="/assets/projects/mantis-blades/hero.jpeg"
+              alt="Mantis Blades wearable robotic mechanism"
+              fill
+              sizes="(max-width: 900px) 0px, 30vw"
+            />
+          </div>
+
+          <div className="homeMenuPreview__content">
+            <span>FEATURED RECORD // 01</span>
+            <strong>MANTIS BLADES</strong>
+            <small>WEARABLE ROBOTIC MECHANISM</small>
+            <div>
+              <span>COMPLETED PROTOTYPE</span>
+              <span>2024 — 2025</span>
+            </div>
+          </div>
+        </section>
+
+        <div className="homeMenuHud homeMenuHud--top" aria-hidden="true">
+          <span>PORTFOLIO BUILD 01.00</span>
+          <strong>LAPUTA OS // ONLINE</strong>
+        </div>
+
+        <div className="homeMenuHud homeMenuHud--bottom" aria-hidden="true">
+          <span><b>ENTER</b> Select</span>
+          <span><b>ESC</b> Close</span>
+        </div>
+      </div>
     );
   }
 

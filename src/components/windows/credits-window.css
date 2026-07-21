@@ -1,0 +1,100 @@
+.creditsFrame .windowFrame__content {
+  overflow: auto;
+}
+
+.creditsInterface {
+  min-height: 100%;
+  padding: clamp(1.25rem, 3vw, 3.5rem);
+  color: rgba(241, 241, 230, 0.86);
+}
+
+.creditsInterface__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 66, 82, 0.6);
+}
+
+.creditsInterface__header span,
+.creditsInterface__header strong {
+  color: rgba(255, 91, 101, 0.8);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.creditsInterface__header strong {
+  color: #71f7ff;
+  font-size: clamp(1.1rem, 2vw, 1.8rem);
+  font-weight: 500;
+  text-align: right;
+}
+
+.creditsInterface__intro {
+  max-width: 58rem;
+  margin: clamp(2rem, 5vw, 5rem) auto;
+  color: rgba(241, 241, 230, 0.68);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  line-height: 1.6;
+}
+
+.creditsInterface__groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+  max-width: 75rem;
+  margin: 0 auto;
+}
+
+.creditsGroup {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 2rem);
+  border: 1px solid rgba(255, 66, 82, 0.55);
+  background: rgba(14, 8, 18, 0.5);
+  clip-path: polygon(0 0, calc(100% - 1.25rem) 0, 100% 1.25rem, 100% 100%, 0 100%);
+}
+
+.creditsGroup__number {
+  color: #f4e700;
+  font-size: 1.35rem;
+}
+
+.creditsGroup h2 {
+  margin: 0 0 1rem;
+  color: #71f7ff;
+  font-size: clamp(1rem, 1.5vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.creditsGroup ul {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.creditsGroup li {
+  color: rgba(241, 241, 230, 0.72);
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+  line-height: 1.45;
+}
+
+@media (max-width: 700px) {
+  .creditsInterface__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .creditsInterface__header strong {
+    text-align: left;
+  }
+
+  .creditsInterface__groups {
+    grid-template-columns: 1fr;
+  }
+}

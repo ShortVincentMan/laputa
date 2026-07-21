@@ -7,16 +7,12 @@ import MainMenu from "@/components/navigation/MainMenu";
 import ProjectsWindow from "@/components/projects/ProjectsWindow";
 import AboutWindow from "@/components/windows/AboutWindow";
 import ContactWindow from "@/components/windows/ContactWindow";
+import CreditsWindow from "@/components/windows/CreditsWindow";
 import ExperienceWindow from "@/components/windows/ExperienceWindow";
 import TimePanel from "@/components/shared/TimePanel";
+import type { WindowType } from "@/components/navigation/MainMenu";
 
 import styles from "./home.module.css";
-
-type WindowType =
-  | "projects"
-  | "experience"
-  | "about"
-  | "contact";
 
 export default function HomePage() {
   const [activeWindow, setActiveWindow] =
@@ -54,6 +50,10 @@ export default function HomePage() {
 
           {activeWindow === "contact" && (
             <ContactWindow onClose={closeWindow} />
+          )}
+
+          {activeWindow === "credits" && (
+            <CreditsWindow onClose={closeWindow} />
           )}
         </div>
       )}

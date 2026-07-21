@@ -39,6 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local agent instructions
+AGENTS.md
+agents.md
+
 public.zip
 .gitignore
 src.zip
