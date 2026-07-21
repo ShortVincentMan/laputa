@@ -1,358 +1,60 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import WindowFrame from "./WindowFrame";
+import {
+  experienceCategoryLabels,
+  experienceCategoryOrder,
+  getExperienceRecords,
+  type ExperienceCategory,
+} from "@/data/experience";
+
 import "./experience-window.css";
 
 type ExperienceWindowProps = {
   onClose: () => void;
 };
 
-type ExperienceCategory =
-  | "experience"
-  | "education"
-  | "achievements";
-
-type ExperienceRecord = {
-  id: string;
-  category: ExperienceCategory;
-  title: string;
-  organization: string;
-  period: string;
-  location?: string;
-  status?: "ACTIVE" | "COMPLETED";
-  description: string;
-  details?: string[];
-  technologies?: string[];
-  link?: {
-    label: string;
-    href: string;
-  };
-};
-
-const categoryLabels: Record<
-  ExperienceCategory,
-  string
-> = {
-  experience: "Experience",
-  education: "Education",
-  achievements: "Achievements",
-};
-
-const records: ExperienceRecord[] = [
-  {
-    id: "cal-poly-research",
-    category: "experience",
-    title: "Undergraduate Student Researcher",
-    organization:
-      "California Polytechnic State University",
-    period: "JUN 2026 — PRESENT",
-    location: "San Luis Obispo, CA",
-    status: "ACTIVE",
-    description:
-      "Researching feedback control of an upper-limb tensegrity exoskeleton for wearable rehabilitation and motion-assistance applications.",
-    details: [
-      "Integrating IMU-based motion tracking into the exoskeleton control architecture.",
-      "Evaluating muscle activity through EMG sensing and signal analysis.",
-      "Supporting sensor selection, electronics design, testing, and iterative prototype refinement.",
-      "Documenting design decisions and experimental results for continued research.",
-    ],
-    technologies: [
-      "Inertial Measurement Units (IMU)",
-      "Electromyography (EMG)",
-      "Feedback Control",
-      "Embedded Systems",
-      "Wearable Robotics",
-    ],
-  },
-  {
-    id: "hack4impact-operations",
-    category: "experience",
-    title: "Director of Finance and Operations",
-    organization: "Hack4Impact Cal Poly",
-    period: "MAY 2026 — PRESENT",
-    location: "San Luis Obispo, CA",
-    status: "ACTIVE",
-    description:
-      "Managing organizational operations, financial planning, and internal processes for a student software organization building technology for nonprofit partners.",
-    details: [
-      "Coordinate financial planning and operational logistics.",
-      "Support project teams and organization-wide initiatives.",
-      "Continue contributing technical experience from the software engineering team.",
-    ],
-    technologies: [
-      "Operations",
-      "Finance",
-      "Leadership",
-      "Project Management",
-    ],
-  },
-  {
-    id: "hack4impact-engineer",
-    category: "experience",
-    title: "Software Engineer",
-    organization: "Hack4Impact Cal Poly",
-    period: "NOV 2025 — PRESENT",
-    location: "San Luis Obispo, CA",
-    status: "ACTIVE",
-    description:
-      "Building a STEM learning platform for Kids First Initiative, designed to expand access to educational content for underserved students.",
-    details: [
-      "Shipped features across gameplay, interface design, and backend systems.",
-      "Built an end-to-end cloud save system connecting Unity game progress to MongoDB.",
-      "Worked across Unity, C#, Next.js, and MongoDB.",
-      "Contributed to a platform targeting more than 1,000 students.",
-    ],
-    technologies: [
-      "Unity",
-      "C#",
-      "Next.js",
-      "MongoDB",
-      "Full-Stack Development",
-    ],
-    link: {
-      label: "Open project site",
-      href: "https://kids-first-initiative-site.vercel.app/",
-    },
-  },
-  {
-    id: "cal-poly-racing",
-    category: "experience",
-    title: "Firmware Developer",
-    organization: "Cal Poly Racing",
-    period: "SEP 2025 — PRESENT",
-    location: "San Luis Obispo, CA",
-    status: "ACTIVE",
-    description:
-      "Developing embedded firmware and validating electronics for Cal Poly's electric Formula SAE race car.",
-    details: [
-      "Develop embedded C++ firmware for vehicle systems.",
-      "Work with CAN bus communication between electronic control modules.",
-      "Use FreeRTOS task scheduling for real-time embedded behavior.",
-      "Assist with soldering, board validation, and electronics integration.",
-    ],
-    technologies: [
-      "Embedded C++",
-      "CAN Bus",
-      "FreeRTOS",
-      "PCB Validation",
-      "Soldering",
-    ],
-  },
-  {
-    id: "level-up-msp",
-    category: "experience",
-    title: "Technical Support Intern",
-    organization: "Level Up MSP",
-    period: "JUN 2024 — AUG 2025",
-    location: "San Jose, CA",
-    status: "COMPLETED",
-    description:
-      "Provided IT engineering and technical support for local businesses across infrastructure, troubleshooting, onboarding, and documentation.",
-    details: [
-      "Configured computers, networks, accounts, and business systems.",
-      "Diagnosed recurring Windows failures and hardware issues.",
-      "Maintained backup servers and supported employee onboarding.",
-      "Migrated company documentation from ITGlue to PerfectWiki.",
-      "Developed automation for documentation-transfer workflows.",
-    ],
-    technologies: [
-      "Windows",
-      "Networking",
-      "ITGlue",
-      "PerfectWiki",
-      "Automation",
-    ],
-  },
-  {
-    id: "pilotcity-mentor",
-    category: "experience",
-    title: "Engineering Mentor",
-    organization: "PilotCity",
-    period: "JUN 2025 — AUG 2025",
-    location: "Bay Area, CA",
-    status: "COMPLETED",
-    description:
-      "Mentored high school students through engineering projects, internship preparation, and technical presentations.",
-    details: [
-      "Provided technical guidance and project-management support.",
-      "Coached students in developing and pitching engineering concepts.",
-      "Provided college, career, and internship guidance.",
-    ],
-    technologies: [
-      "Mentorship",
-      "Engineering Design",
-      "Project Management",
-      "Technical Communication",
-    ],
-  },
-  {
-    id: "pilotcity-intern",
-    category: "experience",
-    title: "Project Development Intern",
-    organization: "PilotCity",
-    period: "MAY 2024 — AUG 2024",
-    location: "San Leandro, CA",
-    status: "COMPLETED",
-    description:
-      "Developed engineering concepts and gained experience in product design, technical communication, and project execution.",
-    details: [
-      "Worked on engineering and product-development initiatives.",
-      "Developed project concepts and technical presentations.",
-      "Collaborated with mentors and other student engineers.",
-    ],
-    technologies: [
-      "Product Development",
-      "Engineering Design",
-      "Prototyping",
-    ],
-  },
-  {
-    id: "cal-poly-education",
-    category: "education",
-    title: "B.S. Computer Engineering",
-    organization:
-      "California Polytechnic State University",
-    period: "2025 — 2029",
-    location: "San Luis Obispo, CA",
-    status: "ACTIVE",
-    description:
-      "Pursuing a Bachelor of Science in Computer Engineering with an emphasis on embedded systems, computer architecture, electronics, and software development.",
-    details: [
-      "Current GPA: 3.83.",
-      "Named to the 2025–2026 President's List.",
-      "Coursework includes Data Structures and Algorithms, Computer Organization, and Linear Analysis.",
-      "Active in Hack4Impact, Cal Poly Racing, Nikkei Student Union, VSA, and Lion Dance.",
-    ],
-    technologies: [
-      "Computer Engineering",
-      "Embedded Systems",
-      "Software",
-      "Electronics",
-    ],
-  },
-  {
-    id: "irvington-education",
-    category: "education",
-    title: "High School Diploma",
-    organization: "Irvington High School",
-    period: "2021 — 2025",
-    location: "Fremont, CA",
-    status: "COMPLETED",
-    description:
-      "Completed high school with a focus on engineering, athletics, leadership, and community involvement.",
-    details: [
-      "Graduated with a 3.89 GPA.",
-      "Founded and led the Hardware & Technology Club.",
-      "Served as varsity wrestling captain.",
-      "Competed in wrestling, track and field, and cross country.",
-    ],
-    technologies: [
-      "Leadership",
-      "Engineering",
-      "Athletics",
-      "Community Service",
-    ],
-  },
-  {
-    id: "presidents-list",
-    category: "achievements",
-    title: "President's List",
-    organization:
-      "California Polytechnic State University",
-    period: "2025 — 2026",
-    status: "COMPLETED",
-    description:
-      "Recognized for high academic performance during the 2025–2026 academic year.",
-    details: [
-      "Maintained a 3.83 cumulative GPA.",
-      "Completed first-year Computer Engineering coursework while participating in technical organizations.",
-    ],
-  },
-  {
-    id: "pge-scholarship",
-    category: "achievements",
-    title: "Better Together STEM Scholarship",
-    organization: "PG&E Corporation Foundation",
-    period: "MAY 2025",
-    status: "COMPLETED",
-    description:
-      "Awarded for academic performance, leadership, community involvement, and pursuit of a STEM discipline.",
-  },
-  {
-    id: "nahas-scholarship",
-    category: "achievements",
-    title: "Robert T. Nahas Family Scholarship",
-    organization:
-      "Oakland-Alameda County Coliseum Foundation",
-    period: "JUN 2025",
-    status: "COMPLETED",
-    description:
-      "Awarded based on academics, community service, and participation in competitive school athletics.",
-  },
-];
-
-export default function ExperienceWindow({
-  onClose,
-}: ExperienceWindowProps) {
+export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
   const [activeCategory, setActiveCategory] =
     useState<ExperienceCategory>("experience");
+  const initialRecord = getExperienceRecords("experience")[0];
+  const [selectedId, setSelectedId] = useState(initialRecord?.id ?? "");
 
   const visibleRecords = useMemo(
-    () =>
-      records.filter(
-        (record) =>
-          record.category === activeCategory
-      ),
+    () => getExperienceRecords(activeCategory),
     [activeCategory]
   );
 
-  const [selectedId, setSelectedId] =
-    useState<string>(visibleRecords[0]?.id ?? "");
-
   const selectedRecord =
-    visibleRecords.find(
-      (record) => record.id === selectedId
-    ) ?? visibleRecords[0];
+    visibleRecords.find((record) => record.id === selectedId) ??
+    visibleRecords[0];
 
-  const selectCategory = useCallback(
-    (category: ExperienceCategory) => {
-      const firstRecord = records.find(
-        (record) => record.category === category
-      );
+  const selectCategory = useCallback((category: ExperienceCategory) => {
+    const nextRecords = getExperienceRecords(category);
+    setActiveCategory(category);
+    setSelectedId(nextRecords[0]?.id ?? "");
+  }, []);
 
-      setActiveCategory(category);
-      setSelectedId(firstRecord?.id ?? "");
+  const moveCategory = useCallback(
+    (direction: 1 | -1) => {
+      const index = experienceCategoryOrder.indexOf(activeCategory);
+      const nextIndex =
+        (index + direction + experienceCategoryOrder.length) %
+        experienceCategoryOrder.length;
+      selectCategory(experienceCategoryOrder[nextIndex]);
     },
-    []
+    [activeCategory, selectCategory]
   );
 
   const moveSelection = useCallback(
     (direction: 1 | -1) => {
-      if (!selectedRecord) {
-        return;
-      }
-
-      const currentIndex = visibleRecords.findIndex(
+      if (!selectedRecord || visibleRecords.length === 0) return;
+      const index = visibleRecords.findIndex(
         (record) => record.id === selectedRecord.id
       );
-
-      if (currentIndex === -1) {
-        return;
-      }
-
       const nextIndex =
-        (currentIndex +
-          direction +
-          visibleRecords.length) %
-        visibleRecords.length;
-
+        (index + direction + visibleRecords.length) % visibleRecords.length;
       setSelectedId(visibleRecords[nextIndex].id);
     },
     [selectedRecord, visibleRecords]
@@ -361,7 +63,6 @@ export default function ExperienceWindow({
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       const target = event.target;
-
       if (
         target instanceof HTMLInputElement ||
         target instanceof HTMLTextAreaElement ||
@@ -370,335 +71,180 @@ export default function ExperienceWindow({
         return;
       }
 
-      if (
-        event.key === "ArrowDown" ||
-        event.key.toLowerCase() === "s"
-      ) {
-        event.preventDefault();
-        moveSelection(1);
-      }
-
-      if (
-        event.key === "ArrowUp" ||
-        event.key.toLowerCase() === "w"
-      ) {
-        event.preventDefault();
-        moveSelection(-1);
-      }
-
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-
-        const order: ExperienceCategory[] = [
-          "experience",
-          "education",
-          "achievements",
-        ];
-
-        const currentIndex =
-          order.indexOf(activeCategory);
-
-        selectCategory(
-          order[
-            (currentIndex - 1 + order.length) %
-              order.length
-          ]
-        );
-      }
-
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-
-        const order: ExperienceCategory[] = [
-          "experience",
-          "education",
-          "achievements",
-        ];
-
-        const currentIndex =
-          order.indexOf(activeCategory);
-
-        selectCategory(
-          order[(currentIndex + 1) % order.length]
-        );
+      switch (event.key) {
+        case "ArrowDown":
+          event.preventDefault();
+          moveSelection(1);
+          break;
+        case "ArrowUp":
+          event.preventDefault();
+          moveSelection(-1);
+          break;
+        case "ArrowLeft":
+          event.preventDefault();
+          moveCategory(-1);
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          moveCategory(1);
+          break;
+        case "Enter":
+          if (selectedRecord?.link) {
+            event.preventDefault();
+            window.open(selectedRecord.link.href, "_blank", "noopener,noreferrer");
+          }
+          break;
+        case "Escape":
+          event.preventDefault();
+          onClose();
+          break;
       }
     }
 
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
-
-    return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-    };
-  }, [
-    activeCategory,
-    moveSelection,
-    selectCategory,
-  ]);
-
-  const tabs = (
-    <div className="experienceTabs">
-      {(
-        Object.keys(
-          categoryLabels
-        ) as ExperienceCategory[]
-      ).map((category) => (
-        <button
-          key={category}
-          type="button"
-          className={
-            activeCategory === category
-              ? "experienceTabs__button experienceTabs__button--active"
-              : "experienceTabs__button"
-          }
-          onClick={() => selectCategory(category)}
-        >
-          <span>
-            {String(
-              records.filter(
-                (record) =>
-                  record.category === category
-              ).length
-            ).padStart(2, "0")}
-          </span>
-
-          {categoryLabels[category]}
-        </button>
-      ))}
-    </div>
-  );
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [moveCategory, moveSelection, onClose, selectedRecord]);
 
   return (
-    <WindowFrame
-      title="Experience"
-      subtitle="Personnel archive // operational history"
-      tabs={tabs}
-      footer={`${visibleRecords.length} ${categoryLabels[
-        activeCategory
-      ].toLowerCase()} records loaded`}
-      className="experienceFrame"
-      onClose={onClose}
+    <section
+      className="experienceScreen"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Experience archive"
     >
-      <div className="experienceInterface">
-        <aside
-          className="experienceList"
-          aria-label={`${categoryLabels[activeCategory]} records`}
-        >
-          <header className="experienceList__header">
-            <div>
-              <span>DATABASE INDEX</span>
-              <strong>
-                {categoryLabels[activeCategory]}
-              </strong>
-            </div>
+      <div className="experienceScreen__scanlines" aria-hidden="true" />
 
-            <span>
-              {String(visibleRecords.length).padStart(
-                2,
-                "0"
-              )}
-            </span>
-          </header>
+      <header className="experienceHud">
+        <div className="experienceHud__identity">
+          <div>
+            <strong>{String(visibleRecords.length).padStart(2, "0")}</strong>
+            <span>RECORDS</span>
+          </div>
+          <div>
+            <strong>{String(experienceCategoryOrder.length).padStart(2, "0")}</strong>
+            <span>ARCHIVES</span>
+          </div>
+        </div>
 
-          <div className="experienceList__records">
-            {visibleRecords.map((record, index) => {
-              const isSelected =
-                selectedRecord?.id === record.id;
+        <nav className="experienceHud__nav" aria-label="Portfolio sections">
+          <span>CYBERWARE</span>
+          <span>INVENTORY</span>
+          <span>MAP</span>
+          <span>CHARACTER</span>
+          <strong>JOURNAL</strong>
+        </nav>
 
-              return (
+        <div className="experienceHud__status">
+          <span>LAPUTA OS</span>
+          <strong>PERSONNEL ARCHIVE</strong>
+        </div>
+      </header>
+
+      <div className="experienceArchive">
+        <aside className="experienceIndex" aria-label="Experience categories">
+          {experienceCategoryOrder.map((category) => {
+            const records = getExperienceRecords(category);
+            const active = activeCategory === category;
+
+            return (
+              <div key={category} className="experienceIndex__group">
                 <button
-                  key={record.id}
                   type="button"
                   className={
-                    isSelected
-                      ? "experienceRecord experienceRecord--selected"
-                      : "experienceRecord"
+                    active
+                      ? "experienceIndex__category is-active"
+                      : "experienceIndex__category"
                   }
-                  onClick={() =>
-                    setSelectedId(record.id)
-                  }
-                  aria-pressed={isSelected}
+                  onClick={() => selectCategory(category)}
+                  aria-expanded={active}
                 >
-                  <span className="experienceRecord__index">
-                    {String(index + 1).padStart(
-                      2,
-                      "0"
-                    )}
-                  </span>
-
-                  <span className="experienceRecord__text">
-                    <strong>{record.title}</strong>
-                    <span>{record.organization}</span>
-                  </span>
-
-                  <span className="experienceRecord__marker">
-                    {isSelected ? "◆" : "◇"}
-                  </span>
+                  <span>{experienceCategoryLabels[category]}</span>
+                  <small>({String(records.length).padStart(2, "0")})</small>
+                  <b aria-hidden="true">{active ? "▽" : "▷"}</b>
                 </button>
-              );
-            })}
-          </div>
 
-          <footer className="experienceList__footer">
-            <span>W/S</span>
-            Navigate records
-          </footer>
+                {active && (
+                  <div className="experienceIndex__records">
+                    {records.map((record) => {
+                      const selected = selectedRecord?.id === record.id;
+
+                      return (
+                        <button
+                          key={record.id}
+                          type="button"
+                          className={
+                            selected
+                              ? "experienceIndex__record is-selected"
+                              : "experienceIndex__record"
+                          }
+                          onClick={() => setSelectedId(record.id)}
+                          aria-pressed={selected}
+                        >
+                          <strong>{record.title}</strong>
+                          <span>{record.organization}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </aside>
 
         {selectedRecord && (
-          <article
-            className="experienceDetails"
-            key={selectedRecord.id}
-          >
-            <header className="experienceDetails__header">
-              <div className="experienceDetails__identity">
-                <span className="experienceDetails__eyebrow">
-                  SELECTED RECORD //{" "}
-                  {selectedRecord.period}
-                </span>
-
-                <h2>{selectedRecord.title}</h2>
-
-                <h3>
-                  {selectedRecord.organization}
-                </h3>
-              </div>
-
-              <div className="experienceDetails__status">
-                <span
-                  className={
-                    selectedRecord.status === "ACTIVE"
-                      ? "experienceDetails__statusDot experienceDetails__statusDot--active"
-                      : "experienceDetails__statusDot"
-                  }
-                />
-
-                <div>
-                  <span>Record Status</span>
-                  <strong>
-                    {selectedRecord.status ??
-                      "COMPLETED"}
-                  </strong>
-                </div>
-              </div>
+          <article className="experienceDocument" key={selectedRecord.id}>
+            <header className="experienceDocument__header">
+              <span>{selectedRecord.status ?? "ARCHIVED"}</span>
+              <h1>{selectedRecord.title}</h1>
+              <p>{selectedRecord.organization}</p>
             </header>
 
-            <div className="experienceDetails__metadata">
-              <div>
-                <span>Timeline</span>
-                <strong>
-                  {selectedRecord.period}
-                </strong>
-              </div>
-
-              <div>
-                <span>Location</span>
-                <strong>
-                  {selectedRecord.location ??
-                    "Not specified"}
-                </strong>
-              </div>
-
-              <div>
-                <span>Classification</span>
-                <strong>
-                  {
-                    categoryLabels[
-                      selectedRecord.category
-                    ]
-                  }
-                </strong>
-              </div>
+            <div className="experienceDocument__meta">
+              <span>{selectedRecord.period}</span>
+              {selectedRecord.location && <span>{selectedRecord.location}</span>}
             </div>
 
-            <section className="experienceDetails__section">
-              <div className="experienceSectionTitle">
-                <span>01</span>
-                <strong>Overview</strong>
-              </div>
-
-              <p className="experienceDetails__description">
+            <div className="experienceDocument__body">
+              <p className="experienceDocument__lead">
                 {selectedRecord.description}
               </p>
-            </section>
 
-            {selectedRecord.details &&
-              selectedRecord.details.length > 0 && (
-                <section className="experienceDetails__section">
-                  <div className="experienceSectionTitle">
-                    <span>02</span>
-                    <strong>
-                      Operational Details
-                    </strong>
-                  </div>
-
-                  <ul className="experienceDetails__details">
-                    {selectedRecord.details.map(
-                      (detail) => (
-                        <li key={detail}>
-                          <span />
-                          <p>{detail}</p>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </section>
-              )}
+              {selectedRecord.details?.map((detail) => (
+                <p key={detail}>{detail}</p>
+              ))}
+            </div>
 
             {selectedRecord.technologies &&
-              selectedRecord.technologies.length >
-                0 && (
-                <section className="experienceDetails__section">
-                  <div className="experienceSectionTitle">
-                    <span>03</span>
-                    <strong>
-                      Systems and Technologies
-                    </strong>
-                  </div>
-
-                  <div className="experienceTechnologyList">
-                    {selectedRecord.technologies.map(
-                      (technology) => (
-                        <span key={technology}>
-                          {technology}
-                        </span>
-                      )
-                    )}
-                  </div>
-                </section>
+              selectedRecord.technologies.length > 0 && (
+                <div className="experienceDocument__tags">
+                  {selectedRecord.technologies.map((technology) => (
+                    <span key={technology}>{technology}</span>
+                  ))}
+                </div>
               )}
 
             {selectedRecord.link && (
               <a
-                className="experienceDetails__link"
+                className="experienceDocument__link"
                 href={selectedRecord.link.href}
                 target="_blank"
                 rel="noreferrer"
               >
-                <span>Open external record</span>
-                <strong>
-                  {selectedRecord.link.label}
-                </strong>
-                <span aria-hidden="true">↗</span>
+                <span>ENTER</span>
+                {selectedRecord.link.label}
               </a>
             )}
-
-            <footer className="experienceDetails__footer">
-              <span>
-                RECORD ID //{" "}
-                {selectedRecord.id.toUpperCase()}
-              </span>
-
-              <strong>VERIFIED</strong>
-            </footer>
           </article>
         )}
       </div>
-    </WindowFrame>
+
+      <footer className="experienceControls">
+        <div><span>↑ ↓</span>Navigate</div>
+        <div><span>← →</span>Category</div>
+        <div><span>ENTER</span>Open link</div>
+        <button type="button" onClick={onClose}><span>ESC</span>Close</button>
+      </footer>
+    </section>
   );
 }
