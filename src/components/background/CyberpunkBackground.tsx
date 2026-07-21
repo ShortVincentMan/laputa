@@ -55,6 +55,7 @@ export default function CyberpunkBackground({
                   className="scrollingLinesTrail"
                   src={`${ASSET_ROOT}/scrolling-lines.png`}
                   alt=""
+                  loading="eager"
                   width={2048}
                   height={699}
                   draggable={false}
@@ -71,6 +72,7 @@ export default function CyberpunkBackground({
                   className="scrollingLinesTrail"
                   src={`${ASSET_ROOT}/scrolling-lines.png`}
                   alt=""
+                  loading="eager"
                   width={2048}
                   height={699}
                   draggable={false}

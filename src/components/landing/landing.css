@@ -275,8 +275,8 @@ body {
   to { transform: translate3d(140%, 0, 0); }
 }
 
-.bottomLeftOne { animation: bottomLeftOne 4s steps(1) infinite; }
-.bottomLeftTwo { animation: bottomLeftTwo 5.4s steps(1) infinite; }
+.bottomLeftOne { animation: bottomLeftOne 2s steps(1) infinite; }
+.bottomLeftTwo { animation: bottomLeftTwo 3.4s steps(1) infinite; }
 
 @keyframes bottomLeftOne {
   0%, 16%, 32%, 100% { opacity: 1; }

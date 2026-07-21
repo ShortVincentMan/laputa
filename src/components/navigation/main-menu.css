@@ -430,18 +430,259 @@
 }
 
 /* =========================================================
+   HOME REFERENCE COMPOSITION
+   ========================================================= */
+
+.cpNavHomeShell {
+  position: absolute;
+  inset: 0;
+  z-index: 300;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cpNavHomeShell > * {
+  pointer-events: auto;
+}
+
+.cpNavHome {
+  top: 0;
+  left: clamp(2rem, 6.7vw, 8rem);
+  bottom: 0;
+  width: clamp(24rem, 22.5vw, 32rem);
+  padding: 
+    clamp(6rem, 19vh, 11rem) 
+    clamp(1.5rem, 2vw, 2.75rem) 
+    clamp(2.75rem, 6vh, 5rem);
+
+  background:
+    linear-gradient(90deg, rgba(38, 4, 13, 0.94), rgba(31, 4, 12, 0.8) 75%, rgba(31, 4, 12, 0.15));
+  border-left-color: rgba(255, 65, 85, 0.45);
+  border-right-color: rgba(255, 65, 85, 0.28);
+  box-shadow: 18px 0 70px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(5px);
+}
+
+.cpNavHome .cpNavHeader {
+  margin-bottom: clamp(2rem, 4.5vh, 3.75rem);
+  transform: translateX(clamp(-1.5rem, -1.2vw, -0.5rem));
+}
+
+.cpNavHome .cpNavLogo {
+  max-width: 100%;
+  font-size: clamp(2.8rem, 3.6vw, 5rem);
+  line-height: 0.8;
+}
+
+.cpNavHome .cpNavSubtitle {
+  margin-top: clamp(1rem, 2vh, 1.5rem);
+  font-size: clamp(0.65rem, 0.8vw, 0.9rem);
+}
+
+.cpNavHome .cpNavList {
+  gap: 0;
+}
+
+.cpNavHome .cpNavItem {
+  width: min(100%, 22rem);
+  min-height: clamp(2.5rem, 4.8vh, 3.25rem);
+  padding: 0 clamp(0.75rem, 1vw, 1.25rem);
+  border-color: transparent;
+  transform: none;
+}
+
+.cpNavHome .cpNavItem:hover,
+.cpNavHome .cpNavItem:focus-visible,
+.cpNavHome .cpNavItemActive {
+  transform: none;
+  color: #f4e700;
+  border-color: rgba(244, 231, 0, 0.86);
+  background: linear-gradient(90deg, rgba(155, 135, 0, 0.2), rgba(80, 68, 0, 0.04));
+  text-shadow: 0 0 8px rgba(244, 231, 0, 0.4);
+}
+
+.cpNavHome .cpNavItemActive::after {
+  right: clamp(0.8rem, 1.4vw, 1.6rem);
+  width: clamp(1.5rem, 2.2vw, 2.25rem);
+  height: 1.2rem;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(244, 231, 0, 0.95) 0,
+      rgba(244, 231, 0, 0.95) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+}
+
+.cpNavHome .cpNavLabel {
+  font-size: clamp(1.15rem, 1.55vw, 1.95rem);
+  letter-spacing: 0.04em;
+}
+
+.cpNavHome .cpNavMeta {
+  margin-right: clamp(2.75rem, 4vw, 4.25rem);
+  font-size: clamp(0.58rem, 0.66vw, 0.75rem);
+}
+
+.cpNavHome .cpNavFooter {
+  padding-top: clamp(1.5rem, 3vh, 2.75rem);
+  margin-left: clamp(-1.5rem, -1vw, -0.75rem);
+}
+
+.cpNavHome .cpNavVersion {
+  font-size: clamp(1rem, 1.2vw, 1.35rem);
+}
+
+.cpNavHome .cpNavUser {
+  font-size: clamp(1.35rem, 1.9vw, 2rem);
+}
+
+.homeMenuPreview {
+  position: absolute;
+  top: 40%;
+  left: calc(clamp(2rem, 6.7vw, 8rem) + clamp(24rem, 22.5vw, 32rem) + clamp(1rem, 1.5vw, 2rem));
+  width: min(22vw, 26rem);
+  min-width: 18rem;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.98);
+  border: 1px solid rgba(255, 66, 82, 0.8);
+  background: rgba(18, 5, 11, 0.78);
+  box-shadow: 0 0 30px rgba(255, 30, 50, 0.08);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 1.25rem) 0,
+    100% 1.25rem,
+    100% 100%,
+    0 100%
+  );
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms ease;
+}
+
+.homeMenuPreview--visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.homeMenuPreview__image {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 66, 82, 0.8);
+}
+
+.homeMenuPreview__image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(13, 4, 10, 0.8));
+}
+
+.homeMenuPreview__image img {
+  object-fit: cover;
+  filter: saturate(0.8) contrast(1.05);
+}
+
+.homeMenuPreview__image--placeholder {
+  display: grid;
+  place-items: center;
+  color: rgba(113, 247, 255, 0.5);
+  background:
+    linear-gradient(rgba(255, 45, 72, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 45, 72, 0.08) 1px, transparent 1px),
+    rgba(8, 13, 20, 0.85);
+  background-size: 1.25rem 1.25rem;
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.homeMenuPreview__content {
+  display: grid;
+  gap: 0.45rem;
+  padding: clamp(1rem, 1.6vw, 1.5rem);
+}
+
+.homeMenuPreview__content > span,
+.homeMenuPreview__content small,
+.homeMenuPreview__content div {
+  color: rgba(255, 94, 104, 0.78);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.homeMenuPreview__content strong {
+  color: #71f7ff;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.homeMenuPreview__content small {
+  color: rgba(241, 241, 230, 0.72);
+}
+
+.homeMenuPreview__content div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 66, 82, 0.42);
+}
+
+.homeMenuHud {
+  position: absolute;
+  right: clamp(1rem, 4vw, 5rem);
+  display: flex;
+  gap: clamp(1rem, 2vw, 2.5rem);
+  color: rgba(255, 90, 101, 0.8);
+  font-size: clamp(0.65rem, 0.8vw, 0.85rem);
+  letter-spacing: 0.12em;
+}
+
+.homeMenuHud--top {
+  top: clamp(1.5rem, 4vh, 3rem);
+}
+
+.homeMenuHud--top strong {
+  color: #71f7ff;
+  font-weight: 500;
+}
+
+.homeMenuHud--bottom {
+  bottom: clamp(1.25rem, 4vh, 3rem);
+}
+
+.homeMenuHud b {
+  padding: 0.2rem 0.45rem;
+  color: #071014;
+  background: #71f7ff;
+  font-weight: 700;
+}
+
+/* =========================================================
    RESPONSIVE
    ========================================================= */
 
 @media (max-width: 850px) {
   .cpNavHome {
     left: 0;
-    width: min(88vw, 420px);
+    width: min(88vw, 34rem);
     padding-top: 56px;
   }
 
   .cpNavLogo {
     font-size: 50px;
+  }
+
+  .homeMenuPreview,
+  .homeMenuHud {
+    display: none;
   }
 }
 

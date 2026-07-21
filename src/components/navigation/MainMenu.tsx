@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,7 +15,8 @@ export type WindowType =
   | "projects"
   | "experience"
   | "about"
-  | "contact";
+  | "contact"
+  | "credits";
 
 type MainMenuProps = {
   variant?: "home" | "drawer";
@@ -44,7 +46,69 @@ const homeNavItems: {
     label: "CONTACT",
     window: "contact",
   },
+  {
+    label: "CREDITS",
+    window: "credits",
+  },
 ];
+
+type HomeMenuKey = "home" | WindowType;
+
+const homeMenuPreviews: Record<
+  HomeMenuKey,
+  {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    status: string;
+    period: string;
+    image?: string;
+  }
+> = {
+  home: {
+    eyebrow: "SYSTEM RECORD // 00",
+    title: "LAPUTA OS",
+    subtitle: "INTERACTIVE ENGINEERING PORTFOLIO",
+    status: "SYSTEM ONLINE",
+    period: "BUILD 01.00",
+  },
+  projects: {
+    eyebrow: "FEATURED RECORD // 01",
+    title: "MANTIS BLADES",
+    subtitle: "WEARABLE ROBOTIC MECHANISM",
+    status: "COMPLETED PROTOTYPE",
+    period: "2024 — 2025",
+    image: "/assets/projects/mantis-blades/hero.jpeg",
+  },
+  experience: {
+    eyebrow: "PERSONNEL RECORD // 02",
+    title: "ENGINEERING HISTORY",
+    subtitle: "RESEARCH // EMBEDDED // OPERATIONS",
+    status: "RECORD READY",
+    period: "2024 — PRESENT",
+  },
+  about: {
+    eyebrow: "CHARACTER RECORD // 03",
+    title: "VINCENT LE",
+    subtitle: "COMPUTER ENGINEER // RESEARCHER",
+    status: "PROFILE ONLINE",
+    period: "CAL POLY SLO",
+  },
+  contact: {
+    eyebrow: "NETWORK RECORD // 04",
+    title: "CONTACT CHANNELS",
+    subtitle: "PROFESSIONAL // DIRECT // EXTERNAL",
+    status: "CHANNELS AVAILABLE",
+    period: "SECURE LINK",
+  },
+  credits: {
+    eyebrow: "ARCHIVE RECORD // 05",
+    title: "CREDITS",
+    subtitle: "CONTRIBUTORS // REFERENCES // SOURCES",
+    status: "ACKNOWLEDGEMENTS",
+    period: "LAPUTA OS",
+  },
+};
 
 const drawerNavItems = [
   {
@@ -85,6 +149,8 @@ export default function MainMenu({
   const [isOpen, setIsOpen] = useState(
     isHomeVariant || defaultOpen
   );
+  const [hoveredHomeItem, setHoveredHomeItem] =
+    useState<HomeMenuKey | null>(null);
 
   function openMenu() {
     setIsOpen(true);
@@ -207,6 +273,16 @@ export default function MainMenu({
       <nav
         className="cpNavList"
         aria-label="Primary navigation"
+        onMouseLeave={() => setHoveredHomeItem(null)}
+        onBlur={(event) => {
+          if (
+            !event.currentTarget.contains(
+              event.relatedTarget as Node | null
+            )
+          ) {
+            setHoveredHomeItem(null);
+          }
+        }}
       >
         {isHomeVariant ? (
           <>
@@ -218,9 +294,11 @@ export default function MainMenu({
                   ? "cpNavItemActive"
                   : "",
               ]
-                .filter(Boolean)
-                .join(" ")}
+                  .filter(Boolean)
+                  .join(" ")}
               onClick={handleHomeSelection}
+              onMouseEnter={() => setHoveredHomeItem("home")}
+              onFocus={() => setHoveredHomeItem("home")}
             >
               <span className="cpNavLabel">HOME</span>
               <span className="cpNavMeta">00</span>
@@ -240,10 +318,16 @@ export default function MainMenu({
                       ? "cpNavItemActive"
                       : "",
                   ]
-                    .filter(Boolean)
-                    .join(" ")}
+                  .filter(Boolean)
+                  .join(" ")}
                   onClick={() =>
                     handleWindowSelection(item.window)
+                  }
+                  onMouseEnter={() =>
+                    setHoveredHomeItem(item.window)
+                  }
+                  onFocus={() =>
+                    setHoveredHomeItem(item.window)
                   }
                 >
                   <span className="cpNavLabel">
@@ -325,12 +409,65 @@ export default function MainMenu({
 
   if (isHomeVariant) {
     return (
-      <aside
-        className="cpNav cpNavHome"
-        aria-label="Main menu"
-      >
-        {menuContent}
-      </aside>
+      <div className="cpNavHomeShell">
+        <aside
+          className="cpNav cpNavHome"
+          aria-label="Main menu"
+        >
+          {menuContent}
+        </aside>
+
+        <section
+          className={
+            hoveredHomeItem
+              ? "homeMenuPreview homeMenuPreview--visible"
+              : "homeMenuPreview"
+          }
+          aria-label="Featured portfolio record"
+        >
+          {hoveredHomeItem && (
+            <>
+              {homeMenuPreviews[hoveredHomeItem].image ? (
+                <div className="homeMenuPreview__image">
+                  <Image
+                    src={homeMenuPreviews[hoveredHomeItem].image}
+                    alt={homeMenuPreviews[hoveredHomeItem].title}
+                    fill
+                    sizes="(max-width: 900px) 0px, 28vw"
+                  />
+                </div>
+              ) : (
+                <div
+                  className="homeMenuPreview__image homeMenuPreview__image--placeholder"
+                  aria-hidden="true"
+                >
+                  <span>{homeMenuPreviews[hoveredHomeItem].title}</span>
+                </div>
+              )}
+
+              <div className="homeMenuPreview__content">
+                <span>{homeMenuPreviews[hoveredHomeItem].eyebrow}</span>
+                <strong>{homeMenuPreviews[hoveredHomeItem].title}</strong>
+                <small>{homeMenuPreviews[hoveredHomeItem].subtitle}</small>
+                <div>
+                  <span>{homeMenuPreviews[hoveredHomeItem].status}</span>
+                  <span>{homeMenuPreviews[hoveredHomeItem].period}</span>
+                </div>
+              </div>
+            </>
+          )}
+        </section>
+
+        <div className="homeMenuHud homeMenuHud--top" aria-hidden="true">
+          <span>PORTFOLIO BUILD 01.00</span>
+          <strong>LAPUTA OS // ONLINE</strong>
+        </div>
+
+        <div className="homeMenuHud homeMenuHud--bottom" aria-hidden="true">
+          <span><b>ENTER</b> Select</span>
+          <span><b>ESC</b> Close</span>
+        </div>
+      </div>
     );
   }
 

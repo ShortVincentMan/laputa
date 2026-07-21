@@ -110,6 +110,7 @@ export default function LandingScreen() {
                 className="scrollingLinesTrail"
                 src={`${ASSET_ROOT}/scrolling-lines.png`}
                 alt=""
+                loading="eager"
                 width={2048}
                 height={699}
                 draggable={false}
