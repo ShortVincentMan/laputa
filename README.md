@@ -1,113 +1,180 @@
 # Laputa
 
-> A Cyberpunk 2077-inspired interactive portfolio built with
-> **Next.js**, **React**, and **TypeScript**.
+> An interactive engineering portfolio presented through a futuristic operating-system interface inspired by Cyberpunk 2077.
 
-------------------------------------------------------------------------
+---
 
 ## Overview
 
-Laputa is an interactive portfolio that recreates the feeling of
-navigating a futuristic operating system rather than browsing a
-traditional website.
+Laputa is a desktop-style engineering portfolio built with **Next.js**, **React**, and **TypeScript**.
 
-Instead of presenting projects through static webpages, the site uses
-persistent backgrounds, animated HUD elements, reusable windows, and
-game-inspired interfaces to showcase engineering projects, research, and
-experience.
+Instead of navigating traditional webpages, visitors interact with a persistent operating-system interface where engineering projects, research, experience, and technical work are presented through game-inspired UI systems.
 
-The project is both a personal portfolio and a software engineering
-project focused on modern frontend architecture, reusable components,
-animation, and performance.
+Every major section of the portfolio is modeled after a specific Cyberpunk 2077 interface while remaining completely data-driven, responsive, and maintainable.
 
-------------------------------------------------------------------------
+Laputa serves two purposes:
 
-## Goals
+- A portfolio showcasing engineering projects and research.
+- A long-term software engineering project exploring UI architecture, interaction design, animation systems, and frontend performance.
 
--   Build a polished, production-quality web application.
--   Showcase engineering work through an immersive interface.
--   Recreate the design language of Cyberpunk 2077 while adapting it
-    into an original portfolio experience.
--   Prioritize performance, accessibility, and maintainability.
--   Build a reusable desktop/window system instead of traditional page
-    navigation.
+---
 
-------------------------------------------------------------------------
+# Current Status
 
-## Features
+## Implemented
 
--   Cyberpunk-inspired desktop interface
--   Animated HUD background
--   Persistent desktop environment
--   Reusable window and panel system
--   Cyberware-inspired hardware showcase
--   Quickhack-inspired software showcase
--   Research Codex
--   Responsive design
--   TypeScript-first architecture
--   Optimized animations and rendering
+- Animated landing sequence
+- Cyberpunk-inspired Home interface
+- Journal-based Projects screen
+- Journal-based Experience archive
+- Data-driven project architecture
+- Data-driven experience architecture
+- Reusable project detail framework
+- Keyboard navigation
+- Desktop-first responsive layouts
 
-------------------------------------------------------------------------
+## In Progress
 
-## Tech Stack
+- Cyberware-inspired project detail interface
+- Character/About screen
+- Contacts interface
+- Skills interface
+- Resume archive
+- Settings
+- Music interface
+- Vehicle interface
+- Credits
 
--   Next.js
--   React
--   TypeScript
--   CSS
--   Vercel
+---
 
-------------------------------------------------------------------------
+# Interface Mapping
 
-## Planned Sections
+Each major page recreates the visual language of a specific Cyberpunk 2077 interface.
 
-### Home
+| Portfolio Section | Reference |
+|-------------------|-----------|
+| Landing | `landing.webp` |
+| Home | `menu.webp` |
+| Projects | `journal-main.webp` |
+| Experience | `journal-datashards-menu.webp` |
+| Project Detail | `cyberware.webp` |
+| About | `character-ui.webp` |
+| Skills | `skills.webp` |
+| Contact | `contacts-ui.webp` |
+| Resume | `menu-load-saves.webp` |
+| Settings | `menu-settings.webp` |
+| Media | `music-ui.webp` |
+| Large Hardware Projects | `vehicle-ui.webp` |
+| Credits | `credits-page.webp` |
+| Patch / News Records | `patches-window.webp` |
 
-Interactive desktop interface.
+Reference images are used only as visual design guides and are never embedded directly into the website.
 
-### Projects
+---
 
--   Cyberware
--   Quickhacks
--   Research
--   Archive
+# Design Goals
 
-### Experience
+- Recreate the interface language of Cyberpunk 2077
+- Showcase multidisciplinary engineering work
+- Build reusable UI systems instead of page-specific layouts
+- Prioritize maintainability through data-driven architecture
+- Support keyboard/controller-style navigation
+- Maintain smooth performance despite complex visual effects
+- Keep layouts responsive while targeting a desktop-first experience
+- Balance visual fidelity with accessibility
 
-Engineering timeline and work history.
+---
 
-### Personnel Record
+# Architecture
 
-Resume, education, certifications, and technical skills.
+```
+app/
+components/
+data/
+public/
+styles/
+```
 
-### Contacts
+The project separates:
 
-GitHub, LinkedIn, email, and other contact information.
+- Application data
+- Presentation components
+- Interaction logic
+- Styling
+- Assets
 
-------------------------------------------------------------------------
+This allows entire interface shells to be reused while only changing the underlying data.
 
-## Design Philosophy
+---
 
-Traditional portfolios present information as independent webpages.
+# Tech Stack
 
-Laputa instead treats the portfolio as an operating system. Navigation
-occurs through persistent UI elements and animated windows while the
-background remains alive throughout the experience.
+- Next.js
+- React
+- TypeScript
+- CSS
+- Vercel
 
-Every visual decision is balanced against usability, responsiveness, and
-performance.
+---
 
-------------------------------------------------------------------------
+# Roadmap
 
-## Disclaimer
+## Phase 1 — Foundation
+- ✅ Landing
+- ✅ Home
+- ✅ Projects
+- ✅ Experience
 
-This project is an original fan-inspired portfolio that draws visual
-inspiration from *Cyberpunk 2077*. It is not affiliated with, endorsed
-by, or associated with CD PROJEKT RED. All trademarks, logos, and
-original assets belong to their respective owners.
+## Phase 2 — Core Systems
+- Cyberware Project Detail
+- Character Screen
+- Contacts Screen
 
-------------------------------------------------------------------------
+## Phase 3 — Remaining Interfaces
+- Skills
+- Resume Archive
+- Settings
+- Music
+- Vehicle
+- Credits
 
-## License
+## Phase 4 — Polish
+- Cyberpunk cursor system
+- Controller-style navigation improvements
+- Additional interface animations
+- Sound design
+- Performance optimization
+- Accessibility refinements
+
+---
+
+# Project Philosophy
+
+Most engineering portfolios are collections of independent webpages.
+
+Laputa instead treats the portfolio as a persistent operating system.
+
+Navigation occurs through immersive interface screens inspired by Cyberpunk 2077 while presenting real engineering work including:
+
+- Robotics
+- Embedded systems
+- Mechanical design
+- Wearable technology
+- Research
+- Software engineering
+
+Every screen is designed to feel like a functional part of a cohesive system rather than a standalone webpage.
+
+---
+
+# Disclaimer
+
+Laputa is an original engineering portfolio inspired by the interface design language of **Cyberpunk 2077**.
+
+It is **not affiliated with, endorsed by, or associated with CD PROJEKT RED**. All trademarks, logos, and original game assets belong to their respective owners.
+
+---
+
+# License
 
 This project is intended for educational and portfolio purposes.
