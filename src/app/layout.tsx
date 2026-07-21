@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import TimePanel from "@/components/shared/TimePanel";
 import "./globals.css";
 
 export const metadata: Metadata = {
