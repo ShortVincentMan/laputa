@@ -1,0 +1,41 @@
+.time-hud {
+  color: #65edf7;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+
+  text-shadow: 0 0 3px rgba(101, 237, 247, 0.35);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.hud-layer {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.hud-clock {
+  position: absolute;
+
+  top: 3%;
+  right: 2%;
+
+  width: 5%;
+
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hud-clock {
+    top: 3%;
+    right: 0%;
+    width: 170px;
+  }
+}

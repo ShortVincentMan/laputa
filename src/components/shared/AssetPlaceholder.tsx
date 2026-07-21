@@ -1,4 +1,4 @@
-import "./asset-placeholder.css"
+import "./asset-placeholder.css";
 type AssetPlaceholderProps = {
   label?: string;
   className?: string;

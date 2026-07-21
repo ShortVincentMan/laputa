@@ -8,9 +8,9 @@ import ProjectsWindow from "@/components/projects/ProjectsWindow";
 import AboutWindow from "@/components/windows/AboutWindow";
 import ContactWindow from "@/components/windows/ContactWindow";
 import ExperienceWindow from "@/components/windows/ExperienceWindow";
+import TimePanel from "@/components/shared/TimePanel";
 
 import styles from "./home.module.css";
-import "@/components/windows/information-windows.css";
 
 type WindowType =
   | "projects"
@@ -38,7 +38,6 @@ export default function HomePage() {
           onHome={closeWindow}
         />
       )}
-
       {activeWindow && (
         <div className={styles.windowLayer}>
           {activeWindow === "projects" && (
@@ -58,6 +57,9 @@ export default function HomePage() {
           )}
         </div>
       )}
+              <div className="hud-layer">
+                <TimePanel className="hud-clock" /> 
+              </div>
     </main>
   );
 }

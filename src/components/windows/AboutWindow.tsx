@@ -176,7 +176,7 @@ export default function AboutWindow({
           <header className="aboutStats__header">
             <div>
               <span>CHARACTER DATABASE</span>
-              <strong>OPERATOR STATS</strong>
+              <strong>CHARACTER STATS</strong>
             </div>
 
             <span>VL-01</span>
@@ -193,7 +193,7 @@ export default function AboutWindow({
             <p>
               Exoskeleton Researcher
               <br />
-              Computer Engineering
+              Computer Engineer
             </p>
           </div>
 
@@ -431,7 +431,7 @@ export default function AboutWindow({
           {activeSection === "affiliations" && (
             <div className="aboutPanel">
               <header className="aboutPanel__header">
-                <span>05 // AFFILIATIONS</span>
+                <span>04 // AFFILIATIONS</span>
                 <strong>ACTIVE NETWORKS</strong>
               </header>
 

@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "../components/shared/asset-placeholder.css";
 
 :root {
   --font-ui: "Rajdhani", sans-serif;
@@ -73,3 +72,5 @@ body {
   font-style: normal;
   font-display: swap;
 }
+
+
