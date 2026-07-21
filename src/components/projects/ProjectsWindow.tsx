@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import CyberwareWindow from "@/components/projects/CyberwareWindow";
 import ProjectDetailWindow from "@/components/projects/ProjectDetailWindow";
 import AssetPlaceholder from "@/components/shared/AssetPlaceholder";
 import {
@@ -40,6 +41,14 @@ export default function ProjectsWindow({
     null
   );
 
+  const [cyberwareProjectId, setCyberwareProjectId] = useState<string | null>(
+    null
+  );
+
+  const [cyberwareReturnTo, setCyberwareReturnTo] = useState<
+    "journal" | "detail"
+  >("journal");
+
   const [expandedImage, setExpandedImage] = useState<string | null>(
     null
   );
@@ -54,6 +63,7 @@ export default function ProjectsWindow({
     visibleProjects[0];
 
   const openProject = getProjectById(openProjectId);
+  const cyberwareProject = getProjectById(cyberwareProjectId);
 
   const selectCategory = useCallback(
     (category: ProjectCategory) => {
@@ -107,6 +117,14 @@ export default function ProjectsWindow({
 
     setExpandedImage(null);
     setOpenProjectId(selectedProject.id);
+  }, [selectedProject]);
+
+  const openSelectedCyberware = useCallback(() => {
+    if (!selectedProject?.cyberware) return;
+
+    setExpandedImage(null);
+    setCyberwareReturnTo("journal");
+    setCyberwareProjectId(selectedProject.id);
   }, [selectedProject]);
 
   useEffect(() => {
@@ -179,12 +197,41 @@ export default function ProjectsWindow({
     openSelectedProject,
   ]);
 
+  if (cyberwareProject?.cyberware) {
+    return (
+      <CyberwareWindow
+        project={cyberwareProject}
+        onBack={() => {
+          setCyberwareProjectId(null);
+
+          if (cyberwareReturnTo === "detail") {
+            setOpenProjectId(cyberwareProject.id);
+          }
+        }}
+        onOpenRecord={(projectId) => {
+          setCyberwareProjectId(null);
+          setOpenProjectId(projectId);
+        }}
+        onClose={onClose}
+      />
+    );
+  }
+
   if (openProject) {
     return (
       <ProjectDetailWindow
         project={openProject}
         onBack={() => setOpenProjectId(null)}
         onClose={onClose}
+        onOpenCyberware={
+          openProject.cyberware
+            ? () => {
+                setOpenProjectId(null);
+                setCyberwareReturnTo("detail");
+                setCyberwareProjectId(openProject.id);
+              }
+            : undefined
+        }
       />
     );
   }
@@ -222,7 +269,19 @@ export default function ProjectsWindow({
           className="projectsHud__nav"
           aria-label="Portfolio sections"
         >
-          <span>CYBERWARE</span>
+          <button
+            type="button"
+            className="projectsHud__navButton"
+            disabled={!selectedProject?.cyberware}
+            onClick={openSelectedCyberware}
+            title={
+              selectedProject?.cyberware
+                ? `Open ${selectedProject.title} in Cyberware`
+                : "Select a cybernetic project to open Cyberware"
+            }
+          >
+            CYBERWARE
+          </button>
           <span>INVENTORY</span>
           <span>MAP</span>
           <span>CHARACTER</span>

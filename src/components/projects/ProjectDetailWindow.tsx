@@ -12,19 +12,20 @@ type ProjectDetailWindowProps = {
   project: ProjectRecord;
   onBack: () => void;
   onClose: () => void;
+  onOpenCyberware?: () => void;
 };
 
 export default function ProjectDetailWindow({
   project,
   onBack,
   onClose,
+  onOpenCyberware,
 }: ProjectDetailWindowProps) {
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key !== "Backspace") return;
 
       const target = event.target;
-
       if (
         target instanceof HTMLInputElement ||
         target instanceof HTMLTextAreaElement ||
@@ -38,31 +39,37 @@ export default function ProjectDetailWindow({
     }
 
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onBack]);
 
   const tabs = (
-    <button
-      type="button"
-      className="projectDetailBack"
-      onClick={onBack}
-    >
-      <span>BKSP</span>
-      Return to journal
-    </button>
+    <>
+      <button type="button" className="projectDetailTab" onClick={onBack}>
+        <span>BKSP</span>
+        JOURNAL
+      </button>
+
+      <button type="button" className="projectDetailTab is-active" aria-current="page">
+        PROJECT RECORD
+      </button>
+
+      {project.cyberware && onOpenCyberware && (
+        <button
+          type="button"
+          className="projectDetailTab projectDetailTab--cyberware"
+          onClick={onOpenCyberware}
+        >
+          CYBERWARE
+        </button>
+      )}
+    </>
   );
 
   return (
     <WindowFrame
       title={project.title}
       subtitle={`${project.subtitle} // ${project.period}`}
-      sectionLabel="CYBERWARE"
+      sectionLabel="PROJECT RECORD"
       tabs={tabs}
       footer={`PROJECT RECORD // ${project.status}`}
       className="projectDetailFrame"

@@ -35,6 +35,22 @@ export type ProjectLink = {
   href: string;
 };
 
+export type CyberwareSlot =
+  | "head"
+  | "ocular"
+  | "arms"
+  | "hands"
+  | "spine"
+  | "torso"
+  | "legs";
+
+export type CyberwareProfile = {
+  slot: CyberwareSlot;
+  label: string;
+  systemType: string;
+  description: string;
+};
+
 export type ProjectRecord = {
   id: string;
   category: StoredProjectCategory;
@@ -55,6 +71,7 @@ export type ProjectRecord = {
   sections?: ProjectSection[];
   gallery?: ProjectGalleryItem[];
   links?: ProjectLink[];
+  cyberware?: CyberwareProfile;
 
   featured?: boolean;
 };
@@ -104,6 +121,13 @@ export const projects: ProjectRecord[] = [
     imageAlt: "Completed wearable Mantis Blades prototype",
 
     detailLabel: "ARMS // MANTIS BLADES",
+    cyberware: {
+      slot: "arms",
+      label: "MANTIS BLADES",
+      systemType: "ARM-MOUNTED DEPLOYMENT SYSTEM",
+      description:
+        "Wearable mechanical cyberware prototype with motion sensing, servo actuation, and a deployable blade mechanism.",
+    },
 
     sections: [
       {
@@ -195,6 +219,13 @@ export const projects: ProjectRecord[] = [
 
     assetLabel: "EXOSKELETON RESEARCH VISUAL",
     detailLabel: "RESEARCH // TENSEGRITY EXOSKELETON",
+    cyberware: {
+      slot: "arms",
+      label: "TENSEGRITY EXOSKELETON",
+      systemType: "UPPER-LIMB ASSIST SYSTEM",
+      description:
+        "Sensor-driven upper-limb exoskeleton research platform using IMU and EMG feedback for rehabilitation control.",
+    },
     featured: true,
   },
 
@@ -222,6 +253,13 @@ export const projects: ProjectRecord[] = [
 
     assetLabel: "SPINAL SYSTEM RENDER",
     detailLabel: "CYBERWARE // SPINAL PLATFORM",
+    cyberware: {
+      slot: "spine",
+      label: "SPINAL BATTERY SYSTEM",
+      systemType: "MODULAR POWER BACKBONE",
+      description:
+        "Wearable spinal platform combining structural support, distributed power, sensing, and future actuator interfaces.",
+    },
     featured: true,
   },
 
@@ -399,4 +437,10 @@ export function getProjectById(
   if (!id) return undefined;
 
   return projects.find((project) => project.id === id);
+}
+export function getCyberwareProjects(): ProjectRecord[] {
+  return projects.filter(
+    (project): project is ProjectRecord & { cyberware: CyberwareProfile } =>
+      Boolean(project.cyberware)
+  );
 }
