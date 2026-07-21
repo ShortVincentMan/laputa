@@ -25,15 +25,20 @@ export default function HomePage() {
   return (
     <main className={styles.homePage}>
       <CyberpunkBackground muted />
+        {!activeWindow && (
+          <>
+            <MainMenu
+              variant="home"
+              activeWindow={activeWindow}
+              onNavigate={setActiveWindow}
+              onHome={closeWindow}
+            />
 
-      {!activeWindow && (
-        <MainMenu
-          variant="home"
-          activeWindow={activeWindow}
-          onNavigate={setActiveWindow}
-          onHome={closeWindow}
-        />
-      )}
+            <div className="hud-layer">
+              <TimePanel className="hud-clock" />
+            </div>
+          </>
+        )}
       {activeWindow && (
         <div className={styles.windowLayer}>
           {activeWindow === "projects" && (
@@ -57,9 +62,6 @@ export default function HomePage() {
           )}
         </div>
       )}
-              <div className="hud-layer">
-                <TimePanel className="hud-clock" /> 
-              </div>
     </main>
   );
 }
