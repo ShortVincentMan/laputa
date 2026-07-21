@@ -119,6 +119,7 @@ export default function MainMenu({
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
+    const triggerElement = triggerRef.current;
 
     document.body.style.overflow = "hidden";
 
@@ -136,7 +137,7 @@ export default function MainMenu({
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        closeMenu();
+        setIsOpen(false);
         return;
       }
 
@@ -176,7 +177,7 @@ export default function MainMenu({
       window.removeEventListener("keydown", handleKeyDown);
 
       const focusTarget =
-        triggerRef.current ?? previouslyFocusedElement;
+        triggerElement ?? previouslyFocusedElement;
 
       focusTarget?.focus();
     };
