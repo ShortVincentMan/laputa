@@ -1,13 +1,15 @@
 "use client";
 
 import {
+  type FormEvent,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
 
-import WindowFrame from "./WindowFrame";
+import ActionBar from "@/components/shared/ActionBar";
+import ActionKey from "@/components/shared/ActionKey";
 
 import "./contact-window.css";
 
@@ -15,38 +17,40 @@ type ContactWindowProps = {
   onClose: () => void;
 };
 
-type ContactChannel = {
-  id: string;
+type ContactId =
+  | "message"
+  | "linkedin"
+  | "github"
+  | "resume"
+  | "location";
+
+type ContactTab = "contacts" | "messages";
+type SendState = "idle" | "sending" | "sent" | "error";
+
+type ContactRecord = {
+  id: ContactId;
   label: string;
-  handle: string;
-  category: string;
-  description: string;
-  status: string;
+  subtitle: string;
+  value: string;
   actionLabel: string;
-  href: string;
+  href?: string;
   external?: boolean;
+  disabled?: boolean;
 };
 
-const channels: ContactChannel[] = [
+const contacts: ContactRecord[] = [
   {
-    id: "email",
-    label: "Email",
-    handle: "vincentrle26@gmail.com",
-    category: "Direct Channel",
-    description:
-      "Primary contact method for internships, research, engineering collaborations, and professional opportunities.",
-    status: "AVAILABLE",
-    actionLabel: "Send Email",
-    href: "mailto:vincentrle26@gmail.com",
+    id: "message",
+    label: "Vincent Le",
+    subtitle: "Secure message relay",
+    value: "DIRECT CHANNEL // ONLINE",
+    actionLabel: "Open Message Thread",
   },
   {
     id: "linkedin",
     label: "LinkedIn",
-    handle: "linkedin.com/in/vincentrle",
-    category: "Professional Network",
-    description:
-      "View professional experience, research, education, leadership, and current engineering work.",
-    status: "CONNECTED",
+    subtitle: "Professional network",
+    value: "linkedin.com/in/vincentrle",
     actionLabel: "Open LinkedIn",
     href: "https://www.linkedin.com/in/vincentrle",
     external: true,
@@ -54,11 +58,8 @@ const channels: ContactChannel[] = [
   {
     id: "github",
     label: "GitHub",
-    handle: "github.com/ShortVincentMan",
-    category: "Code Repository",
-    description:
-      "Browse software, embedded systems, portfolio development, and engineering project repositories.",
-    status: "ONLINE",
+    subtitle: "Engineering repositories",
+    value: "github.com/ShortVincentMan",
     actionLabel: "Open GitHub",
     href: "https://github.com/ShortVincentMan",
     external: true,
@@ -66,99 +67,141 @@ const channels: ContactChannel[] = [
   {
     id: "resume",
     label: "Resume",
-    handle: "Vincent Le // Engineering Resume",
-    category: "Document Archive",
-    description:
-      "Download a concise overview of technical experience, education, research, projects, and skills.",
-    status: "LOCKED",
-    actionLabel: "Resume Coming Soon",
-    href: "",
+    subtitle: "Personnel archive",
+    value: "DOCUMENT PENDING",
+    actionLabel: "Resume Unavailable",
+    disabled: true,
+  },
+  {
+    id: "location",
+    label: "Location",
+    subtitle: "Current operating region",
+    value: "SAN LUIS OBISPO, CA",
+    actionLabel: "Location Record",
+    disabled: true,
   },
 ];
 
 export default function ContactWindow({
   onClose,
 }: ContactWindowProps) {
-  const [selectedId, setSelectedId] = useState(
-    channels[0].id
-  );
+  const [activeTab, setActiveTab] =
+    useState<ContactTab>("contacts");
+  const [selectedId, setSelectedId] =
+    useState<ContactId>("message");
 
-  const selectedChannel = useMemo(
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
+  const [sendState, setSendState] =
+    useState<SendState>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const selectedContact = useMemo(
     () =>
-      channels.find(
-        (channel) => channel.id === selectedId
-      ) ?? channels[0],
+      contacts.find(
+        (contact) => contact.id === selectedId
+      ) ?? contacts[0],
     [selectedId]
   );
 
   const moveSelection = useCallback(
     (direction: 1 | -1) => {
-      const currentIndex = channels.findIndex(
-        (channel) => channel.id === selectedId
+      const currentIndex = contacts.findIndex(
+        (contact) => contact.id === selectedId
       );
 
       const nextIndex =
-        (currentIndex +
-          direction +
-          channels.length) %
-        channels.length;
+        (currentIndex + direction + contacts.length) %
+        contacts.length;
 
-      setSelectedId(channels[nextIndex].id);
+      setSelectedId(contacts[nextIndex].id);
     },
     [selectedId]
   );
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      const target = event.target;
+  const openContact = useCallback(
+    (contact: ContactRecord) => {
+      setSelectedId(contact.id);
 
-      if (
-        target instanceof HTMLInputElement ||
-        target instanceof HTMLTextAreaElement ||
-        target instanceof HTMLSelectElement
-      ) {
+      if (contact.id === "message") {
+        setActiveTab("messages");
+        setSendState("idle");
+        setErrorMessage("");
         return;
       }
 
       if (
-        event.key === "ArrowDown" ||
-        event.key.toLowerCase() === "s"
+        contact.href &&
+        !contact.disabled
       ) {
-        event.preventDefault();
-        moveSelection(1);
+        window.open(
+          contact.href,
+          contact.external ? "_blank" : "_self",
+          contact.external
+            ? "noopener,noreferrer"
+            : undefined
+        );
       }
+    },
+    []
+  );
 
-      if (
-        event.key === "ArrowUp" ||
-        event.key.toLowerCase() === "w"
-      ) {
+  const activateSelectedContact = useCallback(() => {
+    openContact(selectedContact);
+  }, [openContact, selectedContact]);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      const target = event.target;
+      const editing =
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement;
+
+      if (event.key === "Escape") {
+        if (editing) return;
+
         event.preventDefault();
-        moveSelection(-1);
-      }
 
-      if (
-        event.key === "Enter" &&
-        selectedChannel.href
-      ) {
-        event.preventDefault();
-
-        if (selectedChannel.external) {
-          window.open(
-            selectedChannel.href,
-            "_blank",
-            "noopener,noreferrer"
-          );
-        } else {
-          window.location.href =
-            selectedChannel.href;
+        if (activeTab === "messages") {
+          setActiveTab("contacts");
+          return;
         }
+
+        onClose();
+        return;
+      }
+
+      if (editing || activeTab !== "contacts") {
+        return;
+      }
+
+      switch (event.key) {
+        case "ArrowDown":
+        case "s":
+        case "S":
+          event.preventDefault();
+          moveSelection(1);
+          break;
+
+        case "ArrowUp":
+        case "w":
+        case "W":
+          event.preventDefault();
+          moveSelection(-1);
+          break;
+
+        case "Enter":
+          event.preventDefault();
+          activateSelectedContact();
+          break;
       }
     }
 
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener(
@@ -166,230 +209,409 @@ export default function ContactWindow({
         handleKeyDown
       );
     };
-  }, [moveSelection, selectedChannel]);
+  }, [
+    activeTab,
+    activateSelectedContact,
+    moveSelection,
+    onClose,
+  ]);
+
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault();
+
+    if (sendState === "sending") return;
+
+    setSendState("sending");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          subject,
+          message,
+          website,
+        }),
+      });
+
+      const result = (await response
+        .json()
+        .catch(() => null)) as
+        | {
+            success?: boolean;
+            error?: string;
+          }
+        | null;
+
+      if (!response.ok || !result?.success) {
+        throw new Error(
+          result?.error ??
+            "Transmission failed. Try again later."
+        );
+      }
+
+      setSendState("sent");
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+      setWebsite("");
+    } catch (error) {
+      setSendState("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Transmission failed. Try again later."
+      );
+    }
+  }
+
+  function resetComposer() {
+    setSendState("idle");
+    setErrorMessage("");
+  }
 
   return (
-    <WindowFrame
-      title="Contacts"
-      subtitle="Communications directory // external channels"
-      sectionLabel="NETWORK"
-      footer={`${channels.length} communication channels loaded`}
-      className="contactFrame"
-      onClose={onClose}
+    <section
+      className="contactsScreen"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Contact Vincent Le"
     >
-      <div className="contactInterface">
-        <aside className="contactDirectory">
-          <header className="contactDirectory__header">
-            <div>
-              <span>CONTACT DIRECTORY</span>
-              <strong>AVAILABLE CHANNELS</strong>
+      <div
+        className="contactsScreen__scanlines"
+        aria-hidden="true"
+      />
+
+      <main className="contactsWorkspace">
+        <section className="contactsPanel">
+          <header className="contactsHeader">
+            <div
+              className="contactsHeader__device"
+              aria-hidden="true"
+            >
+              <span />
+              <span />
+              <span />
             </div>
 
-            <span>
-              {String(channels.length).padStart(
-                2,
-                "0"
-              )}
-            </span>
-          </header>
-
-          <div className="contactDirectory__list">
-            {channels.map((channel, index) => {
-              const isSelected =
-                channel.id === selectedChannel.id;
-
-              return (
-                <button
-                  key={channel.id}
-                  type="button"
-                  className={
-                    isSelected
-                      ? "contactDirectoryItem contactDirectoryItem--selected"
-                      : "contactDirectoryItem"
-                  }
-                  onClick={() =>
-                    setSelectedId(channel.id)
-                  }
-                  aria-pressed={isSelected}
-                >
-                  <span className="contactDirectoryItem__index">
-                    {String(index + 1).padStart(
-                      2,
-                      "0"
-                    )}
-                  </span>
-
-                  <span className="contactDirectoryItem__identity">
-                    <strong>{channel.label}</strong>
-                    <span>{channel.category}</span>
-                  </span>
-
-                  <span className="contactDirectoryItem__status">
-                    {channel.status}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          <footer className="contactDirectory__footer">
-            <span>W/S</span>
-            Navigate contacts
-          </footer>
-        </aside>
-
-        <article
-          className="contactDetails"
-          key={selectedChannel.id}
-        >
-          <div
-            className="contactDetails__backgroundCode"
-            aria-hidden="true"
-          >
-            {selectedChannel.id
-              .toUpperCase()
-              .padEnd(10, "0")}
-          </div>
-
-          <header className="contactDetails__header">
-            <div>
-              <span className="contactDetails__eyebrow">
-                SELECTED CONTACT //{" "}
-                {selectedChannel.category}
-              </span>
-
-              <h2>{selectedChannel.label}</h2>
-
-              <p>{selectedChannel.handle}</p>
-            </div>
-
-            <div className="contactDetails__status">
-              <span
+            <div
+              className="contactsTabs"
+              role="tablist"
+              aria-label="Contact views"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === "messages"}
                 className={
-                  selectedChannel.status ===
-                  "LOCKED"
-                    ? "contactDetails__statusDot contactDetails__statusDot--locked"
-                    : "contactDetails__statusDot"
+                  activeTab === "messages"
+                    ? "is-active"
+                    : ""
                 }
-              />
+                onClick={() => {
+                  setActiveTab("messages");
+                  setSelectedId("message");
+                }}
+              >
+                <span aria-hidden="true">✉</span>
+                Messages
+              </button>
 
-              <div>
-                <span>Channel Status</span>
-                <strong>
-                  {selectedChannel.status}
-                </strong>
-              </div>
-            </div>
-          </header>
-
-          <div className="contactDetails__divider" />
-
-          <section className="contactDetails__section">
-            <div className="contactDetails__sectionTitle">
-              <span>01</span>
-              <strong>Channel Information</strong>
-            </div>
-
-            <p className="contactDetails__description">
-              {selectedChannel.description}
-            </p>
-          </section>
-
-          <section className="contactDetails__section">
-            <div className="contactDetails__sectionTitle">
-              <span>02</span>
-              <strong>Connection Data</strong>
-            </div>
-
-            <div className="contactDetails__metadata">
-              <div>
-                <span>Contact Type</span>
-                <strong>
-                  {selectedChannel.category}
-                </strong>
-              </div>
-
-              <div>
-                <span>Address</span>
-                <strong>
-                  {selectedChannel.handle}
-                </strong>
-              </div>
-
-              <div>
-                <span>Protocol</span>
-                <strong>
-                  {selectedChannel.external
-                    ? "EXTERNAL LINK"
-                    : "DIRECT LINK"}
-                </strong>
-              </div>
-            </div>
-          </section>
-
-          <section className="contactDetails__actionSection">
-            {selectedChannel.href ? (
-              <a
-                className="contactDetails__action"
-                href={selectedChannel.href}
-                target={
-                  selectedChannel.external
-                    ? "_blank"
-                    : undefined
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === "contacts"}
+                className={
+                  activeTab === "contacts"
+                    ? "is-active"
+                    : ""
                 }
-                rel={
-                  selectedChannel.external
-                    ? "noreferrer"
-                    : undefined
+                onClick={() =>
+                  setActiveTab("contacts")
                 }
               >
-                <span className="contactDetails__actionIcon">
-                  ↗
-                </span>
+                <span aria-hidden="true">●</span>
+                Contacts
+              </button>
+            </div>
+          </header>
 
-                <span className="contactDetails__actionText">
-                  <small>
-                    ESTABLISH CONNECTION
-                  </small>
+          {activeTab === "contacts" ? (
+            <div
+              className="contactsDirectory"
+              role="listbox"
+              aria-label="Contact methods"
+            >
+              {contacts.map((contact) => {
+                const selected =
+                  contact.id === selectedId;
 
-                  <strong>
-                    {selectedChannel.actionLabel}
-                  </strong>
-                </span>
+                return (
+                  <button
+                    key={contact.id}
+                    type="button"
+                    role="option"
+                    aria-selected={selected}
+                    aria-disabled={contact.disabled}
+                    className={`contactsDirectory__item${
+                      selected ? " is-selected" : ""
+                    }${
+                      contact.disabled
+                        ? " is-disabled"
+                        : ""
+                    }`}
+                    onMouseEnter={() =>
+                      setSelectedId(contact.id)
+                    }
+                    onFocus={() =>
+                      setSelectedId(contact.id)
+                    }
+                    onClick={() => openContact(contact)}
+                  >
+                    <span
+                      className="contactsDirectory__icon"
+                      aria-hidden="true"
+                    >
+                      {contact.id === "message"
+                        ? "●"
+                        : ""}
+                    </span>
 
-                <span className="contactDetails__actionArrow">
-                  &gt;
-                </span>
-              </a>
-            ) : (
-              <div className="contactDetails__action contactDetails__action--disabled">
-                <span className="contactDetails__actionIcon">
-                  ×
-                </span>
+                    <span className="contactsDirectory__copy">
+                      <strong>{contact.label}</strong>
+                      <small>{contact.subtitle}</small>
+                    </span>
 
-                <span className="contactDetails__actionText">
-                  <small>ACCESS DENIED</small>
+                    {selected && (
+                      <span className="contactsDirectory__actions">
+                        R ✉ F ☎
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
 
-                  <strong>
-                    {selectedChannel.actionLabel}
-                  </strong>
-                </span>
+              <span
+                className="contactsDirectory__rail"
+                aria-hidden="true"
+              />
+            </div>
+          ) : (
+            <form
+              className="messageThread"
+              onSubmit={handleSubmit}
+            >
+              <input
+                className="messageThread__honeypot"
+                type="text"
+                name="website"
+                value={website}
+                onChange={(event) =>
+                  setWebsite(event.target.value)
+                }
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
+
+              <header className="messageThread__header">
+                <span>MESSAGES</span>
+                <strong>› VINCENT LE</strong>
+                <small>TRN_CLASS_CONTACT</small>
+              </header>
+
+              <div className="messageThread__body">
+                <div className="messageBubble messageBubble--incoming">
+                  <p>
+                    Hey. Leave your contact information and
+                    tell me what you want to build.
+                  </p>
+                </div>
+
+                <label className="messageBubble messageBubble--outgoing messageBubble--field">
+                  <span>Operator Name</span>
+                  <input
+                    value={name}
+                    onChange={(event) =>
+                      setName(event.target.value)
+                    }
+                    required
+                    maxLength={100}
+                    autoComplete="name"
+                    placeholder="Your name"
+                  />
+                </label>
+
+                <label className="messageBubble messageBubble--outgoing messageBubble--field">
+                  <span>Return Channel</span>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(event) =>
+                      setEmail(event.target.value)
+                    }
+                    required
+                    maxLength={254}
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                  />
+                </label>
+
+                <label className="messageBubble messageBubble--outgoing messageBubble--field">
+                  <span>Subject</span>
+                  <input
+                    value={subject}
+                    onChange={(event) =>
+                      setSubject(event.target.value)
+                    }
+                    required
+                    maxLength={150}
+                    placeholder="Opportunity, project, or idea"
+                  />
+                </label>
+
+                <label className="messageBubble messageBubble--outgoing messageBubble--field messageBubble--message">
+                  <span>Message</span>
+                  <textarea
+                    value={message}
+                    onChange={(event) =>
+                      setMessage(event.target.value)
+                    }
+                    required
+                    minLength={10}
+                    maxLength={5000}
+                    placeholder="Compose transmission"
+                  />
+                </label>
+
+                {sendState === "sent" && (
+                  <div
+                    className="messageBubble messageBubble--incoming messageBubble--system"
+                    role="status"
+                  >
+                    <p>
+                      Transmission accepted. Message delivered.
+                    </p>
+                  </div>
+                )}
+
+                {sendState === "error" && (
+                  <div
+                    className="messageBubble messageBubble--incoming messageBubble--error"
+                    role="alert"
+                  >
+                    <p>
+                      Transmission error // {errorMessage}
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </section>
 
-          <footer className="contactDetails__footer">
-            <span>
-              CHANNEL ID //{" "}
-              {selectedChannel.id.toUpperCase()}
-            </span>
+              <div className="messageThread__composer">
+                <span>
+                  {sendState === "sending"
+                    ? "UPLOADING PACKET..."
+                    : sendState === "sent"
+                      ? "CHANNEL CONFIRMED"
+                      : "SECURE RELAY READY"}
+                </span>
 
-            <strong>
-              CONNECTION SECURE
-            </strong>
-          </footer>
-        </article>
-      </div>
-    </WindowFrame>
+                {sendState === "sent" ? (
+                  <button
+                    type="button"
+                    onClick={resetComposer}
+                  >
+                    New Message
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={sendState === "sending"}
+                  >
+                    {sendState === "sending"
+                      ? "Transmitting..."
+                      : "Send Transmission"}
+                  </button>
+                )}
+              </div>
+            </form>
+          )}
+        </section>
+
+        <aside className="contactPreview">
+          <span className="contactPreview__eyebrow">
+            CONTACT DATABASE // VL-01
+          </span>
+
+          <h1>
+            {activeTab === "messages"
+              ? "SECURE MESSAGE"
+              : selectedContact.label}
+          </h1>
+
+          <p>
+            {activeTab === "messages"
+              ? "Your message is sent through a private server-side relay. Vincent's email address is never exposed to the browser."
+              : selectedContact.value}
+          </p>
+
+          {activeTab === "contacts" && (
+            <button
+              type="button"
+              onClick={activateSelectedContact}
+              disabled={selectedContact.disabled}
+            >
+              {selectedContact.actionLabel}
+            </button>
+          )}
+        </aside>
+      </main>
+
+      <ActionBar
+        status={
+          activeTab === "messages"
+            ? "MESSAGE CHANNEL OPEN"
+            : "CONTACT DIRECTORY ONLINE"
+        }
+      >
+        {activeTab === "contacts" ? (
+          <>
+            <ActionKey keyLabel="↑ ↓" label="Navigate" />
+            <ActionKey
+              keyLabel="ENTER"
+              label="Select"
+              onClick={activateSelectedContact}
+              disabled={selectedContact.disabled}
+            />
+            <ActionKey
+              keyLabel="ESC"
+              label="Close"
+              onClick={onClose}
+            />
+          </>
+        ) : (
+          <>
+            <ActionKey
+              keyLabel="BKSP"
+              label="Contacts"
+              onClick={() => setActiveTab("contacts")}
+            />
+            <ActionKey
+              keyLabel="ESC"
+              label="Close"
+              onClick={onClose}
+            />
+          </>
+        )}
+      </ActionBar>
+    </section>
   );
 }
