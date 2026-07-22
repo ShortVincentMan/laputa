@@ -71,6 +71,7 @@
   inset: 0;
   z-index: 19;
   pointer-events: none;
+
   opacity: 0.16;
   background: repeating-linear-gradient(
     to bottom,
@@ -88,32 +89,46 @@
   grid-template-columns: minmax(520px, 44%) minmax(0, 56%);
   gap: clamp(3rem, 7vw, 8rem);
 
+  min-width: 0;
   min-height: 0;
+  overflow: hidden;
+
   padding:
     clamp(5rem, 13vh, 9rem)
     clamp(4rem, 8vw, 9rem)
-    3rem;
+    1.25rem;
 }
 
 .contactsPanel {
-  align-self: start;
+  align-self: stretch;
+
+  display: flex;
+  flex-direction: column;
+
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 .contactsHeader {
+  flex: 0 0 auto;
+
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr);
   align-items: end;
   gap: 1rem;
+
   margin-bottom: 0.7rem;
 }
 
 .contactsHeader__device {
   position: relative;
+
   width: 48px;
   height: 78px;
+
   transform: skewY(8deg);
+
   border: 1px solid rgba(255, 89, 99, 0.6);
   background: linear-gradient(
     135deg,
@@ -126,7 +141,9 @@
   position: absolute;
   right: 8px;
   left: 8px;
+
   height: 2px;
+
   background: rgba(255, 89, 99, 0.45);
 }
 
@@ -145,19 +162,24 @@
 .contactsTabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
+
   border-bottom: 1px solid rgba(255, 89, 99, 0.55);
 }
 
 .contactsTabs button {
   position: relative;
+
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
   min-height: 48px;
   padding: 0 0.5rem;
+
   color: var(--contact-red);
   background: transparent;
   border: 0;
+
   cursor: pointer;
   font: inherit;
   font-size: clamp(1rem, 1.7vw, 1.5rem);
@@ -171,21 +193,29 @@
 
 .contactsTabs button.is-active::after {
   content: "";
+
   position: absolute;
   right: 0;
   bottom: -2px;
   left: 0;
+
   height: 4px;
+
   background: var(--contact-cyan);
   box-shadow: 0 0 10px rgba(102, 241, 241, 0.62);
 }
 
 .contactsDirectory {
   position: relative;
-  min-height: 490px;
-  max-height: 62vh;
+
+  flex: 1 1 auto;
+
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+
   padding-right: 14px;
+
   scrollbar-width: none;
 }
 
@@ -195,18 +225,23 @@
 
 .contactsDirectory__item {
   position: relative;
+
   display: grid;
   grid-template-columns: 28px minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.7rem;
+
   width: 100%;
   min-height: 58px;
   padding: 0.55rem 0.75rem;
+
   color: var(--contact-cyan);
   text-align: left;
+
   background: rgba(7, 12, 16, 0.18);
   border: 0;
   border-bottom: 1px solid rgba(255, 89, 99, 0.16);
+
   cursor: pointer;
   font: inherit;
   text-transform: uppercase;
@@ -224,7 +259,9 @@
     rgba(102, 241, 241, 0.22),
     rgba(102, 241, 241, 0.055)
   );
+
   border: 1px solid var(--contact-cyan);
+
   clip-path: polygon(
     0 0,
     calc(100% - 10px) 0,
@@ -241,32 +278,38 @@
 .contactsDirectory__icon {
   display: grid;
   place-items: center;
+
   font-size: 1rem;
 }
 
 .contactsDirectory__copy {
   display: grid;
   gap: 0.18rem;
+
   min-width: 0;
 }
 
 .contactsDirectory__copy strong {
   overflow: hidden;
+
   font-size: clamp(0.95rem, 1.55vw, 1.3rem);
   font-weight: 500;
   letter-spacing: 0.035em;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .contactsDirectory__copy small {
   color: rgba(255, 255, 255, 0.28);
+
   font-size: 0.5rem;
   letter-spacing: 0.08em;
 }
 
 .contactsDirectory__actions {
   color: var(--contact-cyan);
+
   font-size: 0.72rem;
   letter-spacing: 0.08em;
 }
@@ -275,27 +318,36 @@
   position: absolute;
   top: 0;
   right: 2px;
+
   width: 3px;
   height: 42%;
+
   background: var(--contact-red);
   box-shadow: 0 0 9px rgba(255, 89, 99, 0.65);
+
+  pointer-events: none;
 }
 
 .contactPreview {
   align-self: center;
+
   max-width: 660px;
+
   color: rgba(255, 255, 255, 0.5);
 }
 
 .contactPreview__eyebrow {
   color: var(--contact-red);
+
   font-size: 0.58rem;
   letter-spacing: 0.15em;
 }
 
 .contactPreview h1 {
   margin: 0.7rem 0 1rem;
+
   color: var(--contact-red);
+
   font-size: clamp(2.2rem, 5vw, 5rem);
   font-weight: 500;
   line-height: 0.95;
@@ -304,8 +356,10 @@
 
 .contactPreview p {
   max-width: 60ch;
+
   font-size: clamp(0.8rem, 1.2vw, 1rem);
   line-height: 1.65;
+
   overflow-wrap: anywhere;
   text-transform: none;
 }
@@ -313,9 +367,11 @@
 .contactPreview button {
   margin-top: 1.4rem;
   padding: 0.75rem 1rem;
+
   color: var(--contact-cyan);
   background: rgba(102, 241, 241, 0.08);
   border: 1px solid rgba(102, 241, 241, 0.62);
+
   cursor: pointer;
   font: inherit;
   font-size: 0.65rem;
@@ -329,9 +385,20 @@
 }
 
 .messageThread {
+  position: relative;
+
+  flex: 1 1 auto;
+
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  min-height: min(650px, 68vh);
+
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-height: 100%;
+
+  overflow: hidden;
+
   border-right: 3px solid var(--contact-red);
   border-bottom: 1px solid rgba(255, 89, 99, 0.7);
 }
@@ -339,49 +406,92 @@
 .messageThread__honeypot {
   position: absolute;
   left: -9999px;
+
   width: 1px;
   height: 1px;
+
   opacity: 0;
   pointer-events: none;
 }
 
 .messageThread__header {
+  flex: 0 0 auto;
+
   display: flex;
   align-items: baseline;
   gap: 0.6rem;
+
   padding: 0.2rem 0 0.75rem;
+
   border-bottom: 3px solid var(--contact-cyan);
 }
 
 .messageThread__header span,
 .messageThread__header strong {
   color: var(--contact-cyan);
+
   font-size: clamp(1rem, 1.7vw, 1.5rem);
   font-weight: 500;
 }
 
 .messageThread__header small {
   margin-left: auto;
+
   color: rgba(255, 89, 99, 0.52);
+
   font-size: 0.45rem;
   letter-spacing: 0.08em;
 }
 
 .messageThread__body {
+  position: relative;
+
+  min-width: 0;
   min-height: 0;
+
   overflow-y: auto;
-  padding: 1rem 1.5rem 1rem 0.2rem;
-  scrollbar-color: var(--contact-red) transparent;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+
+  padding: 1rem 1.5rem 2rem 0.2rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 89, 99, 0.7) transparent;
+}
+
+.messageThread__body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.messageThread__body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messageThread__body::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    var(--contact-red),
+    rgba(255, 89, 99, 0.35)
+  );
+
+  box-shadow: 0 0 8px rgba(255, 89, 99, 0.55);
+}
+
+.messageThread__body::-webkit-scrollbar-thumb:hover {
+  background: var(--contact-red);
 }
 
 .messageBubble {
   position: relative;
+
   width: fit-content;
   max-width: 86%;
   margin-bottom: 0.85rem;
   padding: 0.8rem 1rem;
+
   border: 2px solid var(--contact-cyan);
   background: rgba(7, 21, 28, 0.76);
+
   clip-path: polygon(
     9px 0,
     100% 0,
@@ -398,26 +508,32 @@
 
 .messageBubble--outgoing {
   margin-left: auto;
+
   border-color: var(--contact-green);
   background: rgba(55, 106, 79, 0.36);
 }
 
 .messageBubble p {
   margin: 0;
+
   color: rgba(228, 255, 255, 0.92);
+
   font-size: clamp(0.8rem, 1.25vw, 1.08rem);
   line-height: 1.4;
+
   text-transform: none;
 }
 
 .messageBubble--field {
   display: grid;
   gap: 0.35rem;
+
   width: min(86%, 680px);
 }
 
 .messageBubble--field > span {
   color: var(--contact-green);
+
   font-size: 0.48rem;
   letter-spacing: 0.12em;
 }
@@ -426,14 +542,18 @@
 .messageBubble textarea {
   width: 100%;
   padding: 0;
+
   color: #ecffff;
   background: transparent;
   border: 0;
   outline: 0;
+
   resize: vertical;
+
   font: inherit;
   font-size: clamp(0.8rem, 1.2vw, 1rem);
   line-height: 1.45;
+
   text-transform: none;
 }
 
@@ -444,6 +564,7 @@
 
 .messageBubble textarea {
   min-height: 110px;
+  max-height: 260px;
 }
 
 .messageBubble--system {
@@ -456,40 +577,34 @@
 }
 
 .messageThread__composer {
+  position: relative;
+  z-index: 2;
+
+  flex: 0 0 auto;
+
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
-  padding: 0.7rem 1rem;
+
+  min-height: 38px;
+  padding: 0.55rem 1rem;
+
   border-top: 1px solid rgba(255, 89, 99, 0.48);
+  background: rgba(5, 8, 12, 0.94);
 }
 
 .messageThread__composer span {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.3);
+
   font-size: 0.5rem;
-}
-
-.messageThread__composer button {
-  padding: 0.65rem 1rem;
-  color: #071014;
-  background: var(--contact-cyan);
-  border: 0;
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.messageThread__composer button:disabled {
-  opacity: 0.45;
-  cursor: wait;
+  letter-spacing: 0.1em;
 }
 
 @media (max-width: 900px) {
   .contactsWorkspace {
     grid-template-columns: 1fr;
+    gap: 1rem;
+
     padding: 2rem 1.25rem 1rem;
   }
 
@@ -507,6 +622,10 @@
     grid-template-rows: minmax(0, 1fr) 50px;
   }
 
+  .contactsWorkspace {
+    padding: 1rem;
+  }
+
   .contactsHeader {
     grid-template-columns: 40px 1fr;
   }
@@ -521,8 +640,12 @@
   }
 
   .messageThread {
-    min-height: 0;
     height: 100%;
+    min-height: 0;
+  }
+
+  .messageThread__body {
+    padding-right: 0.75rem;
   }
 
   .messageBubble {

@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -98,6 +99,13 @@ export default function ContactWindow({
   const [sendState, setSendState] =
     useState<SendState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const messageFormRef = useRef<HTMLFormElement>(null);
+
+  const formReady =
+    name.trim().length > 0 &&
+    email.trim().length > 0 &&
+    subject.trim().length > 0 &&
+    message.trim().length >= 10;
 
   const selectedContact = useMemo(
     () =>
@@ -406,6 +414,7 @@ export default function ContactWindow({
             </div>
           ) : (
             <form
+              ref={messageFormRef}
               className="messageThread"
               onSubmit={handleSubmit}
             >
@@ -515,32 +524,18 @@ export default function ContactWindow({
                 )}
               </div>
 
-              <div className="messageThread__composer">
+              <div className="messageThread__composer" aria-live="polite">
                 <span>
                   {sendState === "sending"
                     ? "UPLOADING PACKET..."
                     : sendState === "sent"
                       ? "CHANNEL CONFIRMED"
-                      : "SECURE RELAY READY"}
+                      : sendState === "error"
+                        ? "RELAY ERROR"
+                        : formReady
+                          ? "TRANSMISSION READY"
+                          : "COMPLETE REQUIRED FIELDS"}
                 </span>
-
-                {sendState === "sent" ? (
-                  <button
-                    type="button"
-                    onClick={resetComposer}
-                  >
-                    New Message
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={sendState === "sending"}
-                  >
-                    {sendState === "sending"
-                      ? "Transmitting..."
-                      : "Send Transmission"}
-                  </button>
-                )}
               </div>
             </form>
           )}
@@ -599,6 +594,26 @@ export default function ContactWindow({
           </>
         ) : (
           <>
+            {sendState === "sent" ? (
+              <ActionKey
+                keyLabel="ENTER"
+                label="New Message"
+                onClick={resetComposer}
+              />
+            ) : (
+              <ActionKey
+                keyLabel="ENTER"
+                label={
+                  sendState === "sending"
+                    ? "Transmitting"
+                    : "Send Transmission"
+                }
+                onClick={() =>
+                  messageFormRef.current?.requestSubmit()
+                }
+                disabled={!formReady || sendState === "sending"}
+              />
+            )}
             <ActionKey
               keyLabel="BKSP"
               label="Contacts"

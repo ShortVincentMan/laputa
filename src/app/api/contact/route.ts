@@ -18,7 +18,10 @@ function cleanText(
   value: unknown,
   maxLength: number
 ): string {
-  if (typeof value !== "string") return "";
+  if (typeof value !== "string") {
+    return "";
+  }
+
   return value.trim().slice(0, maxLength);
 }
 
@@ -32,9 +35,11 @@ export async function POST(request: Request) {
     const message = cleanText(body.message, 5000);
     const website = cleanText(body.website, 200);
 
-    // Honeypot: silently accept bot submissions.
+    // Honeypot: silently accept likely bot submissions.
     if (website) {
-      return NextResponse.json({ success: true });
+      return NextResponse.json({
+        success: true,
+      });
     }
 
     if (!name || !email || !subject || !message) {
@@ -43,7 +48,9 @@ export async function POST(request: Request) {
           success: false,
           error: "All transmission fields are required.",
         },
-        { status: 400 }
+        {
+          status: 400,
+        }
       );
     }
 
@@ -53,7 +60,9 @@ export async function POST(request: Request) {
           success: false,
           error: "Return channel is invalid.",
         },
-        { status: 400 }
+        {
+          status: 400,
+        }
       );
     }
 
@@ -63,7 +72,9 @@ export async function POST(request: Request) {
           success: false,
           error: "Transmission is too short.",
         },
-        { status: 400 }
+        {
+          status: 400,
+        }
       );
     }
 
@@ -75,7 +86,12 @@ export async function POST(request: Request) {
 
     if (!apiKey || !contactEmail) {
       console.error(
-        "Missing RESEND_API_KEY or CONTACT_EMAIL."
+        "Contact route configuration error:",
+        {
+          hasApiKey: Boolean(apiKey),
+          hasContactEmail: Boolean(contactEmail),
+          fromEmail,
+        }
       );
 
       return NextResponse.json(
@@ -83,13 +99,15 @@ export async function POST(request: Request) {
           success: false,
           error: "Message relay is not configured.",
         },
-        { status: 500 }
+        {
+          status: 500,
+        }
       );
     }
 
     const resend = new Resend(apiKey);
 
-    const { error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: fromEmail,
       to: [contactEmail],
       replyTo: email,
@@ -112,27 +130,52 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error("Resend send error:", {
+        name: error.name,
+        message: error.message,
+        fromEmail,
+        contactEmail,
+      });
 
       return NextResponse.json(
         {
           success: false,
-          error: "Message relay rejected the transmission.",
+          error:
+            process.env.NODE_ENV === "development"
+              ? error.message
+              : "Message relay rejected the transmission.",
         },
-        { status: 502 }
+        {
+          status: 502,
+        }
       );
     }
 
-    return NextResponse.json({ success: true });
+    console.info("Contact transmission accepted:", {
+      resendId: data?.id,
+      subject,
+      replyTo: email,
+    });
+
+    return NextResponse.json({
+      success: true,
+      id: data?.id,
+    });
   } catch (error) {
     console.error("Contact route error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        error: "Invalid transmission packet.",
+        error:
+          process.env.NODE_ENV === "development" &&
+          error instanceof Error
+            ? error.message
+            : "Invalid transmission packet.",
       },
-      { status: 500 }
+      {
+        status: 500,
+      }
     );
   }
 }
