@@ -202,7 +202,7 @@ export default function AboutWindow({ onClose }: AboutWindowProps) {
       <TopHud
         metrics={[
           { value: "02", label: "YEAR" },
-          { value: "00", label: "STREET CRED 😂", tone: "green" },
+          { value: "00", label: "STREET CRED😂", tone: "green" },
         ]}
         navigation={[
           { id: "cyberware", label: "CYBERWARE" },
@@ -305,12 +305,14 @@ export default function AboutWindow({ onClose }: AboutWindowProps) {
 
             <Image
               src="/assets/about/vincent-portrait.jpeg"
-              alt="Vincent Le sunset portrait"
+              alt="Vincent Le standing at a beach with a sunset in the background, wearing a black jacket and cal poly hoodie"
               fill
               priority
               sizes="(max-width: 900px) 45vw, 28vw"
               className="characterModel__image"
             />
+
+            <div className="characterModel__scanline" aria-hidden="true" />
           </div>
 
           <div className="characterModel__designation">

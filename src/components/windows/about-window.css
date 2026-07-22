@@ -349,18 +349,6 @@
   pointer-events: none;
 }
 
-.characterModel__scanline {
-  position: absolute;
-  z-index: 3;
-  left: 0;
-  right: 0;
-  top: 38%;
-  height: 2px;
-  background: var(--character-cyan);
-  box-shadow: 0 0 14px rgba(89, 232, 242, 0.8);
-  opacity: 0.55;
-}
-
 .characterModel__corner {
   position: absolute;
   z-index: 4;

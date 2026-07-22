@@ -190,6 +190,16 @@ export const projects: ProjectRecord[] = [
         alt: "Side view of the completed Mantis Blades",
         caption: "Completed mechanical assembly",
       },
+      {
+        src: "/assets/projects/mantis-blades/image0.jpg",
+        alt: "Vincent Le demonstrating the wearable Mantis Blades prototype",
+        caption: "Classroom project demonstration",
+      },
+      {
+        src: "/assets/projects/mantis-blades/mantisblades2.png",
+        alt: "Additional view of the Mantis Blades prototype",
+        caption: "Prototype detail view",
+      },
     ],
 
     featured: true,
@@ -365,7 +375,87 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "TRIMTAB ARCHITECTURAL RENDER",
+    image: "/assets/projects/trimtab/final-environment-render.png",
+    imageAlt: "Final environment render of the Trimtab organic architecture study",
     detailLabel: "ARCHIVE // TRIMTAB",
+
+    sections: [
+      {
+        id: "final-form",
+        title: "Final Form",
+        description:
+          "The final concept developed into a seven-story coastal structure shaped through organic architectural principles.",
+        image: "/assets/projects/trimtab/final-form-render.png",
+        imageAlt: "Final form render of the Trimtab architectural study",
+      },
+      {
+        id: "blueprint-setup",
+        title: "Reference Setup",
+        description:
+          "Blueprint references and aligned construction planes established the scale and primary geometry of the model.",
+        image: "/assets/projects/trimtab/blueprint-reference-setup.png",
+        imageAlt: "Blueprint reference setup used to model Trimtab",
+      },
+      {
+        id: "form-development",
+        title: "Form Development",
+        description:
+          "The structure was iterated through layered surface modeling, proportion studies, and organic-form refinement.",
+        image: "/assets/projects/trimtab/form-development-03.png",
+        imageAlt: "Intermediate Trimtab form development model",
+      },
+      {
+        id: "wireframe",
+        title: "Multi-View Modeling",
+        description:
+          "Multiple orthographic and perspective views were used to evaluate continuity, structure, and overall silhouette.",
+        image: "/assets/projects/trimtab/multi-view-wireframe.png",
+        imageAlt: "Multi-view wireframe of the Trimtab model",
+      },
+    ],
+
+    gallery: [
+      {
+        src: "/assets/projects/trimtab/final-environment-render.png",
+        alt: "Trimtab architectural concept in its coastal environment",
+        caption: "Final environment render",
+      },
+      {
+        src: "/assets/projects/trimtab/final-form-render.png",
+        alt: "Final isolated render of the Trimtab structure",
+        caption: "Final form render",
+      },
+      {
+        src: "/assets/projects/trimtab/form-development-01.png",
+        alt: "Early Trimtab form development",
+        caption: "Form development 01",
+      },
+      {
+        src: "/assets/projects/trimtab/form-development-02.png",
+        alt: "Second Trimtab form development stage",
+        caption: "Form development 02",
+      },
+      {
+        src: "/assets/projects/trimtab/form-development-04.png",
+        alt: "Later Trimtab form development stage",
+        caption: "Form development 04",
+      },
+      {
+        src: "/assets/projects/trimtab/reference-plane-modeling.png",
+        alt: "Reference-plane modeling for Trimtab",
+        caption: "Reference-plane modeling",
+      },
+      {
+        src: "/assets/projects/trimtab/reference-overlay-modeling.png",
+        alt: "Reference overlay used during Trimtab modeling",
+        caption: "Reference overlay",
+      },
+      {
+        src: "/assets/projects/trimtab/base-development.png",
+        alt: "Base development for the Trimtab architectural model",
+        caption: "Base development",
+      },
+    ],
   },
 
   {
