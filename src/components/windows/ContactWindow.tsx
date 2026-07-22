@@ -31,13 +31,13 @@ const channels: ContactChannel[] = [
   {
     id: "email",
     label: "Email",
-    handle: "vinvyle06@gmail.com",
+    handle: "vincentrle26@gmail.com",
     category: "Direct Channel",
     description:
       "Primary contact method for internships, research, engineering collaborations, and professional opportunities.",
     status: "AVAILABLE",
     actionLabel: "Send Email",
-    href: "mailto:vinvyle06@gmail.com",
+    href: "mailto:vincentrle26@gmail.com",
   },
   {
     id: "linkedin",
