@@ -6,6 +6,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import CyberwareWindow from "@/components/projects/CyberwareWindow";
 import ProjectDetailWindow from "@/components/projects/ProjectDetailWindow";
 import AssetPlaceholder from "@/components/shared/AssetPlaceholder";
+import ActionBar from "@/components/shared/ActionBar";
+import ActionKey from "@/components/shared/ActionKey";
+import TopHud from "@/components/shared/TopHud";
+
 import {
   categoryLabels,
   categoryOrder,
@@ -21,37 +25,27 @@ type ProjectsWindowProps = {
   onClose: () => void;
 };
 
+type ProjectsView =
+  | { type: "journal" }
+  | { type: "record"; projectId: string }
+  | {
+      type: "cyberware";
+      projectId: string;
+      returnTo: "journal" | "record";
+    };
+
 function getStatusTone(project: ProjectRecord) {
   return project.status === "COMPLETED" ? "complete" : "active";
 }
 
-export default function ProjectsWindow({
-  onClose,
-}: ProjectsWindowProps) {
+export default function ProjectsWindow({ onClose }: ProjectsWindowProps) {
   const initialProject = getVisibleProjects("featured")[0];
 
   const [activeCategory, setActiveCategory] =
     useState<ProjectCategory>("featured");
-
-  const [selectedId, setSelectedId] = useState(
-    initialProject?.id ?? ""
-  );
-
-  const [openProjectId, setOpenProjectId] = useState<string | null>(
-    null
-  );
-
-  const [cyberwareProjectId, setCyberwareProjectId] = useState<string | null>(
-    null
-  );
-
-  const [cyberwareReturnTo, setCyberwareReturnTo] = useState<
-    "journal" | "detail"
-  >("journal");
-
-  const [expandedImage, setExpandedImage] = useState<string | null>(
-    null
-  );
+  const [selectedId, setSelectedId] = useState(initialProject?.id ?? "");
+  const [view, setView] = useState<ProjectsView>({ type: "journal" });
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
   const visibleProjects = useMemo(
     () => getVisibleProjects(activeCategory),
@@ -62,19 +56,16 @@ export default function ProjectsWindow({
     visibleProjects.find((project) => project.id === selectedId) ??
     visibleProjects[0];
 
-  const openProject = getProjectById(openProjectId);
-  const cyberwareProject = getProjectById(cyberwareProjectId);
+  const activeProject =
+    view.type === "journal" ? undefined : getProjectById(view.projectId);
 
-  const selectCategory = useCallback(
-    (category: ProjectCategory) => {
-      const nextProjects = getVisibleProjects(category);
+  const selectCategory = useCallback((category: ProjectCategory) => {
+    const nextProjects = getVisibleProjects(category);
 
-      setExpandedImage(null);
-      setActiveCategory(category);
-      setSelectedId(nextProjects[0]?.id ?? "");
-    },
-    []
-  );
+    setExpandedImage(null);
+    setActiveCategory(category);
+    setSelectedId(nextProjects[0]?.id ?? "");
+  }, []);
 
   const selectProject = useCallback((projectId: string) => {
     setExpandedImage(null);
@@ -88,7 +79,6 @@ export default function ProjectsWindow({
       const currentIndex = visibleProjects.findIndex(
         (project) => project.id === selectedProject.id
       );
-
       const nextIndex =
         (currentIndex + direction + visibleProjects.length) %
         visibleProjects.length;
@@ -102,7 +92,6 @@ export default function ProjectsWindow({
   const moveCategory = useCallback(
     (direction: 1 | -1) => {
       const currentIndex = categoryOrder.indexOf(activeCategory);
-
       const nextIndex =
         (currentIndex + direction + categoryOrder.length) %
         categoryOrder.length;
@@ -116,19 +105,22 @@ export default function ProjectsWindow({
     if (!selectedProject) return;
 
     setExpandedImage(null);
-    setOpenProjectId(selectedProject.id);
+    setView({ type: "record", projectId: selectedProject.id });
   }, [selectedProject]);
 
   const openSelectedCyberware = useCallback(() => {
     if (!selectedProject?.cyberware) return;
 
     setExpandedImage(null);
-    setCyberwareReturnTo("journal");
-    setCyberwareProjectId(selectedProject.id);
+    setView({
+      type: "cyberware",
+      projectId: selectedProject.id,
+      returnTo: "journal",
+    });
   }, [selectedProject]);
 
   useEffect(() => {
-    if (openProjectId) return;
+    if (view.type !== "journal") return;
 
     function handleKeyDown(event: KeyboardEvent) {
       const target = event.target;
@@ -146,7 +138,6 @@ export default function ProjectsWindow({
           event.preventDefault();
           setExpandedImage(null);
         }
-
         return;
       }
 
@@ -155,27 +146,22 @@ export default function ProjectsWindow({
           event.preventDefault();
           moveSelection(1);
           break;
-
         case "ArrowUp":
           event.preventDefault();
           moveSelection(-1);
           break;
-
         case "ArrowLeft":
           event.preventDefault();
           moveCategory(-1);
           break;
-
         case "ArrowRight":
           event.preventDefault();
           moveCategory(1);
           break;
-
         case "Enter":
           event.preventDefault();
           openSelectedProject();
           break;
-
         case "Escape":
           event.preventDefault();
           onClose();
@@ -184,52 +170,50 @@ export default function ProjectsWindow({
     }
 
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [
     expandedImage,
     moveCategory,
     moveSelection,
     onClose,
-    openProjectId,
     openSelectedProject,
+    view.type,
   ]);
 
-  if (cyberwareProject?.cyberware) {
+  if (view.type === "cyberware" && activeProject?.cyberware) {
     return (
       <CyberwareWindow
-        project={cyberwareProject}
+        initialProjectId={activeProject.id}
         onBack={() => {
-          setCyberwareProjectId(null);
-
-          if (cyberwareReturnTo === "detail") {
-            setOpenProjectId(cyberwareProject.id);
+          if (view.returnTo === "record") {
+            setView({ type: "record", projectId: view.projectId });
+            return;
           }
+
+          setView({ type: "journal" });
         }}
-        onOpenRecord={(projectId) => {
-          setCyberwareProjectId(null);
-          setOpenProjectId(projectId);
-        }}
+        onOpenRecord={(projectId) =>
+          setView({ type: "record", projectId })
+        }
         onClose={onClose}
       />
     );
   }
 
-  if (openProject) {
+  if (view.type === "record" && activeProject) {
     return (
       <ProjectDetailWindow
-        project={openProject}
-        onBack={() => setOpenProjectId(null)}
+        project={activeProject}
+        onBack={() => setView({ type: "journal" })}
         onClose={onClose}
         onOpenCyberware={
-          openProject.cyberware
-            ? () => {
-                setOpenProjectId(null);
-                setCyberwareReturnTo("detail");
-                setCyberwareProjectId(openProject.id);
-              }
+          activeProject.cyberware
+            ? () =>
+                setView({
+                  type: "cyberware",
+                  projectId: activeProject.id,
+                  returnTo: "record",
+                })
             : undefined
         }
       />
@@ -243,56 +227,37 @@ export default function ProjectsWindow({
       aria-modal="true"
       aria-label="Projects journal"
     >
-      <div
-        className="projectsScreen__scanlines"
-        aria-hidden="true"
+      <div className="projectsScreen__scanlines" aria-hidden="true" />
+
+      <TopHud
+        metrics={[
+          {
+            value: String(visibleProjects.length).padStart(2, "0"),
+            label: "RECORDS",
+          },
+          {
+            value: String(categoryOrder.length).padStart(2, "0"),
+            label: "SECTORS",
+            tone: "green",
+          },
+        ]}
+        navigation={[
+          {
+            id: "cyberware",
+            label: "CYBERWARE",
+            disabled: !selectedProject?.cyberware,
+            onClick: openSelectedCyberware,
+            title: selectedProject?.cyberware
+              ? `Open ${selectedProject.title} in Cyberware`
+              : "Select a cybernetic project to open Cyberware",
+          },
+          { id: "inventory", label: "INVENTORY" },
+          { id: "map", label: "MAP" },
+          { id: "character", label: "CHARACTER" },
+          { id: "journal", label: "JOURNAL", active: true },
+        ]}
+        archiveLabel="PROJECT DATABASE"
       />
-
-      <header className="projectsHud">
-        <div className="projectsHud__identity">
-          <div>
-            <strong>
-              {String(visibleProjects.length).padStart(2, "0")}
-            </strong>
-            <span>RECORDS</span>
-          </div>
-
-          <div>
-            <strong>
-              {String(categoryOrder.length).padStart(2, "0")}
-            </strong>
-            <span>SECTORS</span>
-          </div>
-        </div>
-
-        <nav
-          className="projectsHud__nav"
-          aria-label="Portfolio sections"
-        >
-          <button
-            type="button"
-            className="projectsHud__navButton"
-            disabled={!selectedProject?.cyberware}
-            onClick={openSelectedCyberware}
-            title={
-              selectedProject?.cyberware
-                ? `Open ${selectedProject.title} in Cyberware`
-                : "Select a cybernetic project to open Cyberware"
-            }
-          >
-            CYBERWARE
-          </button>
-          <span>INVENTORY</span>
-          <span>MAP</span>
-          <span>CHARACTER</span>
-          <strong>JOURNAL</strong>
-        </nav>
-
-        <div className="projectsHud__status">
-          <span>LAPUTA OS</span>
-          <strong>PROJECT DATABASE</strong>
-        </div>
-      </header>
 
       <div
         className="projectsJournalTabs"
@@ -325,14 +290,8 @@ export default function ProjectsWindow({
       </div>
 
       <div className="projectsJournalLayout">
-        <aside
-          className="projectsQuestList"
-          aria-label="Project records"
-        >
-          <div
-            className="projectsQuestList__rail"
-            aria-hidden="true"
-          />
+        <aside className="projectsQuestList" aria-label="Project records">
+          <div className="projectsQuestList__rail" aria-hidden="true" />
 
           {visibleProjects.map((project, index) => {
             const selected = project.id === selectedProject?.id;
@@ -346,16 +305,12 @@ export default function ProjectsWindow({
                   selected ? " is-selected" : ""
                 }`}
                 onClick={() => selectProject(project.id)}
-                onDoubleClick={() => {
-                  setExpandedImage(null);
-                  setOpenProjectId(project.id);
-                }}
+                onDoubleClick={() =>
+                  setView({ type: "record", projectId: project.id })
+                }
                 aria-pressed={selected}
               >
-                <span
-                  className="projectsQuestRow__state"
-                  aria-hidden="true"
-                >
+                <span className="projectsQuestRow__state" aria-hidden="true">
                   {tone === "complete" ? "✓" : "!"}
                 </span>
 
@@ -364,23 +319,15 @@ export default function ProjectsWindow({
                   <small>{project.subtitle}</small>
                 </span>
 
-                <span className="projectsQuestRow__period">
-                  {project.period}
-                </span>
+                <span className="projectsQuestRow__period">{project.period}</span>
 
                 {selected && (
-                  <span
-                    className="projectsQuestRow__marker"
-                    aria-hidden="true"
-                  >
+                  <span className="projectsQuestRow__marker" aria-hidden="true">
                     ◆
                   </span>
                 )}
 
-                <span
-                  className="projectsQuestRow__index"
-                  aria-hidden="true"
-                >
+                <span className="projectsQuestRow__index" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </button>
@@ -389,10 +336,7 @@ export default function ProjectsWindow({
         </aside>
 
         {selectedProject && (
-          <article
-            className="projectsQuestDetail"
-            key={selectedProject.id}
-          >
+          <article className="projectsQuestDetail" key={selectedProject.id}>
             <header className="projectsQuestDetail__header">
               <span>{selectedProject.status}</span>
               <h1>{selectedProject.title}</h1>
@@ -413,24 +357,16 @@ export default function ProjectsWindow({
                   <button
                     type="button"
                     className="projectsQuestDetail__thumbnail"
-                    onClick={() =>
-                      setExpandedImage(selectedProject.image ?? null)
-                    }
+                    onClick={() => setExpandedImage(selectedProject.image ?? null)}
                     aria-label={`Expand ${selectedProject.title} image`}
                   >
                     <Image
                       src={selectedProject.image}
-                      alt={
-                        selectedProject.imageAlt ??
-                        selectedProject.title
-                      }
+                      alt={selectedProject.imageAlt ?? selectedProject.title}
                       fill
-                      priority={
-                        selectedProject.id === "mantis-blades"
-                      }
+                      priority={selectedProject.id === "mantis-blades"}
                       sizes="220px"
                     />
-
                     <span aria-hidden="true">↗</span>
                   </button>
                 ) : (
@@ -442,20 +378,16 @@ export default function ProjectsWindow({
               </div>
 
               <div className="projectsQuestDetail__meta">
-                <span>
-                  {selectedProject.category.toUpperCase()}
-                </span>
+                <span>{selectedProject.category.toUpperCase()}</span>
                 <span>{selectedProject.period}</span>
                 <span>{selectedProject.status}</span>
               </div>
             </div>
 
             <div className="projectsQuestDetail__technologies">
-              {selectedProject.technologies
-                .slice(0, 6)
-                .map((technology) => (
-                  <span key={technology}>{technology}</span>
-                ))}
+              {selectedProject.technologies.slice(0, 6).map((technology) => (
+                <span key={technology}>{technology}</span>
+              ))}
             </div>
 
             <button
@@ -469,29 +401,20 @@ export default function ProjectsWindow({
           </article>
         )}
       </div>
-
-      <footer className="projectsControls">
-        <div>
-          <span>↑ ↓</span>
-          Navigate
-        </div>
-
-        <div>
-          <span>← →</span>
-          Category
-        </div>
-
-        <div>
-          <span>ENTER</span>
-          Select
-        </div>
-
-        <button type="button" onClick={onClose}>
-          <span>ESC</span>
-          Close
-        </button>
-      </footer>
-
+      <ActionBar>
+        <ActionKey keyLabel="↑ ↓" label="Navigate" />
+        <ActionKey keyLabel="← →" label="Category" />
+        <ActionKey
+          keyLabel="ENTER"
+          label="Select"
+          onClick={openSelectedProject}
+        />
+        <ActionKey
+          keyLabel="ESC"
+          label="Close"
+          onClick={onClose}
+        />
+      </ActionBar>
       {expandedImage && selectedProject && (
         <div
           className="projectsImageViewer"
@@ -514,9 +437,7 @@ export default function ProjectsWindow({
           >
             <Image
               src={expandedImage}
-              alt={
-                selectedProject.imageAlt ?? selectedProject.title
-              }
+              alt={selectedProject.imageAlt ?? selectedProject.title}
               fill
               sizes="90vw"
               priority
