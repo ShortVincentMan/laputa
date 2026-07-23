@@ -42,15 +42,24 @@ export default function HomePage() {
       {activeWindow && (
         <div className={styles.windowLayer}>
           {activeWindow === "projects" && (
-            <ProjectsWindow onClose={closeWindow} />
+            <ProjectsWindow
+              onClose={closeWindow}
+              onNavigate={setActiveWindow}
+            />
           )}
 
           {activeWindow === "experience" && (
-            <ExperienceWindow onClose={closeWindow} />
+            <ExperienceWindow
+              onClose={closeWindow}
+              onNavigate={setActiveWindow}
+            />
           )}
 
           {activeWindow === "about" && (
-            <AboutWindow onClose={closeWindow} />
+            <AboutWindow
+              onClose={closeWindow}
+              onNavigate={setActiveWindow}
+            />
           )}
 
           {activeWindow === "contact" && (

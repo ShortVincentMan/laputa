@@ -640,6 +640,137 @@
   }
 }
 
+@media (max-width: 560px) {
+  .characterScreen {
+    grid-template-rows: 56px minmax(0, 1fr) 48px;
+    overflow-y: auto;
+  }
+
+  .characterWorkspace {
+    padding: 0.9rem 0.85rem 5rem;
+    gap: 0.9rem;
+    align-content: start;
+  }
+
+  .characterProtocol {
+    display: none;
+  }
+
+  .characterCategories,
+  .characterProgress {
+    width: 100%;
+  }
+
+  .characterCategory {
+    min-height: 46px;
+    grid-template-columns: 26px minmax(0, 1fr) auto;
+    padding: 0 0.8rem;
+  }
+
+  .characterCategory__icon {
+    font-size: 0.95rem;
+  }
+
+  .characterCategory strong {
+    font-size: 0.78rem;
+  }
+
+  .characterCategory__value {
+    font-size: 0.76rem;
+  }
+
+  .characterProgress {
+    padding-top: 1rem;
+  }
+
+  .characterProgress__meta,
+  .characterProgress__identity {
+    margin-bottom: 0.45rem;
+  }
+
+  .characterLevel__heading {
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 0.5rem;
+  }
+
+  .characterLevel__heading small {
+    justify-self: start;
+  }
+
+  .characterProgress__meta,
+  .characterProgress__identity {
+    flex-wrap: wrap;
+    gap: 0.3rem 0.55rem;
+  }
+
+  .characterLevel {
+    margin-top: 0.9rem;
+  }
+
+  .characterMilestones {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+
+  .characterMilestones > span {
+    padding: 0.45rem 0.35rem;
+  }
+
+  .characterMilestones strong {
+    font-size: 0.55rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .characterScreen__scanlines {
+    opacity: 0.12;
+  }
+
+  .characterWorkspace {
+    padding: 0.65rem 0.55rem 4.25rem;
+  }
+
+  .characterCategories {
+    gap: 0.15rem;
+  }
+
+  .characterCategory {
+    min-height: 44px;
+  }
+
+  .characterCategory strong {
+    font-size: 0.72rem;
+  }
+
+  .characterProgress {
+    padding-top: 0.8rem;
+  }
+
+  .characterProfileCopy h2 {
+    font-size: clamp(1.35rem, 7vw, 2rem);
+    max-width: 12ch;
+    margin-bottom: 0.9rem;
+  }
+
+  .characterProfileCopy p {
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .characterQuote {
+    margin-top: 1rem;
+    padding: 0.85rem 0.9rem;
+  }
+
+  .characterMilestones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .characterMilestones > span {
+    min-height: 50px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .characterScreen *,
   .characterScreen *::before,

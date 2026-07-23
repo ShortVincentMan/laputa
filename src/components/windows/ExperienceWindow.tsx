@@ -9,13 +9,20 @@ import {
   type ExperienceCategory,
 } from "@/data/experience";
 
+import TopHud from "@/components/shared/TopHud";
+import type { WindowType } from "@/components/navigation/MainMenu";
+
 import "./experience-window.css";
 
 type ExperienceWindowProps = {
   onClose: () => void;
+  onNavigate: (window: WindowType) => void;
 };
 
-export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
+export default function ExperienceWindow({
+  onClose,
+  onNavigate,
+}: ExperienceWindowProps) {
   const [focusedCategory, setFocusedCategory] =
     useState<ExperienceCategory>("experience");
   const [openCategories, setOpenCategories] = useState<Set<ExperienceCategory>>(
@@ -156,31 +163,47 @@ export default function ExperienceWindow({ onClose }: ExperienceWindowProps) {
     >
       <div className="experienceScreen__scanlines" aria-hidden="true" />
 
-      <header className="experienceHud">
-        <div className="experienceHud__identity">
-          <div>
-            <strong>{String(visibleRecords.length).padStart(2, "0")}</strong>
-            <span>VISIBLE</span>
-          </div>
-          <div>
-            <strong>{String(openCategories.size).padStart(2, "0")}</strong>
-            <span>OPEN</span>
-          </div>
-        </div>
-
-        <nav className="experienceHud__nav" aria-label="Portfolio sections">
-          <span>CYBERWARE</span>
-          <span>INVENTORY</span>
-          <span>MAP</span>
-          <span>CHARACTER</span>
-          <strong>JOURNAL</strong>
-        </nav>
-
-        <div className="experienceHud__status">
-          <span>LAPUTA OS</span>
-          <strong>PERSONNEL ARCHIVE</strong>
-        </div>
-      </header>
+      <TopHud
+        metrics={[
+          {
+            value: String(visibleRecords.length).padStart(2, "0"),
+            label: "VISIBLE",
+          },
+          {
+            value: String(openCategories.size).padStart(2, "0"),
+            label: "OPEN",
+            tone: "green",
+          },
+        ]}
+        navigation={[
+          {
+            id: "cyberware",
+            label: "CYBERWARE",
+            onClick: () => onNavigate("projects"),
+          },
+          {
+            id: "inventory",
+            label: "INVENTORY",
+            active: true,
+          },
+          {
+            id: "map",
+            label: "MAP",
+            onClick: () => onNavigate("contact"),
+          },
+          {
+            id: "character",
+            label: "CHARACTER",
+            onClick: () => onNavigate("about"),
+          },
+          {
+            id: "journal",
+            label: "JOURNAL",
+            onClick: () => onNavigate("projects"),
+          },
+        ]}
+        archiveLabel="PERSONNEL ARCHIVE"
+      />
 
       <div className="experienceArchive">
         <aside className="experienceIndex" aria-label="Experience categories">

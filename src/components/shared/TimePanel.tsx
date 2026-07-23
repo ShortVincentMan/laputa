@@ -20,11 +20,25 @@ export default function TimeHud({
         }).format(new Date())
       );
 
-    update();
+      let timeoutId: number | undefined;
 
-    const id = setInterval(update, 1000);
+      const scheduleNextUpdate = () => {
+        update();
 
-    return () => clearInterval(id);
+        const now = new Date();
+        const msUntilNextMinute =
+          (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+
+        timeoutId = window.setTimeout(scheduleNextUpdate, msUntilNextMinute);
+      };
+
+      scheduleNextUpdate();
+
+      return () => {
+        if (timeoutId !== undefined) {
+          window.clearTimeout(timeoutId);
+        }
+      };
   }, []);
 
   return (

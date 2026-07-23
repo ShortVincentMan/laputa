@@ -554,7 +554,7 @@ export default function ContactWindow({
 
           <p>
             {activeTab === "messages"
-              ? "Your message is sent through a private server-side relay. Vincent's email address is never exposed to the browser."
+              ? "Your message is sent through a private server-side relay. All messages are encrypted and will be delivered to Vincent's inbox."
               : selectedContact.value}
           </p>
 

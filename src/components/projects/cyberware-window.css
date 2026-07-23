@@ -227,3 +227,91 @@
   .cyberwareStage { inset: 0; min-width: 900px; transform: scale(0.72); transform-origin: top center; }
   .cyberwareMeter { display: none; }
 }
+
+@media (max-width: 700px) {
+  .cyberwareMenu {
+    grid-template-rows: 56px minmax(0, 1fr) 48px;
+    overflow-y: auto;
+  }
+
+  .cyberwareWorkspace {
+    overflow: visible;
+    padding-bottom: 5rem;
+  }
+
+  .cyberwareStage {
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    display: grid;
+    gap: 0.5rem;
+    padding: 0 0 1rem;
+    transform: none;
+  }
+
+  .cyberwareBody {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(180px, 52vw);
+    height: 220px;
+    margin: 0 auto 0.25rem;
+    transform: none;
+  }
+
+  .cyberwareSystem {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin: 0;
+  }
+
+  .cyberwareSystem h2 {
+    font-size: 0.6rem;
+  }
+
+  .cyberwareSystem button {
+    height: 66px;
+  }
+
+  .cyberwareSystem__triple span {
+    height: 48px;
+  }
+
+  .slot--integumentary {
+    width: 100%;
+  }
+
+  .cyberwareMeter {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .cyberwareMenu__scanlines {
+    opacity: 0.14;
+  }
+
+  .cyberwareWorkspace {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  .cyberwareBody {
+    width: min(160px, 56vw);
+    height: 200px;
+  }
+
+  .cyberwareSystem h2 {
+    letter-spacing: 0.02em;
+  }
+
+  .cyberwareSystem button {
+    height: 62px;
+  }
+}

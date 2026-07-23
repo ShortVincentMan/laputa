@@ -657,6 +657,49 @@
   }
 }
 
+@media (max-width: 480px) {
+  .contactsScreen {
+    grid-template-rows: minmax(0, 1fr) 46px;
+  }
+
+  .contactsWorkspace {
+    padding: 0.85rem 0.75rem 0.75rem;
+  }
+
+  .contactsHeader {
+    grid-template-columns: 32px 1fr;
+    gap: 0.65rem;
+  }
+
+  .contactsHeader__device {
+    width: 32px;
+    height: 52px;
+  }
+
+  .contactsTabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .contactsTabs button {
+    white-space: nowrap;
+  }
+
+  .messageThread__composer {
+    padding: 0.45rem 0.6rem;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .messageThread__composer span {
+    font-size: 0.45rem;
+  }
+
+  .messageBubble {
+    max-width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .contactsScreen *,
   .contactsScreen *::before,

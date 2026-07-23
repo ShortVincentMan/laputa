@@ -3,8 +3,11 @@
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  filter:blur(.5px);
   z-index: 0;
+}
+
+.cyberpunkBackgroundMuted {
+  filter: none;
 }
 
 .cyberpunkBackgroundMuted .scene {
@@ -14,38 +17,61 @@
 }
 
 .cyberpunkBackgroundMuted .staticUi {
-  opacity: 0.25;
-}
-
-.cyberpunkBackgroundMuted .scrollingLines {
-  opacity: 0.45;
-}
-
-.cyberpunkBackgroundMuted .scrollingLinesSecondary {
   opacity: 0.18;
 }
 
+.cyberpunkBackgroundMuted .scrollingLines {
+  opacity: 0.32;
+}
+
+.cyberpunkBackgroundMuted .scrollingLinesSecondary {
+  opacity: 0.12;
+}
+
 .cyberpunkBackgroundMuted .bottomGrid {
-  opacity: 0.4;
+  opacity: 0.26;
 }
 
 .cyberpunkBackgroundMuted .uiGrungeOne {
-  opacity: 0.1;
+  opacity: 0.05;
 }
 
 .cyberpunkBackgroundMuted .scratchesOverlay {
-  opacity: 0.01;
+  opacity: 0;
 }
 
 .cyberpunkBackgroundMuted .scanlines {
-  opacity: 0.2;
+  opacity: 0.12;
 }
 
 .cyberpunkBackgroundMuted .vignette {
-  opacity: 0.8;
+  opacity: 0.62;
+}
+
+.cyberpunkBackgroundMuted .bottomGrid::after,
+.cyberpunkBackgroundMuted .topRight,
+.cyberpunkBackgroundMuted .bottomLeftOne,
+.cyberpunkBackgroundMuted .bottomLeftTwo,
+.cyberpunkBackgroundMuted .bottomLettersOne,
+.cyberpunkBackgroundMuted .bottomLettersTwo,
+.cyberpunkBackgroundMuted .pulseRedBar,
+.cyberpunkBackgroundMuted .blueBar,
+.cyberpunkBackgroundMuted .backgroundGlowOverlay,
+.cyberpunkBackgroundMuted .topLeftGlowOverlay,
+.cyberpunkBackgroundMuted .uiGrungeOne,
+.cyberpunkBackgroundMuted .uiGrungeTwo,
+.cyberpunkBackgroundMuted .bottomFogOverlay,
+.cyberpunkBackgroundMuted .scanlines,
+.cyberpunkBackgroundMuted .grain,
+.cyberpunkBackgroundMuted .vignette,
+.cyberpunkBackgroundMuted .prompt,
+.cyberpunkBackgroundMuted .promptCursor,
+.cyberpunkBackgroundMuted .landingTitle {
+  animation: none !important;
+  transition: none !important;
 }
 
 .cpNav {
-    backdrop-filter: blur(8px);
+  backdrop-filter: blur(2px);
 }
 

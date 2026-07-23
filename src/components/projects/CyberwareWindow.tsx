@@ -11,6 +11,8 @@ import {
   type CyberwareSlot,
 } from "@/data/projects";
 
+import type { WindowType } from "@/components/navigation/MainMenu";
+
 import "./cyberware-window.css";
 
 type CyberwareWindowProps = {
@@ -18,6 +20,7 @@ type CyberwareWindowProps = {
   onBack: () => void;
   onOpenRecord: (projectId: string) => void;
   onClose: () => void;
+  onNavigate: (window: WindowType) => void;
 };
 
 type SlotDefinition = {
@@ -45,6 +48,7 @@ export default function CyberwareWindow({
   onBack,
   onOpenRecord,
   onClose,
+  onNavigate,
 }: CyberwareWindowProps) {
   const cyberwareProjects = useMemo(() => getCyberwareProjects(), []);
 
@@ -153,9 +157,21 @@ export default function CyberwareWindow({
         ]}
         navigation={[
           { id: "cyberware", label: "CYBERWARE", active: true },
-          { id: "inventory", label: "INVENTORY" },
-          { id: "map", label: "MAP" },
-          { id: "character", label: "CHARACTER" },
+          {
+            id: "inventory",
+            label: "INVENTORY",
+            onClick: () => onNavigate("experience"),
+          },
+          {
+            id: "map",
+            label: "MAP",
+            onClick: () => onNavigate("contact"),
+          },
+          {
+            id: "character",
+            label: "CHARACTER",
+            onClick: () => onNavigate("about"),
+          },
           { id: "journal", label: "JOURNAL", onClick: onBack },
         ]}
         archiveLabel="CYBERWARE DATABASE"

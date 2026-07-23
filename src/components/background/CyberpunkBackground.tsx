@@ -45,7 +45,7 @@ export default function CyberpunkBackground({
             draggable={false}
           />
 
-          <ScrollingText />
+          <ScrollingText muted={muted} />
 
           <div className="scrollingLines">
             <div className="scrollingLinesTrack">

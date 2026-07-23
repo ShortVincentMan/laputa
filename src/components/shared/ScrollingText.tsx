@@ -1,5 +1,9 @@
 import "./ScrollingText.css";
 
+type ScrollingTextProps = {
+  muted?: boolean;
+};
+
 const longBlocks = [
   "BLACK ICE PROTOCOL ACTIVE · SYSTEM STATUS ONLINE",
   "MEMORY BLOCK VERIFIED · AUTH TOKEN ACCEPTED",
@@ -58,9 +62,12 @@ function ScrollGroup() {
   );
 }
 
-export default function ScrollingText() {
+export default function ScrollingText({ muted = false }: ScrollingTextProps) {
   return (
-    <div className="scrollWindow" aria-hidden="true">
+    <div
+      className={`scrollWindow ${muted ? "scrollWindowMuted" : ""}`}
+      aria-hidden="true"
+    >
       <div className="verticalTrack">
         <ScrollGroup />
         <ScrollGroup />

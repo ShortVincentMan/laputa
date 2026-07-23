@@ -19,10 +19,13 @@ import {
   type ProjectRecord,
 } from "@/data/projects";
 
+import type { WindowType } from "@/components/navigation/MainMenu";
+
 import "./projects-window.css";
 
 type ProjectsWindowProps = {
   onClose: () => void;
+  onNavigate: (window: WindowType) => void;
 };
 
 type ProjectsView =
@@ -38,7 +41,10 @@ function getStatusTone(project: ProjectRecord) {
   return project.status === "COMPLETED" ? "complete" : "active";
 }
 
-export default function ProjectsWindow({ onClose }: ProjectsWindowProps) {
+export default function ProjectsWindow({
+  onClose,
+  onNavigate,
+}: ProjectsWindowProps) {
   const initialProject = getVisibleProjects("featured")[0];
 
   const [activeCategory, setActiveCategory] =
@@ -196,6 +202,7 @@ export default function ProjectsWindow({ onClose }: ProjectsWindowProps) {
           setView({ type: "record", projectId })
         }
         onClose={onClose}
+        onNavigate={onNavigate}
       />
     );
   }
@@ -251,9 +258,21 @@ export default function ProjectsWindow({ onClose }: ProjectsWindowProps) {
               ? `Open ${selectedProject.title} in Cyberware`
               : "Select a cybernetic project to open Cyberware",
           },
-          { id: "inventory", label: "INVENTORY" },
-          { id: "map", label: "MAP" },
-          { id: "character", label: "CHARACTER" },
+          {
+            id: "inventory",
+            label: "INVENTORY",
+            onClick: () => onNavigate("experience"),
+          },
+          {
+            id: "map",
+            label: "MAP",
+            onClick: () => onNavigate("contact"),
+          },
+          {
+            id: "character",
+            label: "CHARACTER",
+            onClick: () => onNavigate("about"),
+          },
           { id: "journal", label: "JOURNAL", active: true },
         ]}
         archiveLabel="PROJECT DATABASE"

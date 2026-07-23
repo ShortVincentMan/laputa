@@ -7,10 +7,13 @@ import ActionBar from "@/components/shared/ActionBar";
 import ActionKey from "@/components/shared/ActionKey";
 import TopHud from "@/components/shared/TopHud";
 
+import type { WindowType } from "@/components/navigation/MainMenu";
+
 import "./about-window.css";
 
 type AboutWindowProps = {
   onClose: () => void;
+  onNavigate: (window: WindowType) => void;
 };
 
 type AboutSection =
@@ -148,7 +151,10 @@ const affiliations = [
 
 const milestones = ["CPE", "CAD", "EMB", "ROB", "CTRL", "HMI"];
 
-export default function AboutWindow({ onClose }: AboutWindowProps) {
+export default function AboutWindow({
+  onClose,
+  onNavigate,
+}: AboutWindowProps) {
   const [activeSection, setActiveSection] =
     useState<AboutSection>("profile");
 
@@ -205,11 +211,27 @@ export default function AboutWindow({ onClose }: AboutWindowProps) {
           { value: "00", label: "STREET CRED😂", tone: "green" },
         ]}
         navigation={[
-          { id: "cyberware", label: "CYBERWARE" },
-          { id: "inventory", label: "INVENTORY" },
-          { id: "map", label: "MAP" },
+          {
+            id: "cyberware",
+            label: "CYBERWARE",
+            onClick: () => onNavigate("projects"),
+          },
+          {
+            id: "inventory",
+            label: "INVENTORY",
+            onClick: () => onNavigate("experience"),
+          },
+          {
+            id: "map",
+            label: "MAP",
+            onClick: () => onNavigate("contact"),
+          },
           { id: "character", label: "CHARACTER", active: true },
-          { id: "journal", label: "JOURNAL" },
+          {
+            id: "journal",
+            label: "JOURNAL",
+            onClick: () => onNavigate("projects"),
+          },
         ]}
         archiveLabel="OPERATOR PROFILE"
       />
