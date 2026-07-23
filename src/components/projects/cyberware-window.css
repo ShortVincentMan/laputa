@@ -218,100 +218,328 @@
 .cyberwareMeter--left strong { top: 52%; right: 0; }
 .cyberwareMeter--right span { top: 47%; left: 0; }
 
-
-@media (max-width: 1180px) {
-  .cyberwareStage { left: 7vw; right: 7vw; transform: scale(0.9); transform-origin: top center; }
-}
-
-@media (max-width: 900px) {
-  .cyberwareStage { inset: 0; min-width: 900px; transform: scale(0.72); transform-origin: top center; }
-  .cyberwareMeter { display: none; }
-}
-
 @media (max-width: 700px) {
   .cyberwareMenu {
-    grid-template-rows: 56px minmax(0, 1fr) 48px;
-    overflow-y: auto;
+    grid-template-rows: 118px minmax(0, 1fr) 64px;
   }
 
   .cyberwareWorkspace {
-    overflow: visible;
-    padding-bottom: 5rem;
+    --cw-mobile-canvas-width: 680px;
+    --cw-mobile-canvas-height: 600px;
+    --cw-mobile-scale: calc(
+      (100vw - 1rem) / var(--cw-mobile-canvas-width)
+    );
+    --cw-mobile-rendered-height: calc(
+      var(--cw-mobile-canvas-height) * var(--cw-mobile-scale)
+    );
+
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    padding: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
+  box-sizing: border-box;
   }
 
+  /*
+   * Preserve the desktop three-column composition, but scale the
+   * complete canvas into the phone width.
+   */
   .cyberwareStage {
-    position: relative;
+    position: absolute;
     inset: auto;
-    min-width: 0;
-    width: 100%;
-    height: auto;
-    display: grid;
-    gap: 0.5rem;
-    padding: 0 0 1rem;
-    transform: none;
+    top: 0.5rem;
+    left: 0.5rem;
+
+    width: var(--cw-mobile-canvas-width);
+    min-width: var(--cw-mobile-canvas-width);
+    height: var(--cw-mobile-canvas-height);
+    margin: 0;
+
+    transform: scale(var(--cw-mobile-scale));
+    transform-origin: top left;
+  }
+
+  /*
+   * Reserve only the visible scaled canvas and both horizontal meters.
+   * Keeping the transformed stage absolute prevents its unscaled box
+   * from creating the large empty area.
+   */
+  .cyberwareWorkspace::after {
+    content: "";
+    display: block;
+    height: calc(
+      var(--cw-mobile-rendered-height) + 84px
+    );
   }
 
   .cyberwareBody {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: min(180px, 52vw);
-    height: 220px;
-    margin: 0 auto 0.25rem;
-    transform: none;
+    position: absolute;
+    top: 18px;
+    left: 50%;
+
+    width: 225px;
+    height: 500px;
+    margin: 0;
+
+    transform: translateX(-50%);
   }
 
   .cyberwareSystem {
-    position: relative;
-    top: auto;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    width: 100%;
+    position: absolute;
+    width: 172px;
     margin: 0;
   }
 
   .cyberwareSystem h2 {
-    font-size: 0.6rem;
+    margin: 0 0 0.35rem;
+
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.035em;
   }
 
   .cyberwareSystem button {
-    height: 66px;
+    width: 100%;
+    height: 76px;
+    min-height: 76px;
+  }
+
+  .cyberwareSystem small {
+    display: block;
+    margin-top: 0.25rem;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .cyberwareSystem__triple {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
   }
 
   .cyberwareSystem__triple span {
-    height: 48px;
+    height: 58px;
   }
 
-  .slot--integumentary {
-    width: 100%;
-  }
+  .slot--cortex {
+  top: 18px;
+  left: 92px;
+}
 
+.slot--arms {
+  top: 142px;
+  left: 46px;
+}
+
+.slot--skeleton {
+  top: 266px;
+  left: 16px;
+}
+
+.slot--nervous {
+  top: 390px;
+  left: 46px;
+}
+
+.slot--integumentary {
+  top: 514px;
+  left: 92px;
+  width: 238px;
+}
+
+.slot--operating {
+  top: 18px;
+  right: 92px;
+}
+
+.slot--face {
+  top: 142px;
+  right: 46px;
+}
+
+.slot--hands {
+  top: 266px;
+  right: 16px;
+}
+
+.slot--circulatory {
+  top: 390px;
+  right: 46px;
+}
+
+.slot--legs {
+  top: 514px;
+  right: 92px;
+}
+
+  /*
+   * The desktop vertical meters become two compact viewport-width rows.
+   * These are positioned using the rendered height, not the unscaled
+   * canvas height.
+   */
   .cyberwareMeter {
+  position: absolute;
+  left: 1rem;
+  right: auto;
+  bottom: auto;
+  z-index: 20;
+
+  width: calc(100% - 2rem);
+  height: 28px;
+
+  overflow: hidden;
+  box-sizing: border-box;
+  contain: paint;
+
+  transform: none;
+  }
+
+  .cyberwareMeter--left {
+    top: calc(
+      0.5rem + var(--cw-mobile-rendered-height) + 8px
+    );
+
+    color: var(--cw-yellow);
+  }
+
+  .cyberwareMeter--right {
+    top: calc(
+      0.5rem + var(--cw-mobile-rendered-height) + 42px
+    );
+
+    color: var(--cw-cyan);
+  }
+
+  .cyberwareMeter__icon {
+    position: absolute;
+    top: 50%;
+    left: 0;
+
+    width: 20px;
+
+    transform: translateY(-50%);
+    font-size: 0.82rem;
+  }
+
+  .cyberwareMeter__bars {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    right: 0;
+
+    width: auto;
+    height: 16px;
+    margin: 0;
+
+    overflow: hidden;
+    box-sizing: border-box;
+
+    transform: translateY(-50%);
+
+    background:
+      repeating-linear-gradient(
+        to right,
+        currentColor 0 4px,
+        transparent 4px 10px
+      );
+
+    clip-path: polygon(
+      0 38%,
+      82% 38%,
+      82% 0,
+      94% 0,
+      94% 38%,
+      100% 38%,
+      100% 62%,
+      94% 62%,
+      94% 100%,
+      82% 100%,
+      82% 62%,
+      0 62%
+    );
+  }
+
+  .cyberwareMeter span,
+  .cyberwareMeter strong {
     display: none;
   }
 }
 
 @media (max-width: 520px) {
-  .cyberwareMenu__scanlines {
-    opacity: 0.14;
-  }
-
   .cyberwareWorkspace {
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
-  }
+  --cw-mobile-canvas-width: 680px;
+  --cw-mobile-canvas-height: 600px;
+  --cw-mobile-scale: calc(
+    (100vw - 1rem) / var(--cw-mobile-canvas-width)
+  );
+}
 
   .cyberwareBody {
-    width: min(160px, 56vw);
-    height: 200px;
+    width: 215px;
+    height: 485px;
   }
 
+
   .cyberwareSystem h2 {
-    letter-spacing: 0.02em;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .cyberwareSystem small {
+    font-size: 0.66rem;
+    font-weight: 600;
   }
 
   .cyberwareSystem button {
-    height: 62px;
+    height: 73px;
+    min-height: 73px;
+  }
+
+  .cyberwareSystem {
+    width: 166px;
+  }
+
+  .slot--cortex {
+    left: 88px;
+  }
+
+  .slot--operating {
+    right: 88px;
+  }
+
+  .slot--arms,
+  .slot--nervous {
+    left: 42px;
+  }
+
+  .slot--face,
+  .slot--circulatory {
+    right: 42px;
+  }
+
+  .slot--skeleton {
+    left: 12px;
+  }
+
+  .slot--hands {
+    right: 12px;
+  }
+
+  .slot--integumentary {
+    left: 88px;
+    width: 230px;
+  }
+
+  .slot--legs {
+    right: 88px;
   }
 }

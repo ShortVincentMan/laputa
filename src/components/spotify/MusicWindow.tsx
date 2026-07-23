@@ -238,9 +238,19 @@ export default function MusicWindow({
           )}
 
           {loadState === "error" && (
-            <p className="musicScreen__state">
-              SPOTIFY LINK ERROR
-            </p>
+            <div className="musicScreen__errorState">
+              <p className="musicScreen__state">
+                SPOTIFY LINK ERROR
+              </p>
+
+              <button
+                type="button"
+                className="musicScreen__retry"
+                onClick={() => void loadSpotify()}
+              >
+                RETRY CONNECTION
+              </button>
+            </div>
           )}
 
           {loadState === "ready" &&

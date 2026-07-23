@@ -669,31 +669,32 @@
    RESPONSIVE
    ========================================================= */
 
-@media (max-width: 850px) {
-  .cpNavHome {
-    left: 0;
-    width: min(88vw, 34rem);
-    padding-top: 56px;
-  }
-
-  .cpNavLogo {
-    font-size: 50px;
-  }
-
-  .homeMenuPreview,
-  .homeMenuHud {
-    display: none;
-  }
-}
-
-@media (max-width: 600px) {
-  .menuTrigger {
-    top: 16px;
-    left: 16px;
-  }
-
+@media (max-width: 760px) {
   .cpNavDrawer {
-    width: 100%;
+    width: min(78vw, 430px);
+  }
+
+  .cpNavItem {
+    min-height: 78px;
+    padding: 0 1.4rem;
+
+    font-size: clamp(1.55rem, 6vw, 2.3rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 10px rgba(255, 90, 100, 0.35);
+  }
+
+  .cpNavItem > span,
+  .cpNavItem strong {
+    font-size: inherit !important;
+    font-weight: inherit;
+  }
+
+  .cpNavItem small {
+    font-size: 0.78rem !important;
+  }
+  .cpMenuPreviewShell {
+    display: none;
   }
 }
 

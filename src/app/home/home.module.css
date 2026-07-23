@@ -17,3 +17,20 @@
 
   padding: clamp(1rem, 2.5vw, 3rem);
 }
+
+@media (max-width: 760px) {
+  .homePage {
+    min-height: 100dvh;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .windowLayer {
+    padding:
+      max(0.5rem, env(safe-area-inset-top))
+      max(0.5rem, env(safe-area-inset-right))
+      max(0.5rem, env(safe-area-inset-bottom))
+      max(0.5rem, env(safe-area-inset-left));
+  }
+}

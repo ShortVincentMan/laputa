@@ -126,3 +126,34 @@
     display: none;
   }
 }
+@media (max-width: 720px) {
+  .githubPatchButton {
+    top: auto;
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: calc(
+      max(1rem, env(safe-area-inset-bottom)) + 54px
+    );
+    z-index: 650;
+
+    width: min(230px, calc(100vw - 1.5rem));
+    height: 44px;
+    padding: 0 0.7rem;
+
+    grid-template-columns: 26px 58px 1fr;
+    gap: 0.55rem;
+  }
+
+  .githubPatchButton__separator,
+  .githubPatchButton__decoration {
+    display: none;
+  }
+
+  .githubPatchButton__label {
+    justify-self: end;
+    font-size: 0.85rem;
+  }
+
+  .githubPatchButton__version {
+    font-size: 0.78rem;
+  }
+}

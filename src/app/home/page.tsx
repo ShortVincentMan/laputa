@@ -87,7 +87,10 @@ export default function HomePage() {
           )}
 
           {activeWindow === "contact" && (
-            <ContactWindow onClose={closeWindow} />
+            <ContactWindow
+              onClose={() => setActiveWindow(null)}
+              onNavigate={setActiveWindow}
+            />
           )}
 
           {activeWindow === "credits" && (

@@ -23,19 +23,19 @@
 
 .hud-clock {
   position: absolute;
+  top: max(18px, env(safe-area-inset-top));
+  right: max(24px, env(safe-area-inset-right));
 
-  top: 3%;
-  right: 2%;
+  width: auto;
 
-  width: 5%;
-
+  text-align: right;
   pointer-events: none;
 }
 
 @media (max-width: 768px) {
   .hud-clock {
-    top: 3%;
-    right: 0%;
-    width: 170px;
+    top: max(14px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+    width: auto;
   }
 }

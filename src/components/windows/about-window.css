@@ -592,182 +592,257 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   .characterScreen {
-    grid-template-rows: 62px minmax(0, 1fr) 52px;
+    grid-template-rows: 118px minmax(0, 1fr) 64px;
+    overflow: hidden;
   }
 
   .characterWorkspace {
-    grid-template-columns: minmax(260px, 42%) minmax(280px, 58%);
-    padding: 1.5rem 2rem;
-  }
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-  .characterRight {
-    display: none;
-  }
+    min-width: 0;
+    min-height: 0;
 
-  .characterModel__frame {
-    width: min(36vw, 340px);
-  }
-}
+    padding:
+      1rem
+      1rem
+      calc(5rem + env(safe-area-inset-bottom));
 
-@media (max-width: 680px) {
-  .characterWorkspace {
-    grid-template-columns: 1fr;
-    padding: 1rem;
-  }
-
-  .characterModel,
-  .characterProtocol {
-    display: none;
-  }
-
-  .characterCategories,
-  .characterProgress {
-    width: 100%;
-  }
-
-  .characterProgress {
-    padding-top: 1.5rem;
-  }
-
-  .characterCategory {
-    min-height: 48px;
-  }
-
-  .characterMilestones {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
-@media (max-width: 560px) {
-  .characterScreen {
-    grid-template-rows: 56px minmax(0, 1fr) 48px;
+    overflow-x: hidden;
     overflow-y: auto;
   }
 
-  .characterWorkspace {
-    padding: 0.9rem 0.85rem 5rem;
-    gap: 0.9rem;
-    align-content: start;
+  /* Portrait first */
+
+  .characterModel {
+    order: 1;
+
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+  }
+
+  .characterModel__glow {
+    width: 90%;
+    height: 420px;
+  }
+
+  .characterModel__frame {
+    width: min(100%, 430px);
+    height: 430px;
+    margin: 0 auto;
+  }
+
+  .characterModel__image {
+    object-fit: cover;
+    object-position: center 18%;
+  }
+
+  .characterModel__designation {
+    bottom: 1rem;
+  }
+
+  .characterModel__designation span {
+    font-size: 0.72rem;
+  }
+
+  .characterModel__designation small {
+    font-size: 0.54rem;
+  }
+
+  /* Selected profile content second */
+
+  .characterRight {
+    order: 2;
+
+    display: grid;
+    grid-template-rows: auto auto;
+
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .characterPanel {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .characterRight__header h1 {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .characterProfileCopy {
+    padding-top: 1rem;
+  }
+
+  .characterProfileCopy h2 {
+    max-width: none;
+
+    margin-bottom: 1rem;
+
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .characterProfileCopy p {
+    max-width: none;
+
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .characterQuote {
+    padding: 1rem;
+  }
+
+  .characterQuote span {
+    font-size: 0.62rem;
+  }
+
+  .characterQuote blockquote {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .characterAttribute {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .characterAttribute > strong {
+    font-size: 1rem;
+  }
+
+  .characterAttribute span {
+    font-size: 1rem;
+  }
+
+  .characterAttribute small {
+    font-size: 0.8rem;
+  }
+
+  .characterMission {
+    grid-template-columns: 30px minmax(0, 1fr);
+    min-height: 76px;
+  }
+
+  .characterMission strong {
+    font-size: 0.95rem;
+  }
+
+  .characterMission small {
+    font-size: 0.7rem;
+  }
+
+  .characterMission em {
+    grid-column: 2;
+    justify-self: start;
+
+    font-size: 0.65rem;
+  }
+
+  .characterRight__footer {
+    margin-top: 1rem;
+
+    font-size: 0.58rem;
+  }
+
+  /* Categories and stats third */
+
+  .characterLeft {
+    order: 3;
+
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
   }
 
   .characterProtocol {
-    display: none;
+    width: 100%;
+    margin-bottom: 1rem;
   }
 
-  .characterCategories,
-  .characterProgress {
+  .characterProtocol strong {
+    font-size: 0.68rem;
+  }
+
+  .characterProtocol span,
+  .characterProtocol small {
+    font-size: 0.58rem;
+  }
+
+  .characterCategories {
     width: 100%;
   }
 
   .characterCategory {
-    min-height: 46px;
-    grid-template-columns: 26px minmax(0, 1fr) auto;
-    padding: 0 0.8rem;
-  }
+    grid-template-columns: 38px minmax(0, 1fr) auto;
 
-  .characterCategory__icon {
-    font-size: 0.95rem;
+    min-height: 68px;
+    padding: 0 1rem;
   }
 
   .characterCategory strong {
-    font-size: 0.78rem;
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   .characterCategory__value {
-    font-size: 0.76rem;
+    font-size: 1rem;
+  }
+
+  .characterCategory__icon {
+    font-size: 1.25rem;
   }
 
   .characterProgress {
-    padding-top: 1rem;
-  }
-
-  .characterProgress__meta,
-  .characterProgress__identity {
-    margin-bottom: 0.45rem;
-  }
-
-  .characterLevel__heading {
-    grid-template-columns: auto 1fr;
-    gap: 0.3rem 0.5rem;
-  }
-
-  .characterLevel__heading small {
-    justify-self: start;
+    width: 100%;
+    padding-top: 1.5rem;
   }
 
   .characterProgress__meta,
   .characterProgress__identity {
     flex-wrap: wrap;
-    gap: 0.3rem 0.55rem;
   }
 
-  .characterLevel {
-    margin-top: 0.9rem;
+  .characterProgress__meta span,
+  .characterProgress__identity span,
+  .characterProgress__meta strong,
+  .characterProgress__identity strong {
+    font-size: 0.9rem;
+  }
+
+  .characterLevel__heading strong {
+    font-size: 1.35rem;
+  }
+
+  .characterLevel__heading span {
+    font-size: 0.95rem;
+  }
+
+  .characterLevel__heading small {
+    font-size: 0.62rem;
   }
 
   .characterMilestones {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.35rem;
   }
 
   .characterMilestones > span {
-    padding: 0.45rem 0.35rem;
+    min-height: 76px;
   }
 
   .characterMilestones strong {
-    font-size: 0.55rem;
-  }
-}
-
-@media (max-width: 430px) {
-  .characterScreen__scanlines {
-    opacity: 0.12;
-  }
-
-  .characterWorkspace {
-    padding: 0.65rem 0.55rem 4.25rem;
-  }
-
-  .characterCategories {
-    gap: 0.15rem;
-  }
-
-  .characterCategory {
-    min-height: 44px;
-  }
-
-  .characterCategory strong {
     font-size: 0.72rem;
-  }
-
-  .characterProgress {
-    padding-top: 0.8rem;
-  }
-
-  .characterProfileCopy h2 {
-    font-size: clamp(1.35rem, 7vw, 2rem);
-    max-width: 12ch;
-    margin-bottom: 0.9rem;
-  }
-
-  .characterProfileCopy p {
-    font-size: 0.76rem;
-    line-height: 1.5;
-  }
-
-  .characterQuote {
-    margin-top: 1rem;
-    padding: 0.85rem 0.9rem;
-  }
-
-  .characterMilestones {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .characterMilestones > span {
-    min-height: 50px;
   }
 }
 

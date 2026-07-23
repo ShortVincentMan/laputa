@@ -9,13 +9,16 @@ import {
   useState,
 } from "react";
 
+import TopHud from "@/components/shared/TopHud";
 import ActionBar from "@/components/shared/ActionBar";
 import ActionKey from "@/components/shared/ActionKey";
+import type { WindowType } from "@/components/navigation/MainMenu";
 
 import "./contact-window.css";
 
 type ContactWindowProps = {
   onClose: () => void;
+  onNavigate: (window: WindowType) => void;
 };
 
 type ContactId =
@@ -27,6 +30,7 @@ type ContactId =
 
 type ContactTab = "contacts" | "messages";
 type SendState = "idle" | "sending" | "sent" | "error";
+
 
 type ContactRecord = {
   id: ContactId;
@@ -85,6 +89,7 @@ const contacts: ContactRecord[] = [
 
 export default function ContactWindow({
   onClose,
+  onNavigate,
 }: ContactWindowProps) {
   const [activeTab, setActiveTab] =
     useState<ContactTab>("contacts");
@@ -297,7 +302,40 @@ export default function ContactWindow({
         className="contactsScreen__scanlines"
         aria-hidden="true"
       />
-
+      <TopHud
+        metrics={[
+          { value: "05", label: "CHANNELS" },
+          { value: "01", label: "ONLINE", tone: "green" },
+        ]}
+        navigation={[
+          {
+            id: "cyberware",
+            label: "CYBERWARE",
+            onClick: () => onNavigate("projects"),
+          },
+          {
+            id: "inventory",
+            label: "INVENTORY",
+            onClick: () => onNavigate("experience"),
+          },
+          {
+            id: "map",
+            label: "MAP",
+            active: true,
+          },
+          {
+            id: "character",
+            label: "CHARACTER",
+            onClick: () => onNavigate("about"),
+          },
+          {
+            id: "journal",
+            label: "JOURNAL",
+            onClick: () => onNavigate("projects"),
+          },
+        ]}
+        archiveLabel="CONTACT DIRECTORY"
+      />
       <main className="contactsWorkspace">
         <section className="contactsPanel">
           <header className="contactsHeader">

@@ -73,4 +73,29 @@ body {
   font-display: swap;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  touch-action: manipulation;
+}
+
+@media (max-width: 760px) {
+  button,
+  a {
+    min-height: 44px;
+  }
+}
 

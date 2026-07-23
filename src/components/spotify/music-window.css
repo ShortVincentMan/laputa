@@ -431,6 +431,25 @@
   font-size: 0.36rem;
 }
 
+.musicScreen__errorState {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+}
+
+.musicScreen__retry {
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+
+  color: var(--music-cyan);
+  font: inherit;
+  letter-spacing: 0.12em;
+
+  border: 1px solid currentColor;
+  background: rgba(0, 0, 0, 0.32);
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   .musicScreen > *:not(.musicScreen__scanlines) {
     width: min(680px, 72vw);
@@ -460,12 +479,12 @@
 
   .musicScreen__main {
     top: 12vh;
-    grid-template-columns: 105px minmax(0, 1fr);
-    gap: 0.8rem;
+    grid-template-columns: 165px minmax(0, 1fr);
+    gap: 1rem;
   }
 
   .musicScreen__artFrame {
-    width: 105px;
+    width: 165px;
   }
 
   .musicScreen__artifactText {
@@ -474,7 +493,7 @@
 
   .musicScreen__history {
     top: 39vh;
-    height: 44vh;
+    height: 45vh;
   }
 
   .musicScreen__signalRow span,

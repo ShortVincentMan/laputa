@@ -323,8 +323,7 @@
 
 @media (max-width: 720px) {
   .experienceScreen {
-    grid-template-rows: 58px auto 50px;
-    overflow-y: auto;
+    grid-template-rows: 112px minmax(0, 1fr) 64px;
   }
 
 

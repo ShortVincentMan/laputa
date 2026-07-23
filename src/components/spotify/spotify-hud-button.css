@@ -105,3 +105,26 @@
     height: 42px;
   }
 }
+@media (max-width: 720px) {
+  .spotifyHudButton {
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 650;
+
+    width: min(230px, calc(100vw - 1.5rem));
+    min-width: 0;
+    height: 44px;
+    padding: 0 0.7rem;
+
+    grid-template-columns: 30px 1fr 24px;
+    gap: 0.55rem;
+  }
+
+  .spotifyHudButton__matrix {
+    display: none;
+  }
+
+  .spotifyHudButton__label {
+    font-size: 0.85rem;
+  }
+}

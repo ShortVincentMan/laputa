@@ -474,7 +474,7 @@ export default function MainMenu({
         >
           {menuContent}
         </aside>
-
+        <div className="cpMenuPreviewShell">
         <section
           className={
             preview
@@ -529,6 +529,7 @@ export default function MainMenu({
             </>
           )}
         </section>
+        </div>
 
         <div
           className="homeMenuHud homeMenuHud--top"

@@ -186,13 +186,10 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Spotify request failed.",
+        error: "Spotify service is temporarily unavailable.",
       },
       {
-        status: 500,
+        status: 503,
       }
     );
   }

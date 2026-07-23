@@ -9,7 +9,7 @@
   isolation: isolate;
 
   display: grid;
-  grid-template-rows: minmax(0, 1fr) 58px;
+  grid-template-rows: 72px minmax(0, 1fr) 58px;
 
   width: 100vw;
   height: 100dvh;
@@ -600,111 +600,184 @@
   letter-spacing: 0.1em;
 }
 
-@media (max-width: 900px) {
-  .contactsWorkspace {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-
-    padding: 2rem 1.25rem 1rem;
+@media (max-width: 760px) {
+  .contactsScreen {
+    grid-template-rows: 118px minmax(0, 1fr) 64px;
+    overflow: hidden;
   }
 
-  .contactPreview {
-    display: none;
+  .contactsWorkspace {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.25rem;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding:
+      1rem
+      1rem
+      calc(5rem + env(safe-area-inset-bottom));
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .contactsPanel {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .contactsHeader {
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 0.8rem;
+  }
+
+  .contactsHeader__device {
+    width: 52px;
+    height: 76px;
+  }
+
+  .contactsTabs button {
+    min-height: 54px;
+
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   .contactsDirectory {
+    flex: none;
+
+    width: 100%;
     max-height: none;
-  }
-}
+    padding-right: 0;
 
-@media (max-width: 620px) {
-  .contactsScreen {
-    grid-template-rows: minmax(0, 1fr) 50px;
+    overflow: visible;
   }
 
-  .contactsWorkspace {
-    padding: 1rem;
+  .contactsDirectory__item {
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+
+    min-height: 74px;
+    padding: 0.8rem 1rem;
   }
 
-  .contactsHeader {
-    grid-template-columns: 40px 1fr;
+  .contactsDirectory__copy strong {
+    font-size: 1.05rem;
+    font-weight: 600;
   }
 
-  .contactsHeader__device {
-    width: 36px;
-    height: 58px;
+  .contactsDirectory__copy small {
+    font-size: 0.65rem;
   }
 
-  .contactsTabs button {
-    font-size: 0.8rem;
+  .contactsDirectory__rail {
+    display: none;
   }
 
+  /* Selected contact information now appears below the list */
+  .contactPreview {
+    align-self: auto;
+
+    width: 100%;
+    max-width: none;
+    padding: 1.25rem;
+
+    border: 1px solid rgba(255, 89, 99, 0.28);
+    background: rgba(7, 10, 14, 0.58);
+  }
+
+  .contactPreview__eyebrow {
+    font-size: 0.68rem;
+  }
+
+  .contactPreview h1 {
+    margin: 0.7rem 0;
+
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .contactPreview p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .contactPreview button {
+    min-height: 46px;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* Message form also uses full mobile width */
   .messageThread {
-    height: 100%;
-    min-height: 0;
+    width: 100%;
+    max-height: none;
+
+    overflow: visible;
+    border-right: 0;
   }
 
   .messageThread__body {
-    padding-right: 0.75rem;
+    overflow: visible;
+    padding: 1rem 0 1.5rem;
   }
 
   .messageBubble {
-    max-width: 95%;
+    max-width: 94%;
   }
 
   .messageBubble--field {
-    width: 95%;
-  }
-}
-
-@media (max-width: 480px) {
-  .contactsScreen {
-    grid-template-rows: minmax(0, 1fr) 46px;
+    width: 94%;
   }
 
-  .contactsWorkspace {
-    padding: 0.85rem 0.75rem 0.75rem;
-  }
-
-  .contactsHeader {
-    grid-template-columns: 32px 1fr;
-    gap: 0.65rem;
-  }
-
-  .contactsHeader__device {
-    width: 32px;
-    height: 52px;
-  }
-
-  .contactsTabs {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .contactsTabs button {
-    white-space: nowrap;
+  .messageBubble p,
+  .messageBubble input,
+  .messageBubble textarea {
+    font-size: 0.95rem;
   }
 
   .messageThread__composer {
-    padding: 0.45rem 0.6rem;
-    justify-content: space-between;
-    gap: 0.4rem;
+    min-height: 44px;
+  }
+  .contactsScreen .actionBar {
+    min-height: 64px;
+    padding-inline: 1rem;
   }
 
-  .messageThread__composer span {
-    font-size: 0.45rem;
+  .contactsScreen .actionBar__controls {
+    gap: 1rem;
   }
 
-  .messageBubble {
-    max-width: 100%;
+  .contactsScreen .actionBar__controls > * {
+    display: inline-flex;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .contactsScreen *,
-  .contactsScreen *::before,
-  .contactsScreen *::after {
-    animation: none !important;
-    transition: none !important;
+  .contactsScreen .actionKey {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+
+  .contactsScreen .actionKey__key {
+    min-width: 46px;
+    height: 42px;
+    padding: 0 0.7rem;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .contactsScreen .actionKey__label {
+    display: inline;
+
+    font-size: 0.76rem;
+    font-weight: 600;
   }
 }
