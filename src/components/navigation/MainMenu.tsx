@@ -18,7 +18,7 @@ export type WindowType =
   | "contact"
   | "credits"
   | "music";
-  
+
 type MainMenuProps = {
   variant?: "home" | "drawer";
   defaultOpen?: boolean;
@@ -29,7 +29,7 @@ type MainMenuProps = {
 
 const homeNavItems: {
   label: string;
-  window: WindowType;
+  window: Exclude<WindowType, "music">;
 }[] = [
   {
     label: "PROJECTS",
@@ -53,18 +53,22 @@ const homeNavItems: {
   },
 ];
 
-type HomeMenuKey = "home" | WindowType;
+type HomeMenuKey =
+  | "home"
+  | Exclude<WindowType, "music">;
+
+type HomeMenuPreview = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  status: string;
+  period: string;
+  image?: string;
+};
 
 const homeMenuPreviews: Record<
   HomeMenuKey,
-  {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-    status: string;
-    period: string;
-    image?: string;
-  }
+  HomeMenuPreview
 > = {
   home: {
     eyebrow: "SYSTEM RECORD // 00",
@@ -73,6 +77,7 @@ const homeMenuPreviews: Record<
     status: "SYSTEM ONLINE",
     period: "BUILD 01.00",
   },
+
   projects: {
     eyebrow: "FEATURED RECORD // 01",
     title: "MANTIS BLADES",
@@ -81,6 +86,7 @@ const homeMenuPreviews: Record<
     period: "2024 — 2025",
     image: "/assets/projects/mantis-blades/hero.jpeg",
   },
+
   experience: {
     eyebrow: "PERSONNEL RECORD // 02",
     title: "ENGINEERING HISTORY",
@@ -88,6 +94,7 @@ const homeMenuPreviews: Record<
     status: "RECORD READY",
     period: "2024 — PRESENT",
   },
+
   about: {
     eyebrow: "CHARACTER RECORD // 03",
     title: "VINCENT LE",
@@ -95,6 +102,7 @@ const homeMenuPreviews: Record<
     status: "PROFILE ONLINE",
     period: "CAL POLY SLO",
   },
+
   contact: {
     eyebrow: "NETWORK RECORD // 04",
     title: "CONTACT CHANNELS",
@@ -102,6 +110,7 @@ const homeMenuPreviews: Record<
     status: "CHANNELS AVAILABLE",
     period: "SECURE LINK",
   },
+
   credits: {
     eyebrow: "ARCHIVE RECORD // 05",
     title: "CREDITS",
@@ -142,6 +151,7 @@ export default function MainMenu({
   onHome,
 }: MainMenuProps) {
   const pathname = usePathname();
+
   const drawerRef = useRef<HTMLElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -150,6 +160,7 @@ export default function MainMenu({
   const [isOpen, setIsOpen] = useState(
     isHomeVariant || defaultOpen
   );
+
   const [hoveredHomeItem, setHoveredHomeItem] =
     useState<HomeMenuKey | null>(null);
 
@@ -169,36 +180,39 @@ export default function MainMenu({
     onHome?.();
   }
 
-  function handleWindowSelection(window: WindowType) {
+  function handleWindowSelection(
+    window: Exclude<WindowType, "music">
+  ) {
     onNavigate?.(window);
   }
 
-  /*
-   * Drawer keyboard behavior and page scroll locking.
-   */
   useEffect(() => {
     if (isHomeVariant || !isOpen) {
       return;
     }
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow =
+      document.body.style.overflow;
+
     const previouslyFocusedElement =
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
+
     const triggerElement = triggerRef.current;
 
     document.body.style.overflow = "hidden";
 
     const drawer = drawerRef.current;
 
-    const focusableElements = drawer?.querySelectorAll<HTMLElement>(
-      [
-        'a[href]',
-        "button:not([disabled])",
-        '[tabindex]:not([tabindex="-1"])',
-      ].join(",")
-    );
+    const focusableElements =
+      drawer?.querySelectorAll<HTMLElement>(
+        [
+          "a[href]",
+          "button:not([disabled])",
+          '[tabindex]:not([tabindex="-1"])',
+        ].join(",")
+      );
 
     focusableElements?.[0]?.focus();
 
@@ -218,7 +232,9 @@ export default function MainMenu({
 
       const firstElement = focusableElements[0];
       const lastElement =
-        focusableElements[focusableElements.length - 1];
+        focusableElements[
+          focusableElements.length - 1
+        ];
 
       if (
         event.shiftKey &&
@@ -237,14 +253,23 @@ export default function MainMenu({
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
 
       const focusTarget =
-        triggerElement ?? previouslyFocusedElement;
+        triggerElement ??
+        previouslyFocusedElement;
 
       focusTarget?.focus();
     };
@@ -264,7 +289,9 @@ export default function MainMenu({
       )}
 
       <header className="cpNavHeader">
-        <div className="cpNavLogo">VINCENT LE</div>
+        <div className="cpNavLogo">
+          VINCENT LE
+        </div>
 
         <div className="cpNavSubtitle">
           PORTFOLIO INTERFACE
@@ -274,7 +301,9 @@ export default function MainMenu({
       <nav
         className="cpNavList"
         aria-label="Primary navigation"
-        onMouseLeave={() => setHoveredHomeItem(null)}
+        onMouseLeave={() =>
+          setHoveredHomeItem(null)
+        }
         onBlur={(event) => {
           if (
             !event.currentTarget.contains(
@@ -295,40 +324,100 @@ export default function MainMenu({
                   ? "cpNavItemActive"
                   : "",
               ]
-                  .filter(Boolean)
-                  .join(" ")}
+                .filter(Boolean)
+                .join(" ")}
               onClick={handleHomeSelection}
-              onMouseEnter={() => setHoveredHomeItem("home")}
-              onFocus={() => setHoveredHomeItem("home")}
+              onMouseEnter={() =>
+                setHoveredHomeItem("home")
+              }
+              onFocus={() =>
+                setHoveredHomeItem("home")
+              }
             >
-              <span className="cpNavLabel">HOME</span>
-              <span className="cpNavMeta">00</span>
+              <span className="cpNavLabel">
+                HOME
+              </span>
+
+              <span className="cpNavMeta">
+                00
+              </span>
             </button>
 
-            {homeNavItems.map((item, index) => {
+            {homeNavItems.map(
+              (item, index) => {
+                const isActive =
+                  activeWindow === item.window;
+
+                return (
+                  <button
+                    key={item.window}
+                    type="button"
+                    className={[
+                      "cpNavItem",
+                      isActive
+                        ? "cpNavItemActive"
+                        : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    onClick={() =>
+                      handleWindowSelection(
+                        item.window
+                      )
+                    }
+                    onMouseEnter={() =>
+                      setHoveredHomeItem(
+                        item.window
+                      )
+                    }
+                    onFocus={() =>
+                      setHoveredHomeItem(
+                        item.window
+                      )
+                    }
+                  >
+                    <span className="cpNavLabel">
+                      {item.label}
+                    </span>
+
+                    <span className="cpNavMeta">
+                      {String(
+                        index + 1
+                      ).padStart(2, "0")}
+                    </span>
+                  </button>
+                );
+              }
+            )}
+          </>
+        ) : (
+          drawerNavItems.map(
+            (item, index) => {
               const isActive =
-                activeWindow === item.window;
+                pathname === item.href ||
+                (item.href !== "/home" &&
+                  pathname.startsWith(
+                    `${item.href}/`
+                  ));
 
               return (
-                <button
-                  key={item.window}
-                  type="button"
+                <Link
+                  key={item.href}
+                  href={item.href}
                   className={[
                     "cpNavItem",
                     isActive
                       ? "cpNavItemActive"
                       : "",
                   ]
-                  .filter(Boolean)
-                  .join(" ")}
-                  onClick={() =>
-                    handleWindowSelection(item.window)
-                  }
-                  onMouseEnter={() =>
-                    setHoveredHomeItem(item.window)
-                  }
-                  onFocus={() =>
-                    setHoveredHomeItem(item.window)
+                    .filter(Boolean)
+                    .join(" ")}
+                  onClick={closeMenu}
+                  tabIndex={isOpen ? 0 : -1}
+                  aria-current={
+                    isActive
+                      ? "page"
+                      : undefined
                   }
                 >
                   <span className="cpNavLabel">
@@ -336,58 +425,22 @@ export default function MainMenu({
                   </span>
 
                   <span className="cpNavMeta">
-                    {String(index + 1).padStart(
+                    {String(index).padStart(
                       2,
                       "0"
                     )}
                   </span>
-                </button>
+                </Link>
               );
-            })}
-          </>
-        ) : (
-          drawerNavItems.map((item, index) => {
-            const isActive =
-              pathname === item.href ||
-              (item.href !== "/home" &&
-                pathname.startsWith(
-                  `${item.href}/`
-                ));
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={[
-                  "cpNavItem",
-                  isActive
-                    ? "cpNavItemActive"
-                    : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                onClick={closeMenu}
-                tabIndex={isOpen ? 0 : -1}
-                aria-current={
-                  isActive ? "page" : undefined
-                }
-              >
-                <span className="cpNavLabel">
-                  {item.label}
-                </span>
-
-                <span className="cpNavMeta">
-                  {String(index).padStart(2, "0")}
-                </span>
-              </Link>
-            );
-          })
+            }
+          )
         )}
       </nav>
 
       <footer className="cpNavFooter">
         <span className="cpNavVersion">
-          Welcome V // LAPUTA OS // BUILD 01.00
+          Welcome V // LAPUTA OS // BUILD
+          01.00
         </span>
 
         <strong className="cpNavUser">
@@ -409,6 +462,10 @@ export default function MainMenu({
   );
 
   if (isHomeVariant) {
+    const preview = hoveredHomeItem
+      ? homeMenuPreviews[hoveredHomeItem]
+      : null;
+
     return (
       <div className="cpNavHomeShell">
         <aside
@@ -420,19 +477,19 @@ export default function MainMenu({
 
         <section
           className={
-            hoveredHomeItem
+            preview
               ? "homeMenuPreview homeMenuPreview--visible"
               : "homeMenuPreview"
           }
           aria-label="Featured portfolio record"
         >
-          {hoveredHomeItem && (
+          {preview && (
             <>
-              {homeMenuPreviews[hoveredHomeItem].image ? (
+              {preview.image ? (
                 <div className="homeMenuPreview__image">
                   <Image
-                    src={homeMenuPreviews[hoveredHomeItem].image}
-                    alt={homeMenuPreviews[hoveredHomeItem].title}
+                    src={preview.image}
+                    alt={preview.title}
                     fill
                     sizes="(max-width: 900px) 0px, 28vw"
                   />
@@ -442,32 +499,49 @@ export default function MainMenu({
                   className="homeMenuPreview__image homeMenuPreview__image--placeholder"
                   aria-hidden="true"
                 >
-                  <span>{homeMenuPreviews[hoveredHomeItem].title}</span>
+                  <span>{preview.title}</span>
                 </div>
               )}
 
               <div className="homeMenuPreview__content">
-                <span>{homeMenuPreviews[hoveredHomeItem].eyebrow}</span>
-                <strong>{homeMenuPreviews[hoveredHomeItem].title}</strong>
-                <small>{homeMenuPreviews[hoveredHomeItem].subtitle}</small>
+                <span>
+                  {preview.eyebrow}
+                </span>
+
+                <strong>
+                  {preview.title}
+                </strong>
+
+                <small>
+                  {preview.subtitle}
+                </small>
+
                 <div>
-                  <span>{homeMenuPreviews[hoveredHomeItem].status}</span>
-                  <span>{homeMenuPreviews[hoveredHomeItem].period}</span>
+                  <span>
+                    {preview.status}
+                  </span>
+
+                  <span>
+                    {preview.period}
+                  </span>
                 </div>
               </div>
             </>
           )}
         </section>
 
-        <div className="homeMenuHud homeMenuHud--top" aria-hidden="true">
-          <span>PORTFOLIO BUILD 01.00</span>
-          <strong>LAPUTA OS // ONLINE</strong>
-        </div>
+        <div
+          className="homeMenuHud homeMenuHud--top"
+          aria-hidden="true"
+        >
+          <span>
+            PORTFOLIO BUILD 01.00
+          </span>
 
-       {/*} <div className="homeMenuHud homeMenuHud--bottom" aria-hidden="true">
-          <span><b>ENTER</b> Select</span>
-          <span><b>ESC</b> Close</span>
-        </div> */}
+          <strong>
+            LAPUTA OS // ONLINE
+          </strong>
+        </div>
       </div>
     );
   }
@@ -517,7 +591,9 @@ export default function MainMenu({
         className={[
           "cpNav",
           "cpNavDrawer",
-          isOpen ? "cpNavDrawerOpen" : "",
+          isOpen
+            ? "cpNavDrawerOpen"
+            : "",
         ]
           .filter(Boolean)
           .join(" ")}
