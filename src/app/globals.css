@@ -10,13 +10,6 @@ body {
   font-weight: 500;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: "Rajdhani", sans-serif;
-  --font-mono: "Rajdhani", monospace;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0b0f10;
