@@ -1,0 +1,554 @@
+.githubPatchOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: grid;
+  place-items: center;
+
+  padding: clamp(24px, 5vh, 72px);
+
+  font-family: "Rajdhani", sans-serif;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(14, 8, 12, 0.28),
+      rgba(1, 1, 3, 0.78)
+    );
+  backdrop-filter: blur(2px);
+}
+
+.githubPatchOverlay__dismiss {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  background: transparent;
+  cursor: default;
+}
+
+/* Centered window matching the game's proportions */
+.githubPatchWindow {
+  position: relative;
+  z-index: 1;
+
+  width: min(82vw, 1440px);
+  height: min(76vh, 760px);
+  min-height: 540px;
+
+  display: grid;
+  grid-template-columns: 29% 71%;
+
+  overflow: hidden;
+
+  color: #b9afb3;
+
+  border: 1px solid rgba(255, 77, 88, 0.64);
+  background: rgba(13, 4, 7, 0.97);
+
+  box-shadow:
+    0 35px 100px rgba(0, 0, 0, 0.7),
+    inset 0 0 55px rgba(110, 0, 18, 0.08);
+
+  animation: githubPatchOpen 160ms ease-out;
+}
+
+.githubPatchWindow::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  z-index: 3;
+
+  pointer-events: none;
+
+  border-top: 1px solid rgba(255, 82, 92, 0.1);
+  border-bottom: 1px solid rgba(255, 82, 92, 0.08);
+}
+
+/* Only use a dedicated artwork image here.
+   url("/assets/pets/performative-jit-programming.jpeg"). */
+.githubPatchWindow__art {
+  background:
+      url("/assets/pets/performative-jit-programming.jpeg")
+    center / cover no-repeat,
+}
+.githubPatchWindow__art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 65%,
+      rgba(17, 3, 7, 0.32)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 3px,
+      rgba(255, 72, 84, 0.025) 4px
+    );
+}
+
+.githubPatchWindow__artImage {
+  display: none;
+}
+
+/* Remove the oversized custom text over the image */
+.githubPatchWindow__artText {
+  display: none;
+}
+
+.githubPatchWindow__content {
+  min-width: 0;
+  min-height: 0;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  padding: 24px 18px 12px;
+}
+
+.githubPatchWindow__header {
+  min-height: 56px;
+  padding: 0 12px 13px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  border-bottom: 1px solid rgba(255, 75, 87, 0.18);
+}
+
+.githubPatchWindow__eyebrow {
+  display: block;
+  margin-bottom: 4px;
+
+  color: rgba(92, 225, 236, 0.62);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.githubPatchWindow__header h2 {
+  margin: 0;
+
+  color: #ff6570;
+  font-size: clamp(22px, 1.75vw, 31px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.githubPatchWindow__close {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  color: #62edf5;
+
+  border: 1px solid rgba(98, 237, 245, 0.72);
+  background: rgba(2, 21, 25, 0.5);
+
+  font: inherit;
+  font-size: 23px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.githubPatchWindow__close:hover,
+.githubPatchWindow__close:focus-visible {
+  color: #ff6570;
+  border-color: #ff6570;
+  outline: none;
+}
+
+.githubPatchWindow__scroll {
+  min-height: 0;
+  overflow-y: auto;
+
+  padding: 8px 9px 12px 3px;
+
+  scrollbar-width: thin;
+  scrollbar-color:
+    #ff5f6c
+    rgba(255, 255, 255, 0.025);
+}
+
+.githubPatchWindow__scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.githubPatchWindow__scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.githubPatchWindow__scroll::-webkit-scrollbar-thumb {
+  background: #ff5f6c;
+}
+
+/* Compact horizontal rows like the reference */
+.githubPatchCard {
+  min-height: 150px;
+  padding: 16px;
+
+  display: grid;
+  grid-template-columns: clamp(180px, 29%, 270px) 1fr;
+  gap: 18px;
+
+  border: 1px solid rgba(255, 76, 88, 0.2);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(38, 7, 13, 0.48),
+      rgba(17, 5, 8, 0.32)
+    );
+}
+
+.githubPatchCard + .githubPatchCard {
+  margin-top: 8px;
+}
+
+.githubPatchCard__visual {
+  position: relative;
+  min-height: 115px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 82, 93, 0.15);
+  background:
+    radial-gradient(
+      circle at 70% 35%,
+      rgba(74, 226, 235, 0.1),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(82, 10, 23, 0.68),
+      rgba(7, 8, 12, 0.95)
+    );
+}
+
+.githubPatchCard__index {
+  position: absolute;
+  top: -14px;
+  left: 10px;
+
+  color: rgba(255, 93, 105, 0.17);
+  font-size: 76px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.githubPatchCard__visualLines {
+  width: 70%;
+
+  display: grid;
+  gap: 7px;
+
+  transform: skewX(-17deg);
+}
+
+.githubPatchCard__visualLines span {
+  height: 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #60eaf2 0 20%,
+      rgba(255, 87, 101, 0.82) 20% 58%,
+      rgba(96, 234, 242, 0.12) 58%
+    );
+}
+
+.githubPatchCard__sha {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+
+  color: #62eaf2;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+}
+
+.githubPatchCard__body {
+  min-width: 0;
+  padding-top: 1px;
+}
+
+.githubPatchCard__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  color: rgba(190, 174, 180, 0.55);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.githubPatchCard h3 {
+  margin: 6px 0 5px;
+
+  color: #62e7f0;
+  font-size: clamp(18px, 1.35vw, 25px);
+  font-weight: 500;
+  line-height: 1.06;
+  text-transform: uppercase;
+}
+
+.githubPatchCard p {
+  margin: 0;
+
+  color: rgba(203, 191, 195, 0.76);
+  font-size: clamp(13px, 0.92vw, 17px);
+  line-height: 1.3;
+  white-space: pre-line;
+}
+
+.githubPatchOverlay__dismiss {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.githubPatchWindow {
+  position: relative;
+  z-index: 2;
+}
+
+.githubPatchWindow__content {
+  position: relative;
+  z-index: 4;
+
+  min-width: 0;
+  min-height: 0;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  padding: 24px 18px 0;
+}
+
+.githubPatchCard__body {
+  position: relative;
+  z-index: 5;
+
+  min-width: 0;
+  padding-top: 1px;
+}
+
+.githubPatchCard__open {
+  position: relative;
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 9px;
+  padding: 5px 0;
+
+  color: #ff6570;
+  background: transparent;
+  border: 0;
+
+  font: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.13em;
+
+  cursor: pointer;
+}
+
+.githubPatchCard__open:hover,
+.githubPatchCard__open:focus-visible {
+  color: #61eaf2;
+  outline: none;
+}
+
+.githubPatchCard__open span {
+  transition: transform 120ms ease;
+}
+
+.githubPatchCard__open:hover span,
+.githubPatchCard__open:focus-visible span {
+  transform: translate(2px, -2px);
+}
+
+.githubPatchWindow__footer {
+  position: relative;
+  z-index: 6;
+
+  min-height: 52px;
+  margin: 0 -18px;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid rgba(255, 79, 94, 0.18);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 3, 6, 0.98),
+      rgba(15, 4, 8, 0.96)
+    );
+}
+
+.githubPatchWindow__footer .actionKey {
+  cursor: pointer;
+}
+
+.githubPatchWindow__footer .actionKey__key {
+  min-width: 34px;
+  height: 26px;
+
+  color: #061014;
+  background: #59e8f2;
+}
+
+.githubPatchWindow__footer .actionKey__label {
+  color: #ff4f5e;
+}
+
+.githubPatchWindow__footer
+  .actionKey:hover
+  .actionKey__label,
+.githubPatchWindow__footer
+  .actionKey:focus-visible
+  .actionKey__label {
+  color: #59e8f2;
+}
+
+.githubPatchWindow__branch {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: rgba(199, 184, 189, 0.42);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.githubPatchWindow__branch strong {
+  color: #ff6873;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.githubPatchWindow__status {
+  height: 100%;
+
+  display: grid;
+  place-items: center;
+
+  color: #61eaf2;
+  font-size: 16px;
+  letter-spacing: 0.16em;
+}
+
+.githubPatchWindow__status--error {
+  color: #ff6470;
+}
+
+.githubPatchWindow__footer {
+  min-height: 29px;
+  padding: 8px 8px 0;
+
+  display: flex;
+  justify-content: space-between;
+
+  color: rgba(199, 184, 189, 0.42);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.githubPatchWindow__footer span {
+  display: flex;
+  gap: 7px;
+}
+
+.githubPatchWindow__footer strong {
+  color: #ff6873;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@keyframes githubPatchOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.975);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1000px) {
+  .githubPatchOverlay {
+    padding: 18px;
+  }
+
+  .githubPatchWindow {
+    width: min(94vw, 900px);
+    height: min(84dvh, 760px);
+    min-height: 0;
+
+    grid-template-columns: 31% 69%;
+  }
+
+  .githubPatchCard {
+    grid-template-columns: 160px 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .githubPatchWindow {
+    width: 95vw;
+    height: 88dvh;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 190px 1fr;
+  }
+
+  .githubPatchWindow__art {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 73, 85, 0.28);
+  }
+
+  .githubPatchWindow__content {
+    padding: 16px 12px 9px;
+  }
+
+  .githubPatchCard {
+    grid-template-columns: 1fr;
+  }
+
+  .githubPatchCard__visual {
+    min-height: 95px;
+  }
+}

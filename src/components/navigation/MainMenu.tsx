@@ -17,8 +17,8 @@ export type WindowType =
   | "about"
   | "contact"
   | "credits"
-    "music";
-
+  | "music";
+  
 type MainMenuProps = {
   variant?: "home" | "drawer";
   defaultOpen?: boolean;
