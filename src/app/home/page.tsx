@@ -12,6 +12,9 @@ import ExperienceWindow from "@/components/windows/ExperienceWindow";
 import TimePanel from "@/components/shared/TimePanel";
 import type { WindowType } from "@/components/navigation/MainMenu";
 
+import MusicWindow from "@/components/spotify/MusicWindow";
+import SpotifyHudButton from "@/components/spotify/SpotifyHudButton";
+
 import styles from "./home.module.css";
 
 export default function HomePage() {
@@ -37,6 +40,9 @@ export default function HomePage() {
             <div className="hud-layer">
               <TimePanel className="hud-clock" />
             </div>
+            <SpotifyHudButton
+              onOpen={() => setActiveWindow("music")}
+            />
           </>
         )}
       {activeWindow && (
@@ -68,6 +74,9 @@ export default function HomePage() {
 
           {activeWindow === "credits" && (
             <CreditsWindow onClose={closeWindow} />
+          )}
+          {activeWindow === "music" && (
+            <MusicWindow onClose={closeWindow} />
           )}
         </div>
       )}

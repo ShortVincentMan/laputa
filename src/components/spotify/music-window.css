@@ -1,0 +1,488 @@
+.musicScreen {
+  --music-red: #ff5a63;
+  --music-cyan: #55e8f3;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+
+  color: var(--music-red);
+
+  background:
+    linear-gradient(
+      rgba(19, 4, 8, 0.68),
+      rgba(5, 4, 7, 0.76)
+    ),
+    radial-gradient(
+      circle at 58% 45%,
+      rgba(63, 174, 184, 0.08),
+      transparent 35%
+    );
+}
+
+.musicScreen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  background:
+    linear-gradient(
+      rgba(34, 4, 8, 0.55),
+      rgba(5, 4, 6, 0.7)
+    ),
+    url("/assets/reference/menu.webp")
+      center / cover no-repeat;
+
+  filter: blur(7px) brightness(0.5);
+  transform: scale(1.04);
+}
+
+.musicScreen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 25%,
+      rgba(0, 0, 0, 0.42) 80%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(27, 5, 8, 0.45),
+      rgba(10, 5, 7, 0.12),
+      rgba(0, 0, 0, 0.42)
+    );
+}
+
+.musicScreen__scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0.14;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    rgba(255, 255, 255, 0.018) 4px
+  );
+}
+
+.musicScreen__header,
+.musicScreen__main,
+.musicScreen__history,
+.musicScreen__footer {
+  width: 100%;
+}
+
+.musicScreen {
+  padding: 4vh 0;
+}
+
+.musicScreen > *:not(.musicScreen__scanlines) {
+  width: min(760px, 52vw);
+}
+
+.musicScreen__header {
+  position: absolute;
+  top: 13vh;
+}
+
+.musicScreen__header small,
+.musicScreen__historyLabel,
+.musicScreen__sectionLabel {
+  display: block;
+
+  color: rgba(255, 77, 88, 0.74);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+}
+
+.musicScreen__titleBar {
+  position: relative;
+
+  height: 44px;
+  padding: 0 1rem;
+
+  border: 1px solid rgba(255, 73, 84, 0.72);
+
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 9px),
+    calc(100% - 9px) 100%,
+    0 100%
+  );
+}
+
+.musicScreen__titleBar::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 0;
+
+  width: 6px;
+  height: 100%;
+
+  background: var(--music-red);
+}
+
+.musicScreen__titleBar span {
+  color: var(--music-cyan);
+  font-size: 1.45rem;
+  line-height: 42px;
+}
+
+.musicScreen__main {
+  position: absolute;
+  top: 21vh;
+
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 1.2rem;
+}
+
+.musicScreen__artPanel {
+  position: relative;
+}
+
+.musicScreen__artFrame {
+  width: 190px;
+  aspect-ratio: 1;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 80, 90, 0.72);
+  background: rgba(15, 5, 8, 0.8);
+}
+
+.musicScreen__artFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  filter:
+    saturate(0.9)
+    contrast(1.05);
+}
+
+.musicScreen__artFallback {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--music-cyan);
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.musicScreen__artifactText {
+  position: absolute;
+  left: 0.7rem;
+  bottom: 0.55rem;
+
+  color: rgba(255, 76, 87, 0.55);
+  font-size: 0.35rem;
+  line-height: 1.1;
+}
+
+.musicScreen__nowPlaying {
+  min-width: 0;
+}
+
+.musicScreen__sectionLabel {
+  padding-bottom: 0.45rem;
+
+  border-bottom: 1px solid rgba(255, 79, 89, 0.52);
+}
+
+.musicScreen__state {
+  margin-top: 1.3rem;
+  font-size: 1.5rem;
+}
+
+.musicScreen__trackCopy {
+  margin-top: 1rem;
+}
+
+.musicScreen__trackCopy h1 {
+  overflow: hidden;
+  margin: 0;
+
+  color: var(--music-red);
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-weight: 500;
+  line-height: 1.05;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.musicScreen__trackCopy p {
+  margin: 0.45rem 0 0;
+
+  color: var(--music-cyan);
+  font-size: 1rem;
+  font-weight: 650;
+  text-shadow:
+    0 0 1.5px #5ef6ff;
+}
+
+.musicScreen__trackCopy span {
+  display: block;
+  margin-top: 0.15rem;
+
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.68rem;
+}
+
+.musicScreen__signalRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+
+  margin-top: 1.2rem;
+}
+
+.musicScreen__signalRow span {
+  margin-right: auto;
+  font-size: 0.6rem;
+}
+
+.musicScreen__signalRow strong {
+  color: var(--music-cyan);
+  font-size: 1.35rem;
+}
+
+.musicScreen__signalRow em {
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.75rem;
+  font-style: normal;
+}
+
+.musicScreen__progress {
+  height: 1px;
+  margin-top: 0.35rem;
+
+  background: rgba(255, 78, 88, 0.4);
+}
+
+.musicScreen__progress span {
+  display: block;
+  height: 100%;
+  background: var(--music-cyan);
+}
+
+.musicScreen__spotifyLink {
+  display: inline-block;
+  margin-top: 0.7rem;
+
+  color: var(--music-cyan);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.musicScreen__spotifyLink:hover {
+  color: #f5da21;
+}
+
+.musicScreen__history {
+  position: absolute;
+  top: 49vh;
+  height: 30vh;
+  overflow: hidden;
+}
+
+.musicScreen__historyLabel {
+  margin-bottom: 0.35rem;
+}
+
+.musicScreen__trackList {
+  height: calc(100% - 1rem);
+  overflow-y: auto;
+  padding-right: 5px;
+
+  scrollbar-color: var(--music-red) transparent;
+  scrollbar-width: thin;
+}
+
+.musicScreen__trackRow {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+
+  width: 100%;
+  min-height: 38px;
+  padding: 0.25rem 0.65rem;
+
+  color: var(--music-cyan);
+  background: transparent;
+  border: 1px solid transparent;
+
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.musicScreen__trackRow:hover,
+.musicScreen__trackRow.is-selected {
+  color: #83f7ff;
+  background: rgba(41, 130, 137, 0.2);
+  border-color: var(--music-cyan);
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 9px) 0,
+    100% 9px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.musicScreen__rowCode {
+  color: rgba(85, 232, 243, 0.46);
+  font-size: 0.52rem;
+}
+
+.musicScreen__rowCopy {
+  display: grid;
+  min-width: 0;
+}
+
+.musicScreen__rowCopy strong {
+  overflow: hidden;
+
+  font-size: 0.92rem;
+  font-weight: 600;
+    text-shadow:
+    0 0 1px #5ef6ff;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.musicScreen__rowCopy small {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.55rem;
+}
+
+.musicScreen__trackRow time {
+  color: rgba(255, 89, 99, 0.62);
+  font-size: 0.5rem;
+}
+
+.musicScreen__footer {
+  position: absolute;
+  top: 80vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 34px;
+  border-top: 1px solid rgba(255, 78, 89, 0.55);
+}
+.musicScreen__footer div {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.musicScreen__footer button {
+  color: var(--music-red);
+  background: none;
+  border: 0;
+
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.musicScreen__footer kbd {
+  display: inline-grid;
+  place-items: center;
+
+  min-width: 34px;
+  height: 34px;
+  margin-right: 0.35rem;
+
+  color: var(--music-cyan);
+  border: 2px solid currentColor;
+
+  font: inherit;
+}
+.musicScreen__footer > span {
+  max-width: 250px;
+
+  color: rgba(255, 79, 89, 0.48);
+  font-size: 0.36rem;
+}
+
+@media (max-width: 900px) {
+  .musicScreen > *:not(.musicScreen__scanlines) {
+    width: min(680px, 72vw);
+  }
+
+  .musicScreen__main {
+    grid-template-columns: 165px minmax(0, 1fr);
+  }
+
+  .musicScreen__artFrame {
+    width: 165px;
+  }
+}
+
+@media (max-width: 700px) {
+  .musicScreen {
+    overflow-y: auto;
+  }
+
+  .musicScreen > *:not(.musicScreen__scanlines) {
+    width: calc(100vw - 2rem);
+  }
+
+  .musicScreen__header {
+    top: 4vh;
+  }
+
+  .musicScreen__main {
+    top: 12vh;
+    grid-template-columns: 105px minmax(0, 1fr);
+    gap: 0.8rem;
+  }
+
+  .musicScreen__artFrame {
+    width: 105px;
+  }
+
+  .musicScreen__artifactText {
+    display: none;
+  }
+
+  .musicScreen__history {
+    top: 39vh;
+    height: 44vh;
+  }
+
+  .musicScreen__signalRow span,
+  .musicScreen__trackRow time {
+    display: none;
+  }
+
+  .musicScreen__footer {
+    top: 85vh;
+  }
+}

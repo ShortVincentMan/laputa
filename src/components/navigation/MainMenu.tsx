@@ -16,7 +16,8 @@ export type WindowType =
   | "experience"
   | "about"
   | "contact"
-  | "credits";
+  | "credits"
+    "music";
 
 type MainMenuProps = {
   variant?: "home" | "drawer";
@@ -463,10 +464,10 @@ export default function MainMenu({
           <strong>LAPUTA OS // ONLINE</strong>
         </div>
 
-        <div className="homeMenuHud homeMenuHud--bottom" aria-hidden="true">
+       {/*} <div className="homeMenuHud homeMenuHud--bottom" aria-hidden="true">
           <span><b>ENTER</b> Select</span>
           <span><b>ESC</b> Close</span>
-        </div>
+        </div> */}
       </div>
     );
   }
