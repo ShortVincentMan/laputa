@@ -26,6 +26,7 @@ import "./projects-window.css";
 type ProjectsWindowProps = {
   onClose: () => void;
   onNavigate: (window: WindowType) => void;
+  initialView?: "journal" | "cyberware";
 };
 
 type ProjectsView =
@@ -44,13 +45,28 @@ function getStatusTone(project: ProjectRecord) {
 export default function ProjectsWindow({
   onClose,
   onNavigate,
+  initialView = "journal",
 }: ProjectsWindowProps) {
   const initialProject = getVisibleProjects("featured")[0];
+
+  const initialCyberwareProject = getVisibleProjects("featured").find(
+    (project) => project.cyberware
+  );
 
   const [activeCategory, setActiveCategory] =
     useState<ProjectCategory>("featured");
   const [selectedId, setSelectedId] = useState(initialProject?.id ?? "");
-  const [view, setView] = useState<ProjectsView>({ type: "journal" });
+  const [view, setView] = useState<ProjectsView>(() => {
+  if (initialView === "cyberware" && initialCyberwareProject) {
+    return {
+      type: "cyberware",
+      projectId: initialCyberwareProject.id,
+      returnTo: "journal",
+    };
+  }
+
+  return { type: "journal" };
+});
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
   const visibleProjects = useMemo(

@@ -214,7 +214,7 @@ export default function AboutWindow({
           {
             id: "cyberware",
             label: "CYBERWARE",
-            onClick: () => onNavigate("projects"),
+            onClick: () => onNavigate("cyberware"),
           },
           {
             id: "inventory",

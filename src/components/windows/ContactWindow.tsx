@@ -311,7 +311,7 @@ export default function ContactWindow({
           {
             id: "cyberware",
             label: "CYBERWARE",
-            onClick: () => onNavigate("projects"),
+            onClick: () => onNavigate("cyberware"),
           },
           {
             id: "inventory",

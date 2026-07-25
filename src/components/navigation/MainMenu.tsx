@@ -13,6 +13,7 @@ import "./main-menu.css";
 
 export type WindowType =
   | "projects"
+  | "cyberware"
   | "experience"
   | "about"
   | "contact"
@@ -29,7 +30,7 @@ type MainMenuProps = {
 
 const homeNavItems: {
   label: string;
-  window: Exclude<WindowType, "music">;
+  window: Exclude<WindowType, "music"> | "cyberware";
 }[] = [
   {
     label: "PROJECTS",
@@ -55,7 +56,7 @@ const homeNavItems: {
 
 type HomeMenuKey =
   | "home"
-  | Exclude<WindowType, "music">;
+  | Exclude<WindowType, "music"> | "cyberware";
 
 type HomeMenuPreview = {
   eyebrow: string;
@@ -181,7 +182,7 @@ export default function MainMenu({
   }
 
   function handleWindowSelection(
-    window: Exclude<WindowType, "music">
+    window: Exclude<WindowType, "music" | "cyberware">
   ) {
     onNavigate?.(window);
   }

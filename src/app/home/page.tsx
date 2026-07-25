@@ -71,6 +71,14 @@ export default function HomePage() {
               onNavigate={setActiveWindow}
             />
           )}
+          
+          {activeWindow === "cyberware" && (
+            <ProjectsWindow
+              initialView="cyberware"
+              onClose={closeWindow}
+              onNavigate={setActiveWindow}
+            />
+          )}
 
           {activeWindow === "experience" && (
             <ExperienceWindow
