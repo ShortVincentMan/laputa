@@ -8,6 +8,7 @@ import {
 
 import type { GitHubCommit } from "@/lib/github";
 import ActionKey from "@/components/shared/ActionKey";
+import { BUILD } from "@/data/build";
 
 import "./github-patch-window.css";
 
@@ -138,7 +139,7 @@ export default function GitHubPatchWindow({
               </span>
 
               <h2 id="github-patch-title">
-                CHANGES IN BUILD 01.00
+                CHANGES IN BUILD {BUILD.semver}
               </h2>
             </div>
 

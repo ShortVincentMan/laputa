@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BUILD } from "@/data/build";
 
 import "./main-menu.css";
 
@@ -76,7 +77,7 @@ const homeMenuPreviews: Record<
     title: "LAPUTA OS",
     subtitle: "INTERACTIVE ENGINEERING PORTFOLIO",
     status: "SYSTEM ONLINE",
-    period: "BUILD 01.00",
+    period: `BUILD ${BUILD.display}`,
   },
 
   projects: {
@@ -441,7 +442,7 @@ export default function MainMenu({
       <footer className="cpNavFooter">
         <span className="cpNavVersion">
           Welcome V // LAPUTA OS // BUILD
-          01.00
+          {BUILD.display}
         </span>
 
         <strong className="cpNavUser">
@@ -537,7 +538,7 @@ export default function MainMenu({
           aria-hidden="true"
         >
           <span>
-            PORTFOLIO BUILD 01.00
+            PORTFOLIO BUILD {BUILD.semver}
           </span>
 
           <strong>

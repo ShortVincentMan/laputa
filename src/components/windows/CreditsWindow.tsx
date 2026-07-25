@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import ActionBar from "@/components/shared/ActionBar";
 import ActionKey from "@/components/shared/ActionKey";
+import { BUILD } from "@/data/build";
 
 import "./credits-window.css";
 
@@ -183,7 +184,7 @@ export default function CreditsWindow({
               </section>
 
               <footer className="creditsCard__footer">
-                <span>LAPUTA-OS // BUILD 01.00</span>
+                <span>LAPUTA-OS // BUILD {BUILD.semver}</span>
                 <strong>ONLINE</strong>
               </footer>
             </div>
