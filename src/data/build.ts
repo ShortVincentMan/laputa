@@ -1,6 +1,6 @@
 export const BUILD = {
-  display: "01.03",
-  semver: "1.0.3",
-  date: "2026-07-25",
-  title: "Journal and Gallery",
+  display: "01.04",
+  semver: "1.0.4",
+  date: "2026-07-26",
+  title: "Quickhacks Protocol",
 } as const;

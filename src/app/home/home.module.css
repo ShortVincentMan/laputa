@@ -18,6 +18,78 @@
   padding: clamp(1rem, 2.5vw, 3rem);
 }
 
+.quickhacksAction {
+  position: fixed;
+  right: clamp(1.5rem, 3vw, 3.5rem);
+  bottom: clamp(1.25rem, 2.5vw, 2.75rem);
+  z-index: 1500;
+
+  padding: 0.55rem 0.75rem;
+  border-top: 1px solid rgba(255, 77, 88, 0.38);
+  background: linear-gradient(90deg, rgba(3, 8, 12, 0.2), rgba(3, 8, 12, 0.82));
+}
+
+.quickhacksUnlockNotice {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 21000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: min(430px, calc(100vw - 2rem));
+  padding: 1rem 2rem;
+
+  color: #5beaf4;
+  border: 1px solid #5beaf4;
+  background: rgba(3, 10, 15, 0.94);
+  box-shadow: 0 0 25px rgba(91, 234, 244, 0.28);
+
+  font-family: var(--font-ui);
+  text-align: center;
+  text-transform: uppercase;
+
+  transform: translate(-50%, -50%);
+  animation: quickhacksUnlockIn 220ms steps(2), quickhacksUnlockPulse 700ms ease-in-out infinite alternate;
+}
+
+.quickhacksUnlockNotice span,
+.quickhacksUnlockNotice small {
+  color: rgba(91, 234, 244, 0.68);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+}
+
+.quickhacksUnlockNotice strong {
+  color: #f5d42b;
+  font-size: clamp(1.25rem, 3vw, 2.2rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+}
+
+@keyframes quickhacksUnlockIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scaleX(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+}
+
+@keyframes quickhacksUnlockPulse {
+  from {
+    filter: brightness(0.9);
+  }
+
+  to {
+    filter: brightness(1.15);
+  }
+}
+
 @media (max-width: 760px) {
   .homePage {
     min-height: 100dvh;
@@ -32,5 +104,16 @@
       max(0.5rem, env(safe-area-inset-right))
       max(0.5rem, env(safe-area-inset-bottom))
       max(0.5rem, env(safe-area-inset-left));
+  }
+
+  .quickhacksAction {
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quickhacksUnlockNotice {
+    animation: none;
   }
 }
