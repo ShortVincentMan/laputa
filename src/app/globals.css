@@ -3,11 +3,50 @@
 :root {
   --font-ui: "Rajdhani", sans-serif;
   --font-display: "Rajdhani", sans-serif;
-}
 
-body {
-  font-family: var(--font-ui);
-  font-weight: 500;
+  --cursor-default:
+    url("/assets/cursors/arrow.png") 0 0,
+    default;
+
+  --cursor-pointer:
+    url("/assets/cursors/link.png") 0 0,
+    pointer;
+
+  --cursor-text:
+    url("/assets/cursors/beam.png") 17 15,
+    text;
+
+  --cursor-move:
+    url("/assets/cursors/move.png") 14 16,
+    move;
+
+  --cursor-disabled:
+    url("/assets/cursors/no.png") 15 15,
+    not-allowed;
+
+  --cursor-help:
+    url("/assets/cursors/help.png") 0 0,
+    help;
+
+  --cursor-crosshair:
+    url("/assets/cursors/cross.png") 16 16,
+    crosshair;
+
+  --cursor-pen:
+    url("/assets/cursors/pen.png") 9 22,
+    crosshair;
+
+  --cursor-person:
+    url("/assets/cursors/person.png") 6 5,
+    pointer;
+
+  --cursor-pin:
+    url("/assets/cursors/pin.png") 6 5,
+    pointer;
+
+  --cursor-up:
+    url("/assets/cursors/up.png") 14 6,
+    n-resize;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -75,6 +114,12 @@ body {
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
+  cursor: var(--cursor-default);
+}
+
+body {
+  font-family: var(--font-ui);
+  font-weight: 500;
 }
 
 button,
@@ -85,6 +130,57 @@ select {
   touch-action: manipulation;
 }
 
+a,
+button,
+[role="button"],
+summary,
+label[for],
+select {
+  cursor: var(--cursor-pointer);
+}
+
+input,
+textarea,
+[contenteditable="true"],
+[role="textbox"] {
+  cursor: var(--cursor-text);
+}
+
+[draggable="true"],
+.cursor-move {
+  cursor: var(--cursor-move);
+}
+
+button:disabled,
+[aria-disabled="true"],
+.cursor-disabled {
+  cursor: var(--cursor-disabled);
+}
+
+.cursor-help {
+  cursor: var(--cursor-help);
+}
+
+.cursor-crosshair {
+  cursor: var(--cursor-crosshair);
+}
+
+.cursor-pen {
+  cursor: var(--cursor-pen);
+}
+
+.cursor-person {
+  cursor: var(--cursor-person);
+}
+
+.cursor-pin {
+  cursor: var(--cursor-pin);
+}
+
+.cursor-up {
+  cursor: var(--cursor-up);
+}
+
 @media (max-width: 760px) {
   button,
   a {
@@ -92,3 +188,8 @@ select {
   }
 }
 
+@media (hover: none), (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+}

@@ -9,7 +9,7 @@ export type ProjectId =
   | "mantis-blades"
   | "tensegrity-exoskeleton"
   | "spinal-battery-system"
-  | "kids-first-platform"
+  | "kfi-stem-platform"
   | "laputa-os"
   | "ar-sand-table"
   | "trimtab"
@@ -211,6 +211,12 @@ export const projects: ProjectRecord[] = [
         alt: "Additional view of the Mantis Blades prototype",
         caption: "Prototype detail view",
       },
+      {
+        src: "/assets/personal/greatsword-mantis-blades.jpeg",
+        alt:
+          "Vincent wearing the Mantis Blades prototype while holding a large prop greatsword",
+        caption: "Completed wearable system and prop showcase",
+      },
     ],
 
     featured: true,
@@ -239,7 +245,58 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "EXOSKELETON RESEARCH VISUAL",
+    image: "/assets/personal/exoskeleton2.jpeg",
+    imageAlt:
+      "Vincent wearing the upper-limb tensegrity exoskeleton prototype during a fit test",
     detailLabel: "RESEARCH // TENSEGRITY EXOSKELETON",
+
+    sections: [
+      {
+        id: "prototype",
+        title: "Prototype",
+        description:
+          "The current research platform uses a lightweight tensegrity-inspired arm structure intended for wearable motion assistance and rehabilitation research.",
+        image: "/assets/personal/exoskeleton.jpeg",
+        imageAlt:
+          "Upper-limb tensegrity exoskeleton prototype being worn during early testing",
+      },
+      {
+        id: "fit-testing",
+        title: "Fit Testing",
+        description:
+          "Wearable fit tests are used to evaluate alignment, comfort, range of motion, and how the structure follows the user during movement.",
+        image: "/assets/personal/exoskeleton2.jpeg",
+        imageAlt:
+          "Wearable fit test of the upper-limb tensegrity exoskeleton",
+      },
+      {
+        id: "arm-assembly",
+        title: "Arm Assembly",
+        description:
+          "The arm assemblies use tensioned members and cable-driven geometry that can be adjusted as the control and sensing architecture develops.",
+        image: "/assets/personal/exoskeletonarms.jpeg",
+        imageAlt:
+          "Close view of the tensegrity exoskeleton arm assemblies",
+      },
+    ],
+
+    gallery: [
+      {
+        src: "/assets/personal/exoskeleton.jpeg",
+        alt: "Upper-limb tensegrity exoskeleton prototype being tested",
+        caption: "Early wearable prototype test",
+      },
+      {
+        src: "/assets/personal/exoskeleton2.jpeg",
+        alt: "Vincent wearing the upper-limb tensegrity exoskeleton",
+        caption: "Fit and range-of-motion test",
+      },
+      {
+        src: "/assets/personal/exoskeletonarms.jpeg",
+        alt: "Close view of the exoskeleton arm structures",
+        caption: "Arm assembly detail",
+      },
+    ],
     cyberware: {
       slot: "arms",
       label: "TENSEGRITY EXOSKELETON",
@@ -273,7 +330,40 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "SPINAL SYSTEM RENDER",
+    image: "/assets/projects/spinal-battery.png",
+    imageAlt:
+      "CAD assembly showing articulated vertebral modules for the Spinal Battery System",
     detailLabel: "CYBERWARE // SPINAL PLATFORM",
+
+    sections: [
+      {
+        id: "vertebral-architecture",
+        title: "Vertebral Architecture",
+        description:
+          "The platform is organized as a chain of modular vertebrae that provide structure, articulation, and protected space for future power and sensing hardware.",
+        image: "/assets/projects/spinal-battery.png",
+        imageAlt:
+          "CAD model of the modular vertebral architecture and articulated joints",
+      },
+      {
+        id: "range-of-motion",
+        title: "Range of Motion",
+        description:
+          "Joint geometry and mechanical stops are being evaluated to approximate useful spinal motion while preventing unrealistic articulation between modules.",
+        image: "/assets/projects/spinal-battery.png",
+        imageAlt:
+          "Spinal Battery CAD model annotated with joint angles and range-of-motion measurements",
+      },
+    ],
+
+    gallery: [
+      {
+        src: "/assets/projects/spinal-battery.png",
+        alt:
+          "Articulated Spinal Battery System CAD assembly with measured joint angles",
+        caption: "Early vertebral architecture and range-of-motion study",
+      },
+    ],
     cyberware: {
       slot: "spine",
       label: "SPINAL BATTERY SYSTEM",
@@ -284,10 +374,10 @@ export const projects: ProjectRecord[] = [
     featured: true,
   },
 
-  {
-    id: "kids-first-platform",
+    {
+    id: "kfi-stem-platform",
     category: "software",
-    title: "Kids First STEM Platform",
+    title: "Kids First Initiative STEM Platform",
     subtitle: "Educational game and cloud platform",
     period: "2025 — PRESENT",
     status: "ACTIVE",
@@ -307,7 +397,99 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "KIDS FIRST PLATFORM PREVIEW",
+    image: "/assets/projects/kfi/hero.jpeg",
+    imageAlt:
+      "Kids First Initiative STEM platform activity selection screen",
     detailLabel: "SOFTWARE // STEM PLATFORM",
+
+    sections: [
+      {
+        id: "learning-platform",
+        title: "Learning Platform",
+        description:
+          "The platform gives students access to interactive STEM activities while facilitators manage access, classrooms, and progress through a separate interface.",
+        image: "/assets/projects/kfi/landing.png",
+        imageAlt:
+          "Kids First Initiative platform landing screen with student and facilitator options",
+      },
+      {
+        id: "activity-selection",
+        title: "Activity Selection",
+        description:
+          "Students choose from guided activities covering matter, fluid systems, and energy concepts.",
+        image: "/assets/projects/kfi/hero.jpeg",
+        imageAlt:
+          "Kids First Initiative activity selection screen",
+      },
+      {
+        id: "fluid-systems",
+        title: "Fluid Systems",
+        description:
+          "The pipe activity uses interactive route-building and phase-change mechanics to teach how matter behaves in a system.",
+        image: "/assets/projects/kfi/fluids.png",
+        imageAlt:
+          "Kids First Initiative pipe activity showing a frozen-water route puzzle",
+      },
+      {
+        id: "energy-systems",
+        title: "Energy Systems",
+        description:
+          "The energy activity asks students to connect a circuit and transfer power through an interactive visual system.",
+        image: "/assets/projects/kfi/gas.png",
+        imageAlt:
+          "Kids First Initiative energy activity showing connected wires and a power control",
+      },
+      {
+        id: "team",
+        title: "Team Recognition",
+        description:
+          "The project was developed collaboratively through Hack4Impact for Kids First Initiative.",
+        image: "/assets/projects/kfi/team.jpg",
+        imageAlt:
+          "Kids First Initiative project team at a presentation and awards event",
+      },
+    ],
+
+    gallery: [
+      {
+        src: "/assets/projects/kfi/landing.png",
+        alt:
+          "Kids First Initiative student and facilitator landing screen",
+        caption: "Student and facilitator entry flow",
+      },
+      {
+        src: "/assets/projects/kfi/hero.jpeg",
+        alt:
+          "Kids First Initiative activity selection screen",
+        caption: "STEM activity selection",
+      },
+      {
+        src: "/assets/projects/kfi/fluids.png",
+        alt:
+          "Interactive pipe and phase-change learning activity",
+        caption: "Fluid systems activity",
+      },
+      {
+        src: "/assets/projects/kfi/gas.png",
+        alt:
+          "Interactive electrical energy learning activity",
+        caption: "Energy systems activity",
+      },
+      {
+        src: "/assets/projects/kfi/team.jpg",
+        alt:
+          "Kids First Initiative project team at an awards event",
+        caption: "Project team and first-place recognition",
+      },
+    ],
+
+    links: [
+      {
+        label: "OPEN LIVE PLATFORM",
+        href: "https://kids-first-initiative-site.vercel.app/",
+      },
+    ],
+
     featured: true,
   },
 
@@ -334,7 +516,37 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "LAPUTA OS INTERFACE CAPTURE",
+    image: "/assets/projects/laputa/laputa.jpeg",
+    imageAlt: "Landing Screen of the Laputa OS portfolio interface",
     detailLabel: "SOFTWARE // LAPUTA OS",
+
+    sections: [
+      {
+        id: "interface",
+        title: "Interface System",
+        description:
+          "Laputa recreates Cyberpunk-inspired menu systems as reusable React interfaces while keeping each portfolio section visually distinct.",
+        image: "/assets/projects/laputa/laputa.jpeg",
+        imageAlt: "Laputa OS portfolio interface",
+      },
+      {
+        id: "project-archive",
+        title: "Project Archive",
+        description:
+          "Projects are organized through typed data records, category filtering, detail views, gallery relationships, and cyberware-style hardware profiles.",
+        image: "/assets/projects/laputa/laputa.jpeg",
+        imageAlt: "Laputa OS project archive interface",
+      },
+    ],
+
+    gallery: [
+      {
+        src: "/assets/projects/laputa/laputa.jpeg",
+        alt: "Laputa OS interface during active development",
+        caption: "Laputa OS interface capture",
+      },
+    ],
+
     featured: true,
   },
 
@@ -361,7 +573,31 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "AR SAND TABLE MEDIA",
+    image: "/assets/projects/ar-sand-table.jpeg",
+    imageAlt:
+      "Augmented Reality Sand Table projecting terrain colors onto sculpted sand",
     detailLabel: "HARDWARE // AR SAND TABLE",
+
+    sections: [
+      {
+        id: "terrain-visualization",
+        title: "Terrain Visualization",
+        description:
+          "A depth camera measured the sand surface while a projector overlaid color-coded terrain information in real time.",
+        image: "/assets/projects/ar-sand-table.png",
+        imageAlt:
+          "Projected elevation colors displayed across the physical sand surface",
+      },
+    ],
+
+    gallery: [
+      {
+        src: "/assets/projects/ar-sand-table.png",
+        alt:
+          "Augmented Reality Sand Table displaying projected terrain visualization",
+        caption: "Real-time projected terrain visualization",
+      },
+    ],
   },
 
   {
@@ -491,7 +727,76 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "HOLLOW PURPLE PCB IMAGE",
+    image: "/assets/projects/gojo/front-irl.jpeg",
+    imageAlt:
+      "Assembled Gojo-inspired custom PCB with illuminated LEDs",
     detailLabel: "HARDWARE // HOLLOW PURPLE PCB",
+
+    sections: [
+      {
+        id: "front-layout",
+        title: "Front Layout",
+        description:
+          "The front copper, silkscreen, component placement, and character artwork were designed as one integrated visual circuit-board composition.",
+        image: "/assets/projects/gojo/front-kicad.jpeg",
+        imageAlt:
+          "KiCad front-side layout of the Gojo-inspired custom PCB",
+      },
+      {
+        id: "back-layout",
+        title: "Back Layout",
+        description:
+          "The reverse side routes the supporting electronics while preserving the custom board silhouette and engraved quote.",
+        image: "/assets/projects/gojo/back-kicad.jpeg",
+        imageAlt:
+          "KiCad back-side layout of the Gojo-inspired custom PCB",
+      },
+      {
+        id: "assembly",
+        title: "Assembly",
+        description:
+          "The fabricated board was assembled and soldered by hand, combining surface-mounted components, controls, and addressable lighting.",
+        image: "/assets/projects/gojo/back-irl.jpeg",
+        imageAlt:
+          "Back side of the assembled Gojo-inspired custom PCB",
+      },
+      {
+        id: "final-board",
+        title: "Final Board",
+        description:
+          "The completed PCB combines functional lighting and controls with a character-shaped board outline and illustrated front artwork.",
+        image: "/assets/projects/gojo/front-irl.jpeg",
+        imageAlt:
+          "Front side of the completed Gojo-inspired PCB with illuminated artwork",
+      },
+    ],
+
+    gallery: [
+      {
+        src: "/assets/projects/gojo/front-irl.jpeg",
+        alt:
+          "Completed Gojo-inspired custom PCB with illuminated front artwork",
+        caption: "Completed front assembly",
+      },
+      {
+        src: "/assets/projects/gojo/back-irl.jpeg",
+        alt:
+          "Back side of the assembled Gojo-inspired PCB",
+        caption: "Assembled reverse side",
+      },
+      {
+        src: "/assets/projects/gojo/front-kicad.jpeg",
+        alt:
+          "Front-side KiCad layout for the Gojo-inspired PCB",
+        caption: "Front PCB layout",
+      },
+      {
+        src: "/assets/projects/gojo/back-kicad.jpeg",
+        alt:
+          "Back-side KiCad layout for the Gojo-inspired PCB",
+        caption: "Back PCB layout",
+      },
+    ],
   },
 
   {

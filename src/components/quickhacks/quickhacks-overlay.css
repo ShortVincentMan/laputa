@@ -182,7 +182,7 @@
   clip-path: polygon(0 0, 96% 0, 100% 17%, 100% 100%, 4% 100%, 0 83%);
   font: inherit;
   text-align: left;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   transition:
     transform 110ms ease,
     border-color 110ms ease,

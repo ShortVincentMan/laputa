@@ -52,7 +52,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.14em;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .galleryCategories button:hover,
@@ -94,7 +94,7 @@
 
   font: inherit;
   text-align: left;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   overflow: hidden;
   transition:
     border-color 120ms ease,
@@ -310,7 +310,7 @@
   font: inherit;
   font-size: 1.5rem;
   line-height: 1;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .galleryLightbox__close:hover,
@@ -335,7 +335,7 @@
   font: inherit;
   font-size: 2rem;
   line-height: 1;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   transform: translateY(-50%);
 }
 
@@ -375,7 +375,7 @@
   font: inherit;
   font-size: 0.5rem;
   letter-spacing: 0.06em;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .galleryLightbox__relations button:hover,

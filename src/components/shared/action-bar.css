@@ -60,7 +60,7 @@
   background: transparent;
   border: 0;
 
-  cursor: default;
+  cursor: var(--cursor-default);
   font: inherit;
   font-size: 0.68rem;
   font-weight: 700;
@@ -73,7 +73,7 @@
 }
 
 .actionKey--interactive {
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .actionKey--interactive:hover .actionKey__key,
@@ -99,7 +99,7 @@
 
 .actionKey:disabled {
   opacity: 0.35;
-  cursor: not-allowed;
+  cursor: var(--cursor-disabled);
 }
 
 .actionKey__key {

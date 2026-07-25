@@ -22,7 +22,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .projectDetailTab span {

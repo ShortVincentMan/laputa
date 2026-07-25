@@ -316,7 +316,7 @@
   border: 1px solid rgba(91, 239, 247, 0.68);
 
   font-family: "Rajdhani", sans-serif;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 
   clip-path: polygon(
     0 0,
@@ -411,7 +411,7 @@
   font-family: inherit;
   font-size: 32px;
   line-height: 1;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 
   clip-path: polygon(
     0 0,

@@ -180,7 +180,7 @@
   background: transparent;
   border: 0;
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   font-size: clamp(1rem, 1.7vw, 1.5rem);
   letter-spacing: 0.02em;
@@ -242,7 +242,7 @@
   border: 0;
   border-bottom: 1px solid rgba(255, 89, 99, 0.16);
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   text-transform: uppercase;
 }
@@ -372,7 +372,7 @@
   background: rgba(102, 241, 241, 0.08);
   border: 1px solid rgba(102, 241, 241, 0.62);
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   font-size: 0.65rem;
   letter-spacing: 0.09em;
@@ -381,7 +381,7 @@
 
 .contactPreview button:disabled {
   opacity: 0.4;
-  cursor: not-allowed;
+  cursor: var(--cursor-disabled);
 }
 
 .messageThread {

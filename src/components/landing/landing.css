@@ -20,7 +20,7 @@ body {
   overflow: hidden;
   background: #000;
   isolation: isolate;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   outline: none;
 }
 

@@ -334,7 +334,7 @@
   background: transparent;
   border: 1px solid transparent;
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   text-align: left;
 }
@@ -406,7 +406,7 @@
   background: none;
   border: 0;
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   font-size: 0.9rem;
 }
@@ -447,7 +447,7 @@
 
   border: 1px solid currentColor;
   background: rgba(0, 0, 0, 0.32);
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 @media (max-width: 900px) {

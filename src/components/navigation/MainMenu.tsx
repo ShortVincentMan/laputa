@@ -80,6 +80,7 @@ const homeMenuPreviews: Record<
     subtitle: "INTERACTIVE ENGINEERING PORTFOLIO",
     status: "SYSTEM ONLINE",
     period: `BUILD ${BUILD.display}`,
+    image: "/assets/projects/laputa/laputa.jpeg",
   },
 
   projects: {
@@ -97,6 +98,7 @@ const homeMenuPreviews: Record<
     subtitle: "RESEARCH // EMBEDDED // OPERATIONS",
     status: "RECORD READY",
     period: "2024 — PRESENT",
+    image: "/assets/personal/exoskeleton2.jpeg",
   },
 
   about: {
@@ -105,6 +107,7 @@ const homeMenuPreviews: Record<
     subtitle: "COMPUTER ENGINEER // RESEARCHER",
     status: "PROFILE ONLINE",
     period: "CAL POLY SLO",
+    image: "/assets/about/vincent-portrait-sunset.png",
   },
 
   contact: {
@@ -113,6 +116,7 @@ const homeMenuPreviews: Record<
     subtitle: "PROFESSIONAL // DIRECT // EXTERNAL",
     status: "CHANNELS AVAILABLE",
     period: "SECURE LINK",
+    image: "/assets/projects/laputa/laputa.jpeg",
   },
 
   credits: {
@@ -121,6 +125,7 @@ const homeMenuPreviews: Record<
     subtitle: "CONTRIBUTORS // REFERENCES // SOURCES",
     status: "ACKNOWLEDGEMENTS",
     period: "LAPUTA OS",
+    image: "/assets/landing/CD_Projekt_logo.svg",
   },
 };
 
