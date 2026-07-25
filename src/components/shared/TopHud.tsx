@@ -101,7 +101,7 @@ export default function TopHud({
               <div
                 className="topHud__dropdown"
                 role="menu"
-                aria-label={`${item.id} navigation`}
+                aria-label="Journal navigation"
               >
                 {item.submenu.map((submenuItem) => (
                   <button
@@ -116,10 +116,22 @@ export default function TopHud({
                       .join(" ")}
                     disabled={submenuItem.disabled}
                     onClick={submenuItem.onClick}
-                    title={submenuItem.title}
                   >
-                    <span>{submenuItem.label}</span>
-                    {submenuItem.disabled && <small>COMING SOON</small>}
+                    <span className="topHud__dropdownIcon" aria-hidden="true">
+                      {submenuItem.id === "projects" && "▦"}
+                      {submenuItem.id === "journal-log" && "▤"}
+                      {submenuItem.id === "gallery" && "▧"}
+                    </span>
+
+                    <span className="topHud__dropdownCopy">
+                      <strong>{submenuItem.label}</strong>
+
+                      <small>
+                        {submenuItem.disabled
+                          ? "ACCESS NOT YET AVAILABLE"
+                          : "CERTIFIED TO ACCESS"}
+                      </small>
+                    </span>
                   </button>
                 ))}
               </div>

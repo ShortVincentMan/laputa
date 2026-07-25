@@ -31,7 +31,7 @@ type MainMenuProps = {
 
 const homeNavItems: {
   label: string;
-  window: Exclude<WindowType, "music"> | "cyberware";
+  window: Exclude<WindowType, "music" | "cyberware">;
 }[] = [
   {
     label: "PROJECTS",
@@ -57,7 +57,7 @@ const homeNavItems: {
 
 type HomeMenuKey =
   | "home"
-  | Exclude<WindowType, "music"> | "cyberware";
+  | Exclude<WindowType, "music" | "cyberware">;
 
 type HomeMenuPreview = {
   eyebrow: string;
@@ -537,7 +537,7 @@ export default function MainMenu({
           aria-hidden="true"
         >
           <span>
-            PORTFOLIO BUILD {BUILD.semver}
+            PORTFOLIO BUILD {BUILD.display}
           </span>
 
           <strong>

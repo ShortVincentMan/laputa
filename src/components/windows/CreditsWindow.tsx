@@ -164,8 +164,7 @@ export default function CreditsWindow({
                 <div>
                   <h3>TECHNOLOGY</h3>
                   <p>
-                    Next.js // React // TypeScript // CSS
-                    // Vercel // Resend
+                    Next.js // React // TypeScript // CSS // Vercel // Resend
                   </p>
                 </div>
               </section>
