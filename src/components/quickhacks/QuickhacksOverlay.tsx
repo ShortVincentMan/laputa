@@ -1,9 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 
 import type { WindowType } from "@/components/navigation/MainMenu";
+import { BUILD } from "@/data/build";
 
 import "./quickhacks-overlay.css";
 
@@ -64,6 +71,22 @@ const QUICKHACKS: Quickhack[] = [
     destination: "gallery",
   },
   {
+    id: "music",
+    name: "HIJACK AUDIO FEED",
+    cost: 5,
+    detail: "READY",
+    icon: "♫",
+    destination: "music",
+  },
+  {
+    id: "contact",
+    name: "OPEN COMMS CHANNEL",
+    cost: 4,
+    detail: "READY",
+    icon: "⌁",
+    destination: "contact",
+  },
+  {
     id: "resume",
     name: "EXTRACT CREDENTIALS",
     cost: 10,
@@ -72,6 +95,15 @@ const QUICKHACKS: Quickhack[] = [
     blocked: true,
   },
 ];
+
+const FOCUSABLE_SELECTOR = [
+  "button:not([disabled])",
+  "[href]",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
 
 export default function QuickhacksOverlay({
   onClose,
@@ -82,6 +114,10 @@ export default function QuickhacksOverlay({
   const [executingId, setExecutingId] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
+  const overlayRef = useRef<HTMLElement | null>(null);
+  const executionTimeoutRef = useRef<number | null>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
   const selectedHack = QUICKHACKS[selectedIndex];
 
   const ramSegments = useMemo(
@@ -89,11 +125,7 @@ export default function QuickhacksOverlay({
     [ram]
   );
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  function executeHack(hack: Quickhack) {
+  const executeHack = useCallback((hack: Quickhack) => {
     if (executingId || hack.blocked || ram < hack.cost) {
       return;
     }
@@ -101,7 +133,7 @@ export default function QuickhacksOverlay({
     setExecutingId(hack.id);
     setRam((currentRam) => Math.max(0, currentRam - hack.cost));
 
-    window.setTimeout(() => {
+    executionTimeoutRef.current = window.setTimeout(() => {
       if (hack.destination) {
         onNavigate(hack.destination);
       }
@@ -109,7 +141,35 @@ export default function QuickhacksOverlay({
       setExecutingId(null);
       onClose();
     }, 650);
-  }
+  }, [executingId, onClose, onNavigate, ram]);
+
+  useEffect(() => {
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    setMounted(true);
+
+    return () => {
+      if (executionTimeoutRef.current !== null) {
+        window.clearTimeout(executionTimeoutRef.current);
+      }
+
+      previousFocusRef.current?.focus({ preventScroll: true });
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) {
+      return;
+    }
+
+    const firstAvailableButton = overlayRef.current?.querySelector<HTMLElement>(
+      ".quickhacksOverlay__item:not(:disabled)"
+    );
+
+    firstAvailableButton?.focus({ preventScroll: true });
+  }, [mounted]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -119,6 +179,31 @@ export default function QuickhacksOverlay({
       if (event.key === "Escape" || event.key.toLowerCase() === "q") {
         event.preventDefault();
         onClose();
+        return;
+      }
+
+      if (event.key === "Tab") {
+        const focusableElements = Array.from(
+          overlayRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR) ?? []
+        );
+
+        if (focusableElements.length === 0) {
+          event.preventDefault();
+          return;
+        }
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        const activeElement = document.activeElement;
+
+        if (event.shiftKey && activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        } else if (!event.shiftKey && activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+
         return;
       }
 
@@ -150,7 +235,7 @@ export default function QuickhacksOverlay({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [executingId, onClose, onNavigate, ram, selectedIndex]);
+  }, [executeHack, onClose, selectedIndex]);
 
   if (!mounted) {
     return null;
@@ -158,15 +243,26 @@ export default function QuickhacksOverlay({
 
   return createPortal(
     <section
+      ref={overlayRef}
       className={`quickhacksOverlay${executingId ? " quickhacksOverlay--executing" : ""}`}
       role="dialog"
       aria-modal="true"
       aria-label="Quickhacks interface"
+      onMouseDown={(event) => {
+        const target = event.target;
+
+        if (
+          target === event.currentTarget ||
+          (target instanceof HTMLElement && target.dataset.backdrop === "true")
+        ) {
+          onClose();
+        }
+      }}
     >
-      <div className="quickhacksOverlay__wash" aria-hidden="true" />
-      <div className="quickhacksOverlay__scanlines" aria-hidden="true" />
-      <div className="quickhacksOverlay__vignette" aria-hidden="true" />
-      <div className="quickhacksOverlay__noise" aria-hidden="true" />
+      <div className="quickhacksOverlay__wash" data-backdrop="true" aria-hidden="true" />
+      <div className="quickhacksOverlay__scanlines" data-backdrop="true" aria-hidden="true" />
+      <div className="quickhacksOverlay__vignette" data-backdrop="true" aria-hidden="true" />
+      <div className="quickhacksOverlay__noise" data-backdrop="true" aria-hidden="true" />
 
       <header className="quickhacksOverlay__ram">
         <div className="quickhacksOverlay__ramMeta">
@@ -272,7 +368,7 @@ export default function QuickhacksOverlay({
           <dl className="quickhacksOverlay__stats">
             <div>
               <dt>BUILD</dt>
-              <dd>1.04</dd>
+              <dd>{BUILD.display}</dd>
             </div>
             <div>
               <dt>INTERFACE</dt>
@@ -298,8 +394,8 @@ export default function QuickhacksOverlay({
             <span>INFO:</span>
             <p>
               Hidden portfolio command interface. Select a quickhack to inspect
-              project files, engineering history, development records, or archived
-              credentials.
+              project files, engineering history, development records, media,
+              communications, or archived credentials.
             </p>
           </div>
         </div>

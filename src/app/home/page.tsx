@@ -24,23 +24,12 @@ import AboutWindow from "@/components/windows/AboutWindow";
 import ContactWindow from "@/components/windows/ContactWindow";
 import CreditsWindow from "@/components/windows/CreditsWindow";
 import ExperienceWindow from "@/components/windows/ExperienceWindow";
+import useKonamiCode from "@/hooks/useKonamiCode";
 
 import "@/components/shared/action-bar.css";
 import styles from "./home.module.css";
 
 const QUICKHACKS_STORAGE_KEY = "laputa-quickhacks-unlocked";
-const KONAMI_SEQUENCE = [
-  "arrowup",
-  "arrowup",
-  "arrowdown",
-  "arrowdown",
-  "arrowleft",
-  "arrowright",
-  "arrowleft",
-  "arrowright",
-  "b",
-  "a",
-];
 
 function isEditableTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
@@ -70,7 +59,6 @@ export default function HomePage() {
   const [showUnlockNotice, setShowUnlockNotice] =
     useState(false);
 
-  const konamiIndexRef = useRef(0);
   const unlockNoticeTimeoutRef = useRef<number | null>(null);
 
   const closeWindow = useCallback(() => {
@@ -85,6 +73,26 @@ export default function HomePage() {
     setQuickhacksOpen(false);
   }, []);
 
+  const unlockQuickhacks = useCallback(() => {
+    window.localStorage.setItem(QUICKHACKS_STORAGE_KEY, "true");
+    setQuickhacksUnlocked(true);
+    setShowUnlockNotice(true);
+    setQuickhacksOpen(true);
+
+    if (unlockNoticeTimeoutRef.current !== null) {
+      window.clearTimeout(unlockNoticeTimeoutRef.current);
+    }
+
+    unlockNoticeTimeoutRef.current = window.setTimeout(() => {
+      setShowUnlockNotice(false);
+    }, 2600);
+  }, []);
+
+  useKonamiCode({
+    onSuccess: unlockQuickhacks,
+    enabled: !quickhacksUnlocked && !quickhacksOpen,
+  });
+
   useEffect(() => {
     setQuickhacksUnlocked(
       window.localStorage.getItem(QUICKHACKS_STORAGE_KEY) === "true"
@@ -98,61 +106,29 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    function handleGlobalKeyDown(event: KeyboardEvent) {
-      if (isEditableTarget(event.target)) {
-        return;
-      }
-
-      const normalizedKey = event.key.toLowerCase();
-
-      if (
-        quickhacksUnlocked &&
-        !event.ctrlKey &&
-        !event.altKey &&
-        !event.metaKey &&
-        normalizedKey === "q"
-      ) {
-        event.preventDefault();
-        setQuickhacksOpen((current) => !current);
-        return;
-      }
-
-      if (quickhacksUnlocked || quickhacksOpen) {
-        return;
-      }
-
-      const expectedKey = KONAMI_SEQUENCE[konamiIndexRef.current];
-
-      if (normalizedKey === expectedKey) {
-        konamiIndexRef.current += 1;
-
-        if (konamiIndexRef.current === KONAMI_SEQUENCE.length) {
-          konamiIndexRef.current = 0;
-          window.localStorage.setItem(QUICKHACKS_STORAGE_KEY, "true");
-          setQuickhacksUnlocked(true);
-          setShowUnlockNotice(true);
-          setQuickhacksOpen(true);
-
-          if (unlockNoticeTimeoutRef.current !== null) {
-            window.clearTimeout(unlockNoticeTimeoutRef.current);
-          }
-
-          unlockNoticeTimeoutRef.current = window.setTimeout(() => {
-            setShowUnlockNotice(false);
-          }, 2600);
-        }
-
-        return;
-      }
-
-      konamiIndexRef.current =
-        normalizedKey === KONAMI_SEQUENCE[0] ? 1 : 0;
+    if (!quickhacksUnlocked || quickhacksOpen) {
+      return;
     }
 
-    window.addEventListener("keydown", handleGlobalKeyDown);
+    function handleQuickhacksShortcut(event: KeyboardEvent) {
+      if (
+        isEditableTarget(event.target) ||
+        event.ctrlKey ||
+        event.altKey ||
+        event.metaKey ||
+        event.key.toLowerCase() !== "q"
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      setQuickhacksOpen(true);
+    }
+
+    window.addEventListener("keydown", handleQuickhacksShortcut);
 
     return () => {
-      window.removeEventListener("keydown", handleGlobalKeyDown);
+      window.removeEventListener("keydown", handleQuickhacksShortcut);
     };
   }, [quickhacksOpen, quickhacksUnlocked]);
 
