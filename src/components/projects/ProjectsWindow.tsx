@@ -16,6 +16,7 @@ import {
   getProjectById,
   getVisibleProjects,
   type ProjectCategory,
+  type ProjectId,
   type ProjectRecord,
 } from "@/data/projects";
 
@@ -27,14 +28,15 @@ type ProjectsWindowProps = {
   onClose: () => void;
   onNavigate: (window: WindowType) => void;
   initialView?: "journal" | "cyberware";
+  initialProjectId?: ProjectId | null;
 };
 
 type ProjectsView =
   | { type: "journal" }
-  | { type: "record"; projectId: string }
+  | { type: "record"; projectId: ProjectId }
   | {
       type: "cyberware";
-      projectId: string;
+      projectId: ProjectId;
       returnTo: "journal" | "record";
     };
 
@@ -46,17 +48,29 @@ export default function ProjectsWindow({
   onClose,
   onNavigate,
   initialView = "journal",
+  initialProjectId,
 }: ProjectsWindowProps) {
-  const initialProject = getVisibleProjects("featured")[0];
+  const requestedProject = getProjectById(initialProjectId ?? null);
+  const initialProject =
+    requestedProject ?? getVisibleProjects("featured")[0];
 
   const initialCyberwareProject = getVisibleProjects("featured").find(
     (project) => project.cyberware
   );
 
   const [activeCategory, setActiveCategory] =
-    useState<ProjectCategory>("featured");
+    useState<ProjectCategory>(
+      requestedProject?.category ?? "featured"
+    );
   const [selectedId, setSelectedId] = useState(initialProject?.id ?? "");
   const [view, setView] = useState<ProjectsView>(() => {
+    if (requestedProject) {
+      return {
+        type: "record",
+        projectId: requestedProject.id,
+      };
+    }
+
     if (initialView === "cyberware" && initialCyberwareProject) {
       return {
         type: "cyberware",
@@ -89,7 +103,7 @@ export default function ProjectsWindow({
     setSelectedId(nextProjects[0]?.id ?? "");
   }, []);
 
-  const selectProject = useCallback((projectId: string) => {
+  const selectProject = useCallback((projectId: ProjectId) => {
     setExpandedImage(null);
     setSelectedId(projectId);
   }, []);

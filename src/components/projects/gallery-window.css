@@ -151,6 +151,12 @@
   letter-spacing: 0.1em;
 }
 
+.galleryTile__placeholder small {
+  color: inherit;
+  font-size: 0.42rem;
+  letter-spacing: 0.12em;
+}
+
 .galleryTile__camera {
   display: grid;
   place-items: center;
@@ -258,6 +264,7 @@
 }
 
 .galleryLightbox__copy {
+  position: relative;
   padding: 1rem 1.25rem 1.2rem;
   background: linear-gradient(90deg, rgba(29, 6, 12, 0.98), rgba(4, 10, 14, 0.98));
 }
@@ -311,6 +318,102 @@
   color: #ff5a63;
   border-color: #ff5a63;
   outline: none;
+}
+
+.galleryLightbox__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 64px;
+  padding: 0;
+  color: #54e7f2;
+  background: rgba(4, 10, 14, 0.88);
+  border: 1px solid rgba(84, 231, 242, 0.54);
+  font: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.galleryLightbox__nav--previous {
+  left: 0.8rem;
+}
+
+.galleryLightbox__nav--next {
+  right: 0.8rem;
+}
+
+.galleryLightbox__nav:hover,
+.galleryLightbox__nav:focus-visible {
+  color: #ff5a63;
+  border-color: #ff5a63;
+  outline: none;
+}
+
+.galleryLightbox__nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.galleryLightbox__relations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.galleryLightbox__relations button {
+  min-height: 34px;
+  padding: 0.4rem 0.6rem;
+  color: rgba(84, 231, 242, 0.78);
+  background: rgba(3, 9, 13, 0.72);
+  border: 1px solid rgba(84, 231, 242, 0.3);
+  font: inherit;
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.galleryLightbox__relations button:hover,
+.galleryLightbox__relations button:focus-visible {
+  color: #ff5a63;
+  border-color: #ff5a63;
+  outline: none;
+}
+
+.galleryLightbox__counter {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.1rem;
+  color: rgba(255, 90, 99, 0.7);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+}
+
+.galleryEmptyState {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.5rem;
+  min-height: 45vh;
+  text-align: center;
+}
+
+.galleryEmptyState strong {
+  color: rgba(84, 231, 242, 0.62);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.galleryEmptyState span {
+  color: rgba(255, 90, 99, 0.58);
+  font-size: 0.52rem;
+  letter-spacing: 0.14em;
 }
 
 @media (max-width: 1200px) {
@@ -408,10 +511,41 @@
     font-size: 0.68rem;
   }
 
+  .galleryLightbox__relations {
+    padding-right: 2.5rem;
+  }
+
+  .galleryLightbox__relations button {
+    min-height: 44px;
+  }
+
   .galleryLightbox__close {
     top: 0.6rem;
     right: 0.6rem;
     width: 38px;
     height: 38px;
+  }
+
+  .galleryLightbox__nav {
+    top: auto;
+    bottom: 0.8rem;
+    width: 44px;
+    height: 44px;
+    transform: none;
+  }
+
+  .galleryLightbox__counter {
+    right: 0.95rem;
+    bottom: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galleryScreen *,
+  .galleryScreen *::before,
+  .galleryScreen *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

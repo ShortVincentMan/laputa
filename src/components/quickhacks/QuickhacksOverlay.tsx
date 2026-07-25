@@ -148,9 +148,13 @@ export default function QuickhacksOverlay({
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
-    setMounted(true);
+    const mountFrame = window.requestAnimationFrame(() => {
+      setMounted(true);
+    });
 
     return () => {
+      window.cancelAnimationFrame(mountFrame);
+
       if (executionTimeoutRef.current !== null) {
         window.clearTimeout(executionTimeoutRef.current);
       }

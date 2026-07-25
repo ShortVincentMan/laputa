@@ -1,64 +1,133 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { WindowType } from "@/components/navigation/MainMenu";
 import ActionBar from "@/components/shared/ActionBar";
 import ActionKey from "@/components/shared/ActionKey";
 import TopHud from "@/components/shared/TopHud";
-import { journalEntries } from "@/data/journal";
+import { getGalleryRecordById } from "@/data/gallery";
+import {
+  getJournalEntryById,
+  journalEntries,
+  type JournalEntry,
+} from "@/data/journal";
 
 import "./journal-window.css";
 
 type JournalWindowProps = {
   onClose: () => void;
   onNavigate: (window: WindowType) => void;
+  initialEntryId?: string | null;
+  onOpenGallery: (galleryId: string) => void;
 };
 
 export default function JournalWindow({
   onClose,
   onNavigate,
+  initialEntryId,
+  onOpenGallery,
 }: JournalWindowProps) {
-  const [selectedId, setSelectedId] = useState(journalEntries[0]?.id ?? "");
+  const initialEntry =
+    getJournalEntryById(initialEntryId ?? null) ?? journalEntries[0];
+  const [selectedId, setSelectedId] = useState(initialEntry?.id ?? "");
+  const [detailOpen, setDetailOpen] = useState(Boolean(initialEntry));
+  const entryButtonRefs = useRef(new Map<string, HTMLButtonElement>());
 
   const selectedEntry = useMemo(
-    () => journalEntries.find((entry) => entry.id === selectedId) ?? journalEntries[0],
+    () => getJournalEntryById(selectedId) ?? journalEntries[0],
     [selectedId]
   );
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onClose();
-        return;
-      }
+  const relatedGallery = useMemo(
+    () =>
+      (selectedEntry?.relatedGalleryIds ?? [])
+        .map((id) => getGalleryRecordById(id))
+        .filter((record): record is NonNullable<typeof record> =>
+          Boolean(record)
+        ),
+    [selectedEntry]
+  );
 
-      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
-        return;
-      }
+  const openEntry = useCallback((entry: JournalEntry) => {
+    setSelectedId(entry.id);
+    setDetailOpen(true);
+  }, []);
 
-      event.preventDefault();
-      const currentIndex = journalEntries.findIndex(
-        (entry) => entry.id === selectedId
+  const returnToIndex = useCallback(() => {
+    setDetailOpen(false);
+    window.requestAnimationFrame(() => {
+      entryButtonRefs.current.get(selectedId)?.focus();
+    });
+  }, [selectedId]);
+
+  const moveSelection = useCallback(
+    (direction: 1 | -1) => {
+      if (journalEntries.length === 0) return;
+
+      const currentIndex = Math.max(
+        0,
+        journalEntries.findIndex((entry) => entry.id === selectedId)
       );
-      const direction = event.key === "ArrowDown" ? 1 : -1;
       const nextIndex =
         (currentIndex + direction + journalEntries.length) %
         journalEntries.length;
 
-      setSelectedId(journalEntries[nextIndex].id);
+      openEntry(journalEntries[nextIndex]);
+    },
+    [openEntry, selectedId]
+  );
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      const target = event.target;
+      const editing =
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement;
+
+      if (editing) return;
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key === "Backspace" && detailOpen) {
+        event.preventDefault();
+        returnToIndex();
+        return;
+      }
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        moveSelection(1);
+      }
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        moveSelection(-1);
+      }
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose, selectedId]);
+  }, [detailOpen, moveSelection, onClose, returnToIndex]);
 
   return (
     <section className="journalScreen" aria-label="Journal archive">
       <TopHud
         metrics={[
           { value: journalEntries.length, label: "LOGS", tone: "cyan" },
-          { value: "01", label: "ACTIVE", tone: "green" },
+          {
+            value: journalEntries.filter(
+              (entry) => entry.status === "DRAFT"
+            ).length,
+            label: "ACTIVE",
+            tone: "green",
+          },
         ]}
         navigation={[
           {
@@ -114,49 +183,98 @@ export default function JournalWindow({
             <strong>{String(journalEntries.length).padStart(2, "0")}</strong>
           </header>
 
-          <div className="journalIndex__list">
-            {journalEntries.map((entry, index) => {
-              const active = entry.id === selectedEntry?.id;
+          {journalEntries.length > 0 ? (
+            <div className="journalIndex__list">
+              {journalEntries.map((entry, index) => {
+                const active = entry.id === selectedEntry?.id;
 
-              return (
-                <button
-                  key={entry.id}
-                  type="button"
-                  className={`journalEntryCard${active ? " is-active" : ""}`}
-                  onClick={() => setSelectedId(entry.id)}
-                >
-                  <span className="journalEntryCard__index">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="journalEntryCard__copy">
-                    <small>{entry.category} // {entry.date}</small>
-                    <strong>{entry.title}</strong>
-                    <span>{entry.excerpt}</span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+                return (
+                  <button
+                    key={entry.id}
+                    ref={(element) => {
+                      if (element) {
+                        entryButtonRefs.current.set(entry.id, element);
+                      } else {
+                        entryButtonRefs.current.delete(entry.id);
+                      }
+                    }}
+                    type="button"
+                    className={`journalEntryCard${
+                      active ? " is-active" : ""
+                    }`}
+                    onClick={() => openEntry(entry)}
+                    aria-pressed={active && detailOpen}
+                  >
+                    <span className="journalEntryCard__index">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="journalEntryCard__copy">
+                      <small>{`${entry.category} // ${entry.date}`}</small>
+                      <strong>{entry.title}</strong>
+                      <span>{entry.summary}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="journalEmptyState">
+              <strong>NO SHARDS INDEXED</strong>
+              <span>ARCHIVE CHANNEL READY</span>
+            </div>
+          )}
         </aside>
 
-        {selectedEntry && (
+        {selectedEntry && detailOpen ? (
           <article className="journalRecord">
+            <button
+              type="button"
+              className="journalRecord__back"
+              onClick={returnToIndex}
+            >
+              <span>BKSP</span>
+              BACK TO INDEX
+            </button>
+
             <header className="journalRecord__header">
               <div>
-                <span>{selectedEntry.category} RECORD</span>
+                <span>{`${selectedEntry.category} // ${selectedEntry.status}`}</span>
                 <h1>{selectedEntry.title}</h1>
               </div>
               <time>{selectedEntry.date}</time>
             </header>
 
+            {selectedEntry.coverAsset && (
+              <div className="journalRecord__cover">
+                <Image
+                  src={selectedEntry.coverAsset}
+                  alt={selectedEntry.coverAlt ?? selectedEntry.title}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 55vw"
+                />
+              </div>
+            )}
+
             <div className="journalRecord__divider" />
 
-            <p className="journalRecord__lead">{selectedEntry.excerpt}</p>
+            <p className="journalRecord__lead">{selectedEntry.summary}</p>
 
             <div className="journalRecord__body">
-              {selectedEntry.body.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+              {selectedEntry.body.length > 0 ? (
+                selectedEntry.body.map((section, index) => (
+                  <section key={`${selectedEntry.id}-section-${index}`}>
+                    {section.heading && <h2>{section.heading}</h2>}
+                    {section.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </section>
+                ))
+              ) : (
+                <div className="journalRecord__pending">
+                  <span>{selectedEntry.status}</span>
+                  <strong>ENTRY RESERVED // COPY NOT YET PUBLISHED</strong>
+                </div>
+              )}
             </div>
 
             <footer className="journalRecord__tags">
@@ -164,12 +282,42 @@ export default function JournalWindow({
                 <span key={tag}>{tag}</span>
               ))}
             </footer>
+
+            {relatedGallery.length > 0 && (
+              <nav
+                className="journalRecord__relations"
+                aria-label="Related archive records"
+              >
+                {relatedGallery.map((record) => (
+                  <button
+                    key={record.id}
+                    type="button"
+                    onClick={() => onOpenGallery(record.id)}
+                  >
+                    <span>GALLERY</span>
+                    {record.title}
+                  </button>
+                ))}
+              </nav>
+            )}
           </article>
+        ) : (
+          <div className="journalRecord journalRecord--empty">
+            <span>INDEX CHANNEL ACTIVE</span>
+            <strong>SELECT A SHARD TO OPEN ITS FULL RECORD</strong>
+          </div>
         )}
       </div>
 
       <ActionBar>
         <ActionKey keyLabel="↑ ↓" label="Select record" />
+        {detailOpen && (
+          <ActionKey
+            keyLabel="BKSP"
+            label="Back to index"
+            onClick={returnToIndex}
+          />
+        )}
         <ActionKey keyLabel="ESC" label="Close" onClick={onClose} />
       </ActionBar>
     </section>

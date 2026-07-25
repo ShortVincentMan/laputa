@@ -24,8 +24,10 @@ import AboutWindow from "@/components/windows/AboutWindow";
 import ContactWindow from "@/components/windows/ContactWindow";
 import CreditsWindow from "@/components/windows/CreditsWindow";
 import ExperienceWindow from "@/components/windows/ExperienceWindow";
+import type { ProjectId } from "@/data/projects";
 import useKonamiCode from "@/hooks/useKonamiCode";
 
+import "@/data/archive-relations";
 import "@/components/shared/action-bar.css";
 import styles from "./home.module.css";
 
@@ -46,6 +48,12 @@ function isEditableTarget(target: EventTarget | null) {
 export default function HomePage() {
   const [activeWindow, setActiveWindow] =
     useState<WindowType | null>(null);
+  const [projectTargetId, setProjectTargetId] =
+    useState<ProjectId | null>(null);
+  const [journalTargetId, setJournalTargetId] =
+    useState<string | null>(null);
+  const [galleryTargetId, setGalleryTargetId] =
+    useState<string | null>(null);
 
   const [patchesOpen, setPatchesOpen] =
     useState(false);
@@ -63,6 +71,37 @@ export default function HomePage() {
 
   const closeWindow = useCallback(() => {
     setActiveWindow(null);
+    setProjectTargetId(null);
+    setJournalTargetId(null);
+    setGalleryTargetId(null);
+  }, []);
+
+  const navigateToWindow = useCallback((window: WindowType) => {
+    setProjectTargetId(null);
+    setJournalTargetId(null);
+    setGalleryTargetId(null);
+    setActiveWindow(window);
+  }, []);
+
+  const openProject = useCallback((projectId: ProjectId) => {
+    setProjectTargetId(projectId);
+    setJournalTargetId(null);
+    setGalleryTargetId(null);
+    setActiveWindow("projects");
+  }, []);
+
+  const openJournal = useCallback((journalId: string) => {
+    setProjectTargetId(null);
+    setJournalTargetId(journalId);
+    setGalleryTargetId(null);
+    setActiveWindow("journal");
+  }, []);
+
+  const openGallery = useCallback((galleryId: string) => {
+    setProjectTargetId(null);
+    setJournalTargetId(null);
+    setGalleryTargetId(galleryId);
+    setActiveWindow("gallery");
   }, []);
 
   const closePatches = useCallback(() => {
@@ -94,11 +133,15 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    setQuickhacksUnlocked(
-      window.localStorage.getItem(QUICKHACKS_STORAGE_KEY) === "true"
-    );
+    const initializationFrame = window.requestAnimationFrame(() => {
+      setQuickhacksUnlocked(
+        window.localStorage.getItem(QUICKHACKS_STORAGE_KEY) === "true"
+      );
+    });
 
     return () => {
+      window.cancelAnimationFrame(initializationFrame);
+
       if (unlockNoticeTimeoutRef.current !== null) {
         window.clearTimeout(unlockNoticeTimeoutRef.current);
       }
@@ -141,7 +184,7 @@ export default function HomePage() {
           <MainMenu
             variant="home"
             activeWindow={activeWindow}
-            onNavigate={setActiveWindow}
+            onNavigate={navigateToWindow}
             onHome={closeWindow}
           />
 
@@ -154,7 +197,7 @@ export default function HomePage() {
           />
 
           <SpotifyHudButton
-            onOpen={() => setActiveWindow("music")}
+            onOpen={() => navigateToWindow("music")}
           />
         </>
       )}
@@ -163,8 +206,9 @@ export default function HomePage() {
         <div className={styles.windowLayer}>
           {activeWindow === "projects" && (
             <ProjectsWindow
+              initialProjectId={projectTargetId}
               onClose={closeWindow}
-              onNavigate={setActiveWindow}
+              onNavigate={navigateToWindow}
             />
           )}
 
@@ -172,42 +216,47 @@ export default function HomePage() {
             <ProjectsWindow
               initialView="cyberware"
               onClose={closeWindow}
-              onNavigate={setActiveWindow}
+              onNavigate={navigateToWindow}
             />
           )}
 
           {activeWindow === "experience" && (
             <ExperienceWindow
               onClose={closeWindow}
-              onNavigate={setActiveWindow}
+              onNavigate={navigateToWindow}
             />
           )}
 
           {activeWindow === "journal" && (
             <JournalWindow
+              initialEntryId={journalTargetId}
               onClose={closeWindow}
-              onNavigate={setActiveWindow}
+              onNavigate={navigateToWindow}
+              onOpenGallery={openGallery}
             />
           )}
 
           {activeWindow === "gallery" && (
             <GalleryWindow
+              initialRecordId={galleryTargetId}
               onClose={closeWindow}
-              onNavigate={setActiveWindow}
+              onNavigate={navigateToWindow}
+              onOpenProject={openProject}
+              onOpenJournal={openJournal}
             />
           )}
 
           {activeWindow === "about" && (
             <AboutWindow
               onClose={closeWindow}
-              onNavigate={setActiveWindow}
+              onNavigate={navigateToWindow}
             />
           )}
 
           {activeWindow === "contact" && (
             <ContactWindow
               onClose={() => setActiveWindow(null)}
-              onNavigate={setActiveWindow}
+              onNavigate={navigateToWindow}
             />
           )}
 
@@ -250,7 +299,7 @@ export default function HomePage() {
         <QuickhacksOverlay
           onClose={closeQuickhacks}
           onNavigate={(window) => {
-            setActiveWindow(window);
+            navigateToWindow(window);
             setQuickhacksOpen(false);
           }}
         />

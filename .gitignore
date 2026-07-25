@@ -51,3 +51,7 @@ public.zip
 src.zip
 public/assets/reference.zip
 
+# archive
+old-archive/
+/old-archive/
+old-archive/*

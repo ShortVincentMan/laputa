@@ -102,15 +102,19 @@ export default function MusicWindow({
   }, []);
 
   useEffect(() => {
-    loadSpotify();
+    const initialLoad = window.setTimeout(() => {
+      void loadSpotify();
+    }, 0);
 
     const interval = window.setInterval(
       loadSpotify,
       20_000
     );
 
-    return () =>
+    return () => {
+      window.clearTimeout(initialLoad);
       window.clearInterval(interval);
+    };
   }, [loadSpotify]);
 
   useEffect(() => {

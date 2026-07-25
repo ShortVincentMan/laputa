@@ -9,6 +9,7 @@ import TopHud from "@/components/shared/TopHud";
 import {
   getCyberwareProjects,
   type CyberwareSlot,
+  type ProjectId,
 } from "@/data/projects";
 
 import type { WindowType } from "@/components/navigation/MainMenu";
@@ -16,9 +17,9 @@ import type { WindowType } from "@/components/navigation/MainMenu";
 import "./cyberware-window.css";
 
 type CyberwareWindowProps = {
-  initialProjectId?: string;
+  initialProjectId?: ProjectId;
   onBack: () => void;
-  onOpenRecord: (projectId: string) => void;
+  onOpenRecord: (projectId: ProjectId) => void;
   onClose: () => void;
   onNavigate: (window: WindowType) => void;
 };

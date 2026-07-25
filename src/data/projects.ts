@@ -5,6 +5,17 @@ export type ProjectCategory =
   | "research"
   | "archive";
 
+export type ProjectId =
+  | "mantis-blades"
+  | "tensegrity-exoskeleton"
+  | "spinal-battery-system"
+  | "kids-first-platform"
+  | "laputa-os"
+  | "ar-sand-table"
+  | "trimtab"
+  | "hollow-purple-board"
+  | "file-cleaner";
+
 export type StoredProjectCategory = Exclude<
   ProjectCategory,
   "featured"
@@ -52,7 +63,7 @@ export type CyberwareProfile = {
 };
 
 export type ProjectRecord = {
-  id: string;
+  id: ProjectId;
   category: StoredProjectCategory;
   title: string;
   subtitle: string;
@@ -522,7 +533,7 @@ export function getVisibleProjects(
 }
 
 export function getProjectById(
-  id: string | null
+  id: ProjectId | null
 ): ProjectRecord | undefined {
   if (!id) return undefined;
 
