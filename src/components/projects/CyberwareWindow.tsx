@@ -172,7 +172,26 @@ export default function CyberwareWindow({
             label: "CHARACTER",
             onClick: () => onNavigate("about"),
           },
-          { id: "journal", label: "JOURNAL", onClick: onBack },
+          {
+            id: "journal",
+            label: "JOURNAL",
+            onClick: onBack,
+            submenu: [
+              { id: "projects", label: "PROJECTS", onClick: onBack },
+              {
+                id: "journal-log",
+                label: "JOURNAL",
+                disabled: true,
+                title: "Journal coming in Build 01.03",
+              },
+              {
+                id: "gallery",
+                label: "GALLERY",
+                disabled: true,
+                title: "Gallery coming in Build 01.04",
+              },
+            ],
+          },
         ]}
         archiveLabel="CYBERWARE DATABASE"
       />

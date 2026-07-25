@@ -88,6 +88,96 @@
   gap: clamp(1.1rem, 2vw, 2.35rem);
 }
 
+.topHud__navigationGroup {
+  position: relative;
+  align-self: stretch;
+
+  display: flex;
+  align-items: center;
+}
+
+.topHud__dropdown {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 50%;
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 190px;
+  padding: 0.45rem;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  background:
+    linear-gradient(135deg, rgba(27, 4, 9, 0.98), rgba(4, 10, 14, 0.98));
+  border: 1px solid rgba(84, 231, 242, 0.55);
+  box-shadow:
+    0 0 22px rgba(84, 231, 242, 0.15),
+    inset 0 0 20px rgba(255, 72, 82, 0.06);
+
+  transform: translate(-50%, -0.4rem);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease,
+    visibility 140ms ease;
+}
+
+.topHud__navigationGroup:hover .topHud__dropdown,
+.topHud__navigationGroup:focus-within .topHud__dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.topHud__dropdownItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+
+  width: 100%;
+  min-height: 38px;
+  padding: 0.55rem 0.7rem;
+
+  color: rgba(255, 90, 99, 0.84);
+  background: transparent;
+  border: 0;
+  border-left: 2px solid transparent;
+
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.topHud__dropdownItem:hover:not(:disabled),
+.topHud__dropdownItem:focus-visible,
+.topHud__dropdownItem.is-active {
+  color: var(--journal-cyan, #54e7f2);
+  background: rgba(84, 231, 242, 0.08);
+  border-left-color: var(--journal-cyan, #54e7f2);
+  outline: none;
+}
+
+.topHud__dropdownItem small {
+  color: rgba(255, 255, 255, 0.32);
+  font-size: 0.5rem;
+  white-space: nowrap;
+}
+
+.topHud__dropdownItem:disabled {
+  color: rgba(255, 255, 255, 0.26);
+  cursor: not-allowed;
+}
+
 .topHud__navigationItem {
   position: relative;
 
@@ -310,6 +400,27 @@ button.topHud__navigationItem:disabled {
 
   .topHud__navigation::-webkit-scrollbar {
     display: none;
+  }
+
+
+  .topHud__navigationGroup {
+    flex: 0 0 auto;
+    height: 100%;
+  }
+
+  .topHud__dropdown {
+    position: fixed;
+    top: 104px;
+    left: 50%;
+
+    width: min(90vw, 320px);
+
+    transform: translate(-50%, -0.4rem);
+  }
+
+  .topHud__navigationGroup:hover .topHud__dropdown,
+  .topHud__navigationGroup:focus-within .topHud__dropdown {
+    transform: translate(-50%, 0);
   }
 
   .topHud__navigationItem {

@@ -57,16 +57,16 @@ export default function ProjectsWindow({
     useState<ProjectCategory>("featured");
   const [selectedId, setSelectedId] = useState(initialProject?.id ?? "");
   const [view, setView] = useState<ProjectsView>(() => {
-  if (initialView === "cyberware" && initialCyberwareProject) {
-    return {
-      type: "cyberware",
-      projectId: initialCyberwareProject.id,
-      returnTo: "journal",
-    };
-  }
+    if (initialView === "cyberware" && initialCyberwareProject) {
+      return {
+        type: "cyberware",
+        projectId: initialCyberwareProject.id,
+        returnTo: "journal",
+      };
+    }
 
-  return { type: "journal" };
-});
+    return { type: "journal" };
+  });
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
   const visibleProjects = useMemo(
@@ -289,7 +289,26 @@ export default function ProjectsWindow({
             label: "CHARACTER",
             onClick: () => onNavigate("about"),
           },
-          { id: "journal", label: "JOURNAL", active: true },
+          {
+            id: "journal",
+            label: "JOURNAL",
+            active: true,
+            submenu: [
+              { id: "projects", label: "PROJECTS", active: true },
+              {
+                id: "journal-log",
+                label: "JOURNAL",
+                disabled: true,
+                title: "Journal coming in Build 01.03",
+              },
+              {
+                id: "gallery",
+                label: "GALLERY",
+                disabled: true,
+                title: "Gallery coming in Build 01.04",
+              },
+            ],
+          },
         ]}
         archiveLabel="PROJECT DATABASE"
       />

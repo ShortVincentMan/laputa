@@ -332,6 +332,25 @@ export default function ContactWindow({
             id: "journal",
             label: "JOURNAL",
             onClick: () => onNavigate("projects"),
+            submenu: [
+              {
+                id: "projects",
+                label: "PROJECTS",
+                onClick: () => onNavigate("projects"),
+              },
+              {
+                id: "journal-log",
+                label: "JOURNAL",
+                disabled: true,
+                title: "Journal coming in Build 01.03",
+              },
+              {
+                id: "gallery",
+                label: "GALLERY",
+                disabled: true,
+                title: "Gallery coming in Build 01.04",
+              },
+            ],
           },
         ]}
         archiveLabel="CONTACT DIRECTORY"

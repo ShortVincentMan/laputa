@@ -8,6 +8,15 @@ export type TopHudMetric = {
   tone?: "cyan" | "green" | "red" | "yellow";
 };
 
+export type TopHudSubmenuItem = {
+  id: string;
+  label: ReactNode;
+  active?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
+  title?: string;
+};
+
 export type TopHudNavItem = {
   id: string;
   label: ReactNode;
@@ -15,6 +24,7 @@ export type TopHudNavItem = {
   disabled?: boolean;
   onClick?: () => void;
   title?: string;
+  submenu?: TopHudSubmenuItem[];
 };
 
 type TopHudProps = {
@@ -52,37 +62,68 @@ export default function TopHud({
 
       <nav className="topHud__navigation" aria-label={ariaLabel}>
         {navigation.map((item) => {
-          const className = [
+          const itemClassName = [
             "topHud__navigationItem",
             item.active ? "is-active" : "",
           ]
             .filter(Boolean)
             .join(" ");
 
-          if (item.onClick || item.disabled) {
-            return (
-              <button
-                key={item.id}
-                type="button"
-                className={className}
-                disabled={item.disabled}
-                onClick={item.onClick}
-                title={item.title}
-                aria-current={item.active ? "page" : undefined}
-              >
-                {item.label}
-              </button>
-            );
-          }
-
-          return (
+          const trigger = item.onClick || item.disabled || item.submenu ? (
+            <button
+              type="button"
+              className={itemClassName}
+              disabled={item.disabled}
+              onClick={item.onClick}
+              title={item.title}
+              aria-current={item.active ? "page" : undefined}
+              aria-haspopup={item.submenu ? "menu" : undefined}
+            >
+              {item.label}
+            </button>
+          ) : (
             <span
-              key={item.id}
-              className={className}
+              className={itemClassName}
               aria-current={item.active ? "page" : undefined}
             >
               {item.label}
             </span>
+          );
+
+          if (!item.submenu) {
+            return <div key={item.id}>{trigger}</div>;
+          }
+
+          return (
+            <div key={item.id} className="topHud__navigationGroup">
+              {trigger}
+
+              <div
+                className="topHud__dropdown"
+                role="menu"
+                aria-label={`${item.id} navigation`}
+              >
+                {item.submenu.map((submenuItem) => (
+                  <button
+                    key={submenuItem.id}
+                    type="button"
+                    role="menuitem"
+                    className={[
+                      "topHud__dropdownItem",
+                      submenuItem.active ? "is-active" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    disabled={submenuItem.disabled}
+                    onClick={submenuItem.onClick}
+                    title={submenuItem.title}
+                  >
+                    <span>{submenuItem.label}</span>
+                    {submenuItem.disabled && <small>COMING SOON</small>}
+                  </button>
+                ))}
+              </div>
+            </div>
           );
         })}
       </nav>
