@@ -441,8 +441,7 @@ export default function MainMenu({
 
       <footer className="cpNavFooter">
         <span className="cpNavVersion">
-          Welcome V // LAPUTA OS // BUILD
-          {BUILD.display}
+          Welcome V // LAPUTA OS // BUILD {BUILD.display}
         </span>
 
         <strong className="cpNavUser">
