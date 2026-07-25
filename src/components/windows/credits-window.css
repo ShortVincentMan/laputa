@@ -228,7 +228,7 @@
   background: transparent;
   border: 0;
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   text-transform: uppercase;
 }

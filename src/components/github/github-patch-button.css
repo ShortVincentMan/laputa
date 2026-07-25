@@ -34,7 +34,7 @@
     inset 0 0 18px rgba(75, 229, 240, 0.03),
     0 8px 24px rgba(0, 0, 0, 0.22);
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .githubPatchButton::before {

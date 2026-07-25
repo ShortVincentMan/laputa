@@ -262,7 +262,7 @@
   background: transparent;
   border: 0;
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -462,7 +462,7 @@
 }
 
 .windowFrame__controls button {
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
 }
 
 .windowFrame__controls span {

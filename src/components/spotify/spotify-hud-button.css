@@ -29,7 +29,7 @@
     0 100%
   );
 
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   letter-spacing: 0.035em;
   text-transform: uppercase;

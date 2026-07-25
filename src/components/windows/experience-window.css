@@ -99,7 +99,7 @@
   background: rgba(9, 10, 14, 0.28);
   border: 1px solid rgba(255, 79, 94, 0.42);
   clip-path: polygon(0 0, 10% 0, 12% 5px, 100% 5px, 100% 100%, 0 100%);
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   text-align: left;
   text-transform: uppercase;
@@ -141,7 +141,7 @@
   color: rgba(232, 229, 229, 0.67);
   background: transparent;
   border: 0;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   text-align: left;
 }
@@ -306,7 +306,7 @@
   color: inherit;
   background: transparent;
   border: 0;
-  cursor: pointer;
+  cursor: var(--cursor-pointer);
   font: inherit;
   text-transform: inherit;
 }
