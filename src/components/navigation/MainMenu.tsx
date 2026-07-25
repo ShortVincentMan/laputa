@@ -19,7 +19,9 @@ export type WindowType =
   | "about"
   | "contact"
   | "credits"
-  | "music";
+  | "music"
+  | "journal"
+  | "gallery";
 
 type MainMenuProps = {
   variant?: "home" | "drawer";
@@ -31,7 +33,7 @@ type MainMenuProps = {
 
 const homeNavItems: {
   label: string;
-  window: Exclude<WindowType, "music" | "cyberware">;
+  window: Exclude<WindowType, "music" | "cyberware" | "journal" | "gallery">;
 }[] = [
   {
     label: "PROJECTS",
@@ -57,7 +59,7 @@ const homeNavItems: {
 
 type HomeMenuKey =
   | "home"
-  | Exclude<WindowType, "music" | "cyberware">;
+  | Exclude<WindowType, "music" | "cyberware" | "journal" | "gallery">;
 
 type HomeMenuPreview = {
   eyebrow: string;
@@ -183,7 +185,7 @@ export default function MainMenu({
   }
 
   function handleWindowSelection(
-    window: Exclude<WindowType, "music" | "cyberware">
+    window: Exclude<WindowType, "music" | "cyberware" | "journal" | "gallery">
   ) {
     onNavigate?.(window);
   }

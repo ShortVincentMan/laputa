@@ -8,6 +8,8 @@ import {
 import CyberpunkBackground from "@/components/background/CyberpunkBackground";
 import GitHubPatchButton from "@/components/github/GitHubPatchButton";
 import GitHubPatchWindow from "@/components/github/GitHubPatchWindow";
+import GalleryWindow from "@/components/projects/GalleryWindow";
+import JournalWindow from "@/components/projects/JournalWindow";
 import MainMenu from "@/components/navigation/MainMenu";
 import type { WindowType } from "@/components/navigation/MainMenu";
 import ProjectsWindow from "@/components/projects/ProjectsWindow";
@@ -82,6 +84,20 @@ export default function HomePage() {
 
           {activeWindow === "experience" && (
             <ExperienceWindow
+              onClose={closeWindow}
+              onNavigate={setActiveWindow}
+            />
+          )}
+
+          {activeWindow === "journal" && (
+            <JournalWindow
+              onClose={closeWindow}
+              onNavigate={setActiveWindow}
+            />
+          )}
+
+          {activeWindow === "gallery" && (
+            <GalleryWindow
               onClose={closeWindow}
               onNavigate={setActiveWindow}
             />

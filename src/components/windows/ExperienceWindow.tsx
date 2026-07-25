@@ -209,14 +209,12 @@ export default function ExperienceWindow({
               {
                 id: "journal-log",
                 label: "JOURNAL",
-                disabled: true,
-                title: "Journal coming in Build 01.03",
+                onClick: () => onNavigate("journal"),
               },
               {
                 id: "gallery",
                 label: "GALLERY",
-                disabled: true,
-                title: "Gallery coming in Build 01.04",
+                onClick: () => onNavigate("gallery"),
               },
             ],
           },

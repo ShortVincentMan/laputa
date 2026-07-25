@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import CyberwareWindow from "@/components/projects/CyberwareWindow";
+import CyberwareWindow from "@/components/windows/CyberwareWindow";
 import ProjectDetailWindow from "@/components/projects/ProjectDetailWindow";
 import AssetPlaceholder from "@/components/shared/AssetPlaceholder";
 import ActionBar from "@/components/shared/ActionBar";
@@ -298,14 +298,12 @@ export default function ProjectsWindow({
               {
                 id: "journal-log",
                 label: "JOURNAL",
-                disabled: true,
-                title: "Journal coming in Build 01.03",
+                onClick: () => onNavigate("journal"),
               },
               {
                 id: "gallery",
                 label: "GALLERY",
-                disabled: true,
-                title: "Gallery coming in Build 01.04",
+                onClick: () => onNavigate("gallery"),
               },
             ],
           },

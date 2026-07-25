@@ -1,6 +1,7 @@
 .topHud {
   position: relative;
-  z-index: 30;
+  z-index: 1000;
+  isolation: isolate;
 
   display: grid;
   grid-template-columns: minmax(190px, 1fr) auto minmax(190px, 1fr);
@@ -99,7 +100,7 @@
   position: absolute;
   top: calc(100% + 2px);
   left: 50%;
-  z-index: 200;
+  z-index: 1200;
 
   display: flex;
   flex-direction: column;
@@ -387,6 +388,25 @@ button.topHud__navigationItem:disabled {
     font-size: clamp(0.65rem, 1.8vw, 0.82rem);
     font-weight: 600;
   }
+
+  .topHud__navigationGroup {
+    position: static;
+  }
+
+  .topHud__dropdown {
+    position: fixed;
+    top: 116px;
+    left: 50%;
+    z-index: 1200;
+
+    width: min(84vw, 250px);
+    transform: translate(-50%, -0.4rem);
+  }
+
+  .topHud__navigationGroup:hover .topHud__dropdown,
+  .topHud__navigationGroup:focus-within .topHud__dropdown {
+    transform: translate(-50%, 0);
+  }
 }
 
 @media (max-width: 760px) {
@@ -474,6 +494,7 @@ button.topHud__navigationItem:disabled {
 
 
   .topHud__navigationGroup {
+    position: static;
     flex: 0 0 auto;
     height: 100%;
   }
@@ -482,6 +503,7 @@ button.topHud__navigationItem:disabled {
     position: fixed;
     top: 104px;
     left: 50%;
+    z-index: 1200;
 
     width: min(84vw, 250px);
 
