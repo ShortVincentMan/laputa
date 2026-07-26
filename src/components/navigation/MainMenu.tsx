@@ -12,6 +12,8 @@ import { BUILD } from "@/data/build";
 
 import "./main-menu.css";
 
+const MAIN_MENU_FONT_CLASS = "mainMenuRajdhani";
+
 export type WindowType =
   | "projects"
   | "cyberware"
@@ -342,6 +344,10 @@ export default function MainMenu({
               onFocus={() =>
                 setHoveredHomeItem("home")
               }
+              aria-current={
+                activeWindow === null ? "page" : undefined
+              }
+              data-focus-return="home"
             >
               <span className="cpNavLabel">
                 HOME
@@ -384,6 +390,10 @@ export default function MainMenu({
                         item.window
                       )
                     }
+                    aria-current={
+                      isActive ? "page" : undefined
+                    }
+                    data-focus-return={item.window}
                   >
                     <span className="cpNavLabel">
                       {item.label}
@@ -475,7 +485,7 @@ export default function MainMenu({
       : null;
 
     return (
-      <div className="cpNavHomeShell">
+      <div className={`${MAIN_MENU_FONT_CLASS} cpNavHomeShell`}>
         <aside
           className="cpNav cpNavHome"
           aria-label="Main menu"
@@ -560,7 +570,7 @@ export default function MainMenu({
       <button
         ref={triggerRef}
         type="button"
-        className="menuTrigger"
+        className={`${MAIN_MENU_FONT_CLASS} menuTrigger`}
         onClick={openMenu}
         aria-label="Open navigation menu"
         aria-expanded={isOpen}
@@ -600,6 +610,7 @@ export default function MainMenu({
         className={[
           "cpNav",
           "cpNavDrawer",
+          MAIN_MENU_FONT_CLASS,
           isOpen
             ? "cpNavDrawerOpen"
             : "",

@@ -67,6 +67,7 @@ export default function GitHubPatchButton({
       className="githubPatchButton"
       onClick={onOpen}
       aria-label="Open latest repository changes"
+      data-focus-return="github-patches"
     >
       <span className="githubPatchButton__key">P</span>
 

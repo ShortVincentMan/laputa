@@ -6,28 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "content:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate-content.mjs",
+    "performance:check": "node scripts/validate-performance.mjs"
   },
   "dependencies": {
     "@react-email/components": "^1.0.12",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.42.2",
-    "lucide-react": "^1.24.0",
-    "motion": "^12.42.2",
     "next": "^16.2.10",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "resend": "^6.18.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "^16.2.10",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

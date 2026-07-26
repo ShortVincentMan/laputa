@@ -2,6 +2,12 @@
    BASE MENU
    ========================================================= */
 
+.mainMenuRajdhani,
+.mainMenuRajdhani button,
+.mainMenuRajdhani a {
+  font-family: "Rajdhani", sans-serif;
+}
+
 .cpNav {
   position: relative;
   z-index: 300;
@@ -109,9 +115,11 @@
   color: #f1e600;
 
   font-family: "Cyberpunk", "Rajdhani", sans-serif;
+  font-weight: 400;
   font-size: clamp(38px, 4.2vw, 76px);
   line-height: 0.86;
   letter-spacing: -0.08em;
+  white-space: nowrap;
 
   text-shadow:
     2px 2px 0 rgba(255, 30, 65, 0.5),
@@ -408,7 +416,7 @@
   background: rgba(0, 25, 30, 0.35);
   border: 1px solid rgba(93, 240, 248, 0.65);
 
-  font-family: inherit;
+  font-family: "Rajdhani", sans-serif;
   font-size: 32px;
   line-height: 1;
   cursor: var(--cursor-pointer);
@@ -693,6 +701,66 @@
   .cpNavItem small {
     font-size: 0.78rem !important;
   }
+
+  .cpNavHome {
+    left: max(0.5rem, env(safe-area-inset-left));
+    right: max(0.5rem, env(safe-area-inset-right));
+    width: 75vw;
+    padding:
+      max(5rem, calc(env(safe-area-inset-top) + 3.5rem))
+      clamp(0.75rem, 4vw, 1.25rem)
+      max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .cpNavHome .cpNavHeader {
+    margin-bottom: clamp(1.25rem, 3vh, 2rem);
+    transform: none;
+  }
+
+  .cpNavHome .cpNavLogo {
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
+    line-height: 0.9;
+  }
+
+  .cpNavHome .cpNavSubtitle {
+    margin-top: 0.75rem;
+    font-size: clamp(0.58rem, 2.6vw, 0.72rem);
+  }
+
+  .cpNavHome .cpNavItem {
+    width: 100%;
+    min-height: 52px;
+    padding-inline: clamp(0.75rem, 4vw, 1.1rem);
+    font-size: clamp(1.25rem, 6vw, 1.55rem);
+  }
+
+  .cpNavHome .cpNavMeta {
+    margin-right: clamp(2.25rem, 12vw, 3.25rem);
+  }
+
+  .cpNavHome .cpNavFooter {
+    margin-left: 0;
+    margin-bottom: clamp(6.5rem, 13vh, 7.5rem);
+    padding-top: 1.25rem;
+  }
+
+  .cpNavHome .cpNavVersion {
+    font-size: clamp(0.72rem, 3.6vw, 0.95rem);
+  }
+
+  .cpNavHome .cpNavUser {
+    font-size: clamp(1.05rem, 5vw, 1.35rem);
+  }
+
+  .cpNavHome .cpNavAccount {
+    width: min(100%, 15rem);
+    min-width: 0;
+  }
+
+  .homeMenuHud {
+    display: none;
+  }
+
   .cpMenuPreviewShell {
     display: none;
   }

@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 :root {
   --font-ui: "Rajdhani", sans-serif;
   --font-display: "Rajdhani", sans-serif;
@@ -122,6 +120,20 @@ body {
   font-weight: 500;
 }
 
+.laputa-page-hidden *,
+.laputa-page-hidden *::before,
+.laputa-page-hidden *::after,
+.laputa-mobile-zooming *,
+.laputa-mobile-zooming *::before,
+.laputa-mobile-zooming *::after {
+  animation-play-state: paused !important;
+  transition-duration: 0s !important;
+}
+
+.laputa-mobile-zooming {
+  scroll-behavior: auto;
+}
+
 button,
 a,
 input,
@@ -192,4 +204,45 @@ button:disabled,
   * {
     cursor: auto !important;
   }
+}
+
+/*
+ * Pinch-zoom safety mode for mobile browsers.
+ * These rules only apply while visualViewport.scale is above 1.
+ */
+.laputa-mobile-zooming .quickhacksOverlay,
+.laputa-mobile-zooming .githubPatchOverlay,
+.laputa-mobile-zooming .galleryLightbox,
+.laputa-mobile-zooming .projectsImageViewer,
+.laputa-mobile-zooming .mainMenu__mobilePanel,
+.laputa-mobile-zooming .cyberpunkBackground__glass {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.laputa-mobile-zooming .musicScreen__background,
+.laputa-mobile-zooming .characterPortrait__glow,
+.laputa-mobile-zooming .cyberpunkBackground__glass,
+.laputa-mobile-zooming .quickhacksOverlay__wash,
+.laputa-mobile-zooming .quickhacksOverlay__noise {
+  filter: none !important;
+}
+
+.laputa-mobile-zooming .quickhacksOverlay__scanlines,
+.laputa-mobile-zooming .quickhacksOverlay__noise,
+.laputa-mobile-zooming .backgroundGlowOverlay,
+.laputa-mobile-zooming .topLeftGlowOverlay,
+.laputa-mobile-zooming .uiGrungeOne,
+.laputa-mobile-zooming .uiGrungeTwo,
+.laputa-mobile-zooming .bottomFogOverlay,
+.laputa-mobile-zooming .scratchesOverlay {
+  mix-blend-mode: normal !important;
+}
+
+.laputa-mobile-zooming [style*="will-change"],
+.laputa-mobile-zooming .quickhacksOverlay,
+.laputa-mobile-zooming .githubPatchOverlay,
+.laputa-mobile-zooming .galleryLightbox,
+.laputa-mobile-zooming .projectsImageViewer {
+  will-change: auto !important;
 }

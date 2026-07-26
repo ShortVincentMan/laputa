@@ -117,7 +117,12 @@ export default function JournalWindow({
   }, [detailOpen, moveSelection, onClose, returnToIndex]);
 
   return (
-    <section className="journalScreen" aria-label="Journal archive">
+    <section
+      className="journalScreen"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Journal archive"
+    >
       <TopHud
         metrics={[
           { value: journalEntries.length, label: "LOGS", tone: "cyan" },

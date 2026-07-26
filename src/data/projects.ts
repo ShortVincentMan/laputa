@@ -584,7 +584,7 @@ export const projects: ProjectRecord[] = [
         title: "Terrain Visualization",
         description:
           "A depth camera measured the sand surface while a projector overlaid color-coded terrain information in real time.",
-        image: "/assets/projects/ar-sand-table.png",
+        image: "/assets/projects/ar-sand-table.jpeg",
         imageAlt:
           "Projected elevation colors displayed across the physical sand surface",
       },
@@ -592,7 +592,7 @@ export const projects: ProjectRecord[] = [
 
     gallery: [
       {
-        src: "/assets/projects/ar-sand-table.png",
+        src: "/assets/projects/ar-sand-table.jpeg",
         alt:
           "Augmented Reality Sand Table displaying projected terrain visualization",
         caption: "Real-time projected terrain visualization",

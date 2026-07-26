@@ -73,9 +73,10 @@ const contacts: ContactRecord[] = [
     id: "resume",
     label: "Resume",
     subtitle: "Personnel archive",
-    value: "DOCUMENT PENDING",
-    actionLabel: "Resume Unavailable",
-    disabled: true,
+    value: "RESUME.PDF // VERIFIED",
+    actionLabel: "Open Resume",
+    href: "/resume.pdf",
+    external: true,
   },
   {
     id: "location",

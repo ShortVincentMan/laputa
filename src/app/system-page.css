@@ -1,0 +1,129 @@
+.systemPage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding:
+    max(1.25rem, env(safe-area-inset-top))
+    max(1.25rem, env(safe-area-inset-right))
+    max(1.25rem, env(safe-area-inset-bottom))
+    max(1.25rem, env(safe-area-inset-left));
+  overflow: hidden;
+  color: #60edf5;
+  background:
+    radial-gradient(circle at 68% 28%, rgba(89, 231, 242, 0.08), transparent 34%),
+    linear-gradient(135deg, rgba(40, 4, 13, 0.96), #03070a 68%);
+}
+
+.systemPage::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.6rem, 2vw, 1.5rem);
+  border: 1px solid rgba(255, 81, 95, 0.42);
+  clip-path: polygon(0 0, calc(100% - 2rem) 0, 100% 2rem, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.systemPage__scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    rgba(255, 255, 255, 0.04) 4px
+  );
+}
+
+.systemPage__panel {
+  position: relative;
+  z-index: 1;
+  width: min(42rem, 100%);
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  border-left: 3px solid #f5df25;
+  background: linear-gradient(90deg, rgba(48, 8, 16, 0.92), rgba(5, 13, 17, 0.84));
+  box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.45);
+}
+
+.systemPage__code {
+  color: #ff5967;
+  font-size: clamp(0.68rem, 2vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.systemPage h1 {
+  margin: 0.75rem 0 1rem;
+  color: #f5df25;
+  font-family: "Cyberpunk", "Rajdhani", sans-serif;
+  font-size: clamp(2rem, 7vw, 4rem);
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.systemPage p {
+  max-width: 52ch;
+  margin: 0;
+  color: rgba(225, 242, 242, 0.78);
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  line-height: 1.55;
+}
+
+.systemPage small {
+  display: block;
+  margin-top: 1rem;
+  color: rgba(96, 237, 245, 0.62);
+  overflow-wrap: anywhere;
+}
+
+.systemPage__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.systemPage__actions a,
+.systemPage__actions button {
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  color: #ff6571;
+  background: rgba(30, 5, 12, 0.72);
+  border: 1px solid rgba(255, 89, 103, 0.72);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.systemPage__actions a:hover,
+.systemPage__actions a:focus-visible,
+.systemPage__actions button:hover,
+.systemPage__actions button:focus-visible {
+  color: #071014;
+  background: #60edf5;
+  border-color: #60edf5;
+  outline: 2px solid #f5df25;
+  outline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .systemPage__actions {
+    display: grid;
+  }
+
+  .systemPage__actions a,
+  .systemPage__actions button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .systemPage *,
+  .systemPage *::before,
+  .systemPage *::after {
+    animation: none !important;
+  }
+}

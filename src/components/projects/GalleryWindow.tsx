@@ -142,7 +142,12 @@ export default function GalleryWindow({
   }
 
   return (
-    <section className="galleryScreen" aria-label="Visual archive">
+    <section
+      className="galleryScreen"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Visual archive"
+    >
       <TopHud
         metrics={[
           { value: galleryRecords.length, label: "FILES", tone: "cyan" },

@@ -26,6 +26,7 @@ type Quickhack = {
   detail: string;
   icon: string;
   destination?: WindowType;
+  href?: string;
   blocked?: boolean;
 };
 
@@ -90,9 +91,9 @@ const QUICKHACKS: Quickhack[] = [
     id: "resume",
     name: "EXTRACT CREDENTIALS",
     cost: 10,
-    detail: "BLOCKED",
+    detail: "READY",
     icon: "⇩",
-    blocked: true,
+    href: "/resume.pdf",
   },
 ];
 
@@ -136,6 +137,14 @@ export default function QuickhacksOverlay({
     executionTimeoutRef.current = window.setTimeout(() => {
       if (hack.destination) {
         onNavigate(hack.destination);
+      }
+
+      if (hack.href) {
+        window.open(
+          hack.href,
+          "_blank",
+          "noopener,noreferrer"
+        );
       }
 
       setExecutingId(null);

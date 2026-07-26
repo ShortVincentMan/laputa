@@ -6,32 +6,121 @@ import {
   useRef,
   useState,
 } from "react";
+import dynamic from "next/dynamic";
 
 import CyberpunkBackground from "@/components/background/CyberpunkBackground";
 import GitHubPatchButton from "@/components/github/GitHubPatchButton";
-import GitHubPatchWindow from "@/components/github/GitHubPatchWindow";
 import MainMenu from "@/components/navigation/MainMenu";
 import type { WindowType } from "@/components/navigation/MainMenu";
-import GalleryWindow from "@/components/projects/GalleryWindow";
-import JournalWindow from "@/components/projects/JournalWindow";
-import ProjectsWindow from "@/components/projects/ProjectsWindow";
-import QuickhacksOverlay from "@/components/quickhacks/QuickhacksOverlay";
 import ActionKey from "@/components/shared/ActionKey";
 import TimePanel from "@/components/shared/TimePanel";
-import MusicWindow from "@/components/spotify/MusicWindow";
 import SpotifyHudButton from "@/components/spotify/SpotifyHudButton";
-import AboutWindow from "@/components/windows/AboutWindow";
-import ContactWindow from "@/components/windows/ContactWindow";
-import CreditsWindow from "@/components/windows/CreditsWindow";
-import ExperienceWindow from "@/components/windows/ExperienceWindow";
 import type { ProjectId } from "@/data/projects";
 import useKonamiCode from "@/hooks/useKonamiCode";
+import useModalFocusManager from "@/hooks/useModalFocusManager";
+import usePageVisibility from "@/hooks/usePageVisibility";
 
 import "@/data/archive-relations";
 import "@/components/shared/action-bar.css";
 import styles from "./home.module.css";
 
 const QUICKHACKS_STORAGE_KEY = "laputa-quickhacks-unlocked";
+const WINDOW_TYPES: WindowType[] = [
+  "projects",
+  "cyberware",
+  "experience",
+  "about",
+  "contact",
+  "credits",
+  "music",
+  "journal",
+  "gallery",
+];
+
+function getHashWindow(): WindowType | null {
+  const hash = window.location.hash.slice(1);
+
+  return WINDOW_TYPES.includes(hash as WindowType)
+    ? (hash as WindowType)
+    : null;
+}
+
+function replaceWindowHash(windowType: WindowType | null) {
+  const baseUrl =
+    window.location.pathname + window.location.search;
+
+  window.history.replaceState(
+    null,
+    "",
+    windowType ? `${baseUrl}#${windowType}` : baseUrl
+  );
+}
+
+function WindowLoading() {
+  return (
+    <div
+      className={styles.windowLoading}
+      role="status"
+      aria-live="polite"
+      aria-label="Loading interface"
+    >
+      <div className={styles.windowLoadingPanel}>
+        <span className={styles.windowLoadingIcon} aria-hidden="true">
+          <span className={styles.windowLoadingIconRing} />
+          <span className={styles.windowLoadingIconCore} />
+          <span className={styles.windowLoadingIconSweep} />
+        </span>
+
+        <span className={styles.windowLoadingDivider} aria-hidden="true" />
+
+        <span className={styles.windowLoadingText}>
+          LOADING INTERFACE...
+        </span>
+      </div>
+    </div>
+  );
+}
+
+const AboutWindow = dynamic(
+  () => import("@/components/windows/AboutWindow"),
+  { loading: WindowLoading }
+);
+const ContactWindow = dynamic(
+  () => import("@/components/windows/ContactWindow"),
+  { loading: WindowLoading }
+);
+const CreditsWindow = dynamic(
+  () => import("@/components/windows/CreditsWindow"),
+  { loading: WindowLoading }
+);
+const ExperienceWindow = dynamic(
+  () => import("@/components/windows/ExperienceWindow"),
+  { loading: WindowLoading }
+);
+const GalleryWindow = dynamic(
+  () => import("@/components/projects/GalleryWindow"),
+  { loading: WindowLoading }
+);
+const GitHubPatchWindow = dynamic(
+  () => import("@/components/github/GitHubPatchWindow"),
+  { loading: WindowLoading }
+);
+const JournalWindow = dynamic(
+  () => import("@/components/projects/JournalWindow"),
+  { loading: WindowLoading }
+);
+const MusicWindow = dynamic(
+  () => import("@/components/spotify/MusicWindow"),
+  { loading: WindowLoading }
+);
+const ProjectsWindow = dynamic(
+  () => import("@/components/projects/ProjectsWindow"),
+  { loading: WindowLoading }
+);
+const QuickhacksOverlay = dynamic(
+  () => import("@/components/quickhacks/QuickhacksOverlay"),
+  { loading: WindowLoading }
+);
 
 function isEditableTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
@@ -46,6 +135,8 @@ function isEditableTarget(target: EventTarget | null) {
 }
 
 export default function HomePage() {
+  usePageVisibility();
+
   const [activeWindow, setActiveWindow] =
     useState<WindowType | null>(null);
   const [projectTargetId, setProjectTargetId] =
@@ -68,26 +159,67 @@ export default function HomePage() {
     useState(false);
 
   const unlockNoticeTimeoutRef = useRef<number | null>(null);
+  const focusReturnIdRef = useRef<string | null>(null);
+
+  useModalFocusManager(
+    Boolean(activeWindow || patchesOpen || quickhacksOpen)
+  );
+
+  const rememberFocusReturn = useCallback(() => {
+    const activeElement =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const focusReturnId =
+      activeElement?.dataset.focusReturn;
+
+    if (focusReturnId) {
+      focusReturnIdRef.current = focusReturnId;
+    }
+  }, []);
+
+  const restoreFocus = useCallback(() => {
+    const focusReturnId = focusReturnIdRef.current;
+
+    if (!focusReturnId) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        document
+          .querySelector<HTMLElement>(
+            `[data-focus-return="${focusReturnId}"]`
+          )
+          ?.focus({ preventScroll: true });
+      });
+    });
+  }, []);
 
   const closeWindow = useCallback(() => {
     setActiveWindow(null);
     setProjectTargetId(null);
     setJournalTargetId(null);
     setGalleryTargetId(null);
-  }, []);
+    replaceWindowHash(null);
+    restoreFocus();
+  }, [restoreFocus]);
 
   const navigateToWindow = useCallback((window: WindowType) => {
+    rememberFocusReturn();
     setProjectTargetId(null);
     setJournalTargetId(null);
     setGalleryTargetId(null);
     setActiveWindow(window);
-  }, []);
+    replaceWindowHash(window);
+  }, [rememberFocusReturn]);
 
   const openProject = useCallback((projectId: ProjectId) => {
     setProjectTargetId(projectId);
     setJournalTargetId(null);
     setGalleryTargetId(null);
     setActiveWindow("projects");
+    replaceWindowHash("projects");
   }, []);
 
   const openJournal = useCallback((journalId: string) => {
@@ -95,6 +227,7 @@ export default function HomePage() {
     setJournalTargetId(journalId);
     setGalleryTargetId(null);
     setActiveWindow("journal");
+    replaceWindowHash("journal");
   }, []);
 
   const openGallery = useCallback((galleryId: string) => {
@@ -102,15 +235,28 @@ export default function HomePage() {
     setJournalTargetId(null);
     setGalleryTargetId(galleryId);
     setActiveWindow("gallery");
+    replaceWindowHash("gallery");
   }, []);
+
+  const openPatches = useCallback(() => {
+    rememberFocusReturn();
+    setPatchesOpen(true);
+  }, [rememberFocusReturn]);
 
   const closePatches = useCallback(() => {
     setPatchesOpen(false);
-  }, []);
+    restoreFocus();
+  }, [restoreFocus]);
+
+  const openQuickhacks = useCallback(() => {
+    rememberFocusReturn();
+    setQuickhacksOpen(true);
+  }, [rememberFocusReturn]);
 
   const closeQuickhacks = useCallback(() => {
     setQuickhacksOpen(false);
-  }, []);
+    restoreFocus();
+  }, [restoreFocus]);
 
   const unlockQuickhacks = useCallback(() => {
     window.localStorage.setItem(QUICKHACKS_STORAGE_KEY, "true");
@@ -131,6 +277,26 @@ export default function HomePage() {
     onSuccess: unlockQuickhacks,
     enabled: !quickhacksUnlocked && !quickhacksOpen,
   });
+
+  useEffect(() => {
+    function syncHashWindow() {
+      const hashWindow = getHashWindow();
+
+      if (hashWindow) {
+        setActiveWindow(hashWindow);
+      }
+    }
+
+    syncHashWindow();
+    window.addEventListener("hashchange", syncHashWindow);
+
+    return () => {
+      window.removeEventListener(
+        "hashchange",
+        syncHashWindow
+      );
+    };
+  }, []);
 
   useEffect(() => {
     const initializationFrame = window.requestAnimationFrame(() => {
@@ -165,7 +331,7 @@ export default function HomePage() {
       }
 
       event.preventDefault();
-      setQuickhacksOpen(true);
+      openQuickhacks();
     }
 
     window.addEventListener("keydown", handleQuickhacksShortcut);
@@ -173,7 +339,7 @@ export default function HomePage() {
     return () => {
       window.removeEventListener("keydown", handleQuickhacksShortcut);
     };
-  }, [quickhacksOpen, quickhacksUnlocked]);
+  }, [openQuickhacks, quickhacksOpen, quickhacksUnlocked]);
 
   return (
     <main className={styles.homePage}>
@@ -193,7 +359,7 @@ export default function HomePage() {
           </div>
 
           <GitHubPatchButton
-            onOpen={() => setPatchesOpen(true)}
+            onOpen={openPatches}
           />
 
           <SpotifyHudButton
@@ -255,7 +421,7 @@ export default function HomePage() {
 
           {activeWindow === "contact" && (
             <ContactWindow
-              onClose={() => setActiveWindow(null)}
+              onClose={closeWindow}
               onNavigate={navigateToWindow}
             />
           )}
@@ -281,8 +447,9 @@ export default function HomePage() {
           <ActionKey
             keyLabel="Q"
             label="Quickhacks"
-            onClick={() => setQuickhacksOpen(true)}
+            onClick={openQuickhacks}
             ariaLabel="Open quickhacks"
+            focusReturnId="quickhacks"
           />
         </div>
       )}

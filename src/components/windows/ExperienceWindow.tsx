@@ -333,7 +333,7 @@ export default function ExperienceWindow({
                 className="experienceDocument__link"
                 href={selectedRecord.link.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 <span>ENTER</span>
                 {selectedRecord.link.label}

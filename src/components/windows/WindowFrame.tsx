@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect } from "react";
 
 import "./window-frame.css";
 
@@ -28,27 +27,6 @@ export default function WindowFrame({
   className = "",
   onClose,
 }: WindowFrameProps) {
-  useEffect(() => {
-    if (!onClose) {
-      return;
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onClose?.();
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-    };
-  }, [onClose]);
-
   return (
     <section
       className={`windowFrame ${className}`}
@@ -113,6 +91,7 @@ export default function WindowFrame({
             className="windowFrame__close"
             onClick={onClose}
             aria-label={`Close ${title}`}
+            data-modal-close="true"
           >
             <span className="windowFrame__closeKey">
               ESC
@@ -164,6 +143,7 @@ export default function WindowFrame({
             <button
               type="button"
               onClick={onClose}
+              data-modal-close="true"
             >
               <span>ESC</span>
               Back

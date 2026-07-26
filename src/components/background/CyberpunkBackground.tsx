@@ -41,7 +41,8 @@ export default function CyberpunkBackground({
             alt=""
             fill
             sizes="210vw"
-            quality={75}
+            quality={70}
+            fetchPriority="low"
             draggable={false}
           />
 
@@ -97,8 +98,8 @@ export default function CyberpunkBackground({
             alt=""
             fill
             sizes="210vw"
-            quality={55}
-            loading="eager"
+            quality={50}
+            fetchPriority="low"
             draggable={false}
           />
 
@@ -108,7 +109,8 @@ export default function CyberpunkBackground({
             alt=""
             fill
             sizes="210vw"
-            quality={60}
+            quality={55}
+            fetchPriority="low"
             draggable={false}
           />
         </div>
@@ -120,7 +122,8 @@ export default function CyberpunkBackground({
         alt=""
         fill
         sizes="100vw"
-        quality={55}
+        quality={50}
+        fetchPriority="low"
         draggable={false}
       />
 

@@ -140,7 +140,12 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
               <h3>External Records</h3>
               <div className="projectRecord__links">
                 {project.links.map((link) => (
-                  <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {link.label}
                   </a>
                 ))}

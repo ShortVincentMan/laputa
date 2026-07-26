@@ -219,7 +219,7 @@ export default function CreditsWindow({
                     <a
                       href="https://www.youtube.com/watch?v=JkB3FbaKOkY"
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       onClick={(event) =>
                         event.stopPropagation()
                       }

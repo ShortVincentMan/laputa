@@ -96,6 +96,9 @@
   text-align: left;
   cursor: var(--cursor-pointer);
   overflow: hidden;
+  contain: layout paint style;
+  content-visibility: auto;
+  contain-intrinsic-size: 240px 240px;
   transition:
     border-color 120ms ease,
     background 120ms ease,

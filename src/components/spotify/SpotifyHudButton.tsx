@@ -15,6 +15,7 @@ export default function SpotifyHudButton({
       className="spotifyHudButton"
       onClick={onOpen}
       aria-label="Open music activity"
+      data-focus-return="music"
     >
       <span className="spotifyHudButton__key">
         M

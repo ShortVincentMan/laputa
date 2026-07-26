@@ -73,7 +73,7 @@
    url("/assets/pets/performative-jit-programming.jpeg"). */
 .githubPatchWindow__art {
   background:
-      url("/assets/pets/performative-jit-programming.jpeg")
+      url("/assets/pets/performative-jit-programming.webp")
     center / cover no-repeat,
 }
 .githubPatchWindow__art::before {

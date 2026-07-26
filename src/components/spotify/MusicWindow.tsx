@@ -6,6 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import Image from "next/image";
 
 import type {
   SpotifyStatus,
@@ -203,9 +204,12 @@ export default function MusicWindow({
         <aside className="musicScreen__artPanel">
           <div className="musicScreen__artFrame">
             {selectedTrack?.image ? (
-              <img
+              <Image
                 src={selectedTrack.image}
                 alt={`${selectedTrack.album} album artwork`}
+                width={190}
+                height={190}
+                sizes="(max-width: 1200px) 165px, 190px"
               />
             ) : (
               <div className="musicScreen__artFallback">
@@ -322,7 +326,7 @@ export default function MusicWindow({
                   selectedTrack.spotifyUrl
                 }
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 OPEN IN SPOTIFY ↗
               </a>

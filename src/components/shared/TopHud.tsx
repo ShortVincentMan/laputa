@@ -1,4 +1,10 @@
-import type { ReactNode } from "react";
+"use client";
+
+import {
+  type ReactNode,
+  useEffect,
+  useRef,
+} from "react";
 
 import "./top-hud.css";
 
@@ -44,6 +50,46 @@ export default function TopHud({
   ariaLabel = "Portfolio sections",
   className = "",
 }: TopHudProps) {
+  const navigationRef = useRef<HTMLElement>(null);
+  const activeNavigationId =
+    navigation.find((item) => item.active)?.id ?? null;
+
+  useEffect(() => {
+    if (!activeNavigationId) {
+      return;
+    }
+
+    const navigationElement = navigationRef.current;
+    const activeElement =
+      navigationElement?.querySelector<HTMLElement>(
+        `[data-navigation-id="${activeNavigationId}"]`
+      );
+
+    if (!navigationElement || !activeElement) {
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      const visibleLeft = navigationElement.scrollLeft;
+      const visibleRight =
+        visibleLeft + navigationElement.clientWidth;
+      const itemLeft = activeElement.offsetLeft;
+      const itemRight =
+        itemLeft + activeElement.offsetWidth;
+
+      if (itemLeft < visibleLeft) {
+        navigationElement.scrollLeft = itemLeft;
+      } else if (itemRight > visibleRight) {
+        navigationElement.scrollLeft =
+          itemRight - navigationElement.clientWidth;
+      }
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [activeNavigationId]);
+
   return (
     <header className={`topHud ${className}`.trim()}>
       <div className="topHud__metrics">
@@ -60,7 +106,11 @@ export default function TopHud({
         ))}
       </div>
 
-      <nav className="topHud__navigation" aria-label={ariaLabel}>
+      <nav
+        ref={navigationRef}
+        className="topHud__navigation"
+        aria-label={ariaLabel}
+      >
         {navigation.map((item) => {
           const itemClassName = [
             "topHud__navigationItem",
@@ -73,6 +123,7 @@ export default function TopHud({
             <button
               type="button"
               className={itemClassName}
+              data-navigation-id={item.id}
               disabled={item.disabled}
               onClick={item.onClick}
               title={item.title}
@@ -84,6 +135,7 @@ export default function TopHud({
           ) : (
             <span
               className={itemClassName}
+              data-navigation-id={item.id}
               aria-current={item.active ? "page" : undefined}
             >
               {item.label}

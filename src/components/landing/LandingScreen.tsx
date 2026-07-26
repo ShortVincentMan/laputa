@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import "./landing.css";
 import ScrollingText from "../shared/ScrollingText";
+import usePageVisibility from "@/hooks/usePageVisibility";
 
 const ASSET_ROOT = "/assets/landing";
 
@@ -24,7 +25,8 @@ function UiLayer({ src, className, sizes }: LayerProps) {
         alt=""
         fill
         sizes={sizes}
-        quality={75}
+        quality={70}
+        fetchPriority="low"
         draggable={false}
       />
     </div>
@@ -32,6 +34,8 @@ function UiLayer({ src, className, sizes }: LayerProps) {
 }
 
 export default function LandingScreen() {
+  usePageVisibility();
+
   const router = useRouter();
   const [isLeaving, setIsLeaving] = useState(false);
   const [promptText, setPromptText] = useState("CLICK TO CONTINUE");
@@ -86,7 +90,8 @@ export default function LandingScreen() {
             alt=""
             fill
             sizes="210vw"
-            quality={75}
+            quality={70}
+            fetchPriority="low"
             draggable={false}
           />
 
@@ -132,7 +137,8 @@ export default function LandingScreen() {
             alt=""
             fill
             sizes="210vw"
-            quality={55}
+            quality={50}
+            fetchPriority="low"
             draggable={false}
           />
 
@@ -143,6 +149,7 @@ export default function LandingScreen() {
             fill
             sizes="210vw"
             quality={50}
+            fetchPriority="low"
             draggable={false}
           />
 
@@ -152,7 +159,8 @@ export default function LandingScreen() {
             alt=""
             fill
             sizes="210vw"
-            quality={60}
+            quality={55}
+            fetchPriority="low"
             draggable={false}
           />
 
@@ -167,7 +175,8 @@ export default function LandingScreen() {
         alt=""
         fill
         sizes="100vw"
-        quality={60}
+        quality={55}
+        fetchPriority="low"
         draggable={false}
       />
 
@@ -177,7 +186,8 @@ export default function LandingScreen() {
         alt=""
         fill
         sizes="100vw"
-        quality={55}
+        quality={50}
+        fetchPriority="low"
         draggable={false}
       />
 
@@ -187,7 +197,8 @@ export default function LandingScreen() {
         alt=""
         fill
         sizes="100vw"
-        quality={55}
+        quality={50}
+        fetchPriority="low"
         draggable={false}
       />
 
