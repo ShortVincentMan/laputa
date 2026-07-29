@@ -4,10 +4,7 @@ export type JournalCategory =
   | "REFLECTION"
   | "LIFE";
 
-export type JournalStatus =
-  | "PUBLISHED"
-  | "DRAFT"
-  | "COMING SOON";
+export type JournalStatus = "PUBLISHED";
 
 export type JournalBodySection = {
   heading?: string;
@@ -28,7 +25,6 @@ export type JournalEntry = {
   status: JournalStatus;
   coverAsset?: string;
   coverAlt?: string;
-  editorialTodo?: string;
 };
 
 export const journalEntries: JournalEntry[] = [
@@ -61,98 +57,6 @@ export const journalEntries: JournalEntry[] = [
     coverAlt: "Portrait of Vincent Le at sunset",
   },
   {
-    id: "cal-poly-field-notes",
-    slug: "cal-poly-field-notes",
-    title: "CAL POLY // FIELD NOTES",
-    date: "COMING SOON",
-    summary:
-      "Notes on studying Computer Engineering and finding a place in Cal Poly's engineering community.",
-    body: [],
-    category: "FIELD NOTE",
-    tags: ["CAL POLY", "COLLEGE", "RESEARCH", "FIELD NOTES"],
-    relatedGalleryIds: [
-      "tensegrity-exoskeleton",
-      "tensegrity-exoskeleton-fit-test",
-      "tensegrity-exoskeleton-arm-assembly",
-    ],
-    featured: true,
-    status: "COMING SOON",
-    coverAsset: "/assets/personal/exoskeleton.jpeg",
-    coverAlt: "Vincent wearing an upper-limb tensegrity exoskeleton prototype",
-    editorialTodo:
-      "TODO: Write the personal post before changing this record to PUBLISHED.",
-  },
-  {
-    id: "wrestling-lessons",
-    slug: "wrestling-lessons",
-    title: "LESSONS FROM WRESTLING",
-    date: "COMING SOON",
-    summary:
-      "A future reflection on discipline, competition, and carrying lessons from wrestling forward.",
-    body: [],
-    category: "REFLECTION",
-    tags: ["WRESTLING", "DISCIPLINE", "REFLECTION"],
-    relatedGalleryIds: ["wrestling-record", "wrestling-takedown", "track-sprint-finish"],
-    featured: false,
-    status: "COMING SOON",
-    coverAsset: "/assets/about/vincent-wrestling.jpeg",
-    coverAlt: "Vincent Le competing in wrestling",
-    editorialTodo:
-      "TODO: Write the personal post before changing this record to PUBLISHED.",
-  },
-  {
-    id: "moe-photo-journal",
-    slug: "moe-photo-journal",
-    title: "MOE // PHOTO JOURNAL",
-    date: "COMING SOON",
-    summary:
-      "A small photo journal for Moe, collected outside the engineering archive.",
-    body: [],
-    category: "LIFE",
-    tags: ["MOE", "PHOTOS", "LIFE"],
-    relatedGalleryIds: [
-      "moe-portrait",
-      "moe-outdoors",
-      "moe-closeup",
-      "moe-in-box",
-      "moe-sleeping",
-      "performative-jit-programming",
-    ],
-    featured: false,
-    status: "COMING SOON",
-    coverAsset: "/assets/pets/moe-wallpaper.jpeg",
-    coverAlt: "Portrait of Moe outdoors",
-    editorialTodo:
-      "TODO: Restore or write the personal caption copy before publishing.",
-  },
-  {
-    id: "outside-the-lab",
-    slug: "outside-the-lab",
-    title: "OUTSIDE THE LAB",
-    date: "COMING SOON",
-    summary:
-      "Personal photographs and field notes from life beyond coursework and technical work.",
-    body: [],
-    category: "LIFE",
-    tags: ["PERSONAL", "FRIENDS", "TRAVEL", "FIELD NOTES"],
-    relatedGalleryIds: [
-      "friends-yosemite",
-      "vietnam-field-record",
-      "lion-dance-record",
-      "fishing-field-record",
-      "eren-jaeger-record",
-      "in-n-out-record",
-      "cheese-pull-record",
-      "project-showcase-stage",
-    ],
-    featured: false,
-    status: "COMING SOON",
-    coverAsset: "/assets/about/vincent-friends-yosemite.JPG",
-    coverAlt: "Vincent Le with friends in Yosemite",
-    editorialTodo:
-      "TODO: Restore or write the personal post before publishing.",
-  },
-  {
     id: "japan-photo-journal",
     slug: "japan-photo-journal",
     title: "JAPAN // PHOTO JOURNAL",
@@ -178,6 +82,40 @@ export const journalEntries: JournalEntry[] = [
     status: "PUBLISHED",
     coverAsset: "/assets/personal/japan.jpeg",
     coverAlt: "Nighttime city scene photographed in Yokohama",
+  },
+
+  {
+    id: "moe-chief-morale-officer",
+    slug: "moe-chief-morale-officer",
+    title: "MOE // CHIEF MORALE OFFICER",
+    date: "2026-07-28",
+    summary:
+      "Meet Moe, the unofficial engineering assistant responsible for morale, mandatory breaks, and keyboard quality assurance.",
+    body: [
+      {
+        heading: "Engineering's Most Important Contributor",
+        paragraphs: [
+          "Every engineering project has an unofficial contributor. Mine happens to have four legs, a pink nose, and a habit of sitting directly on the keyboard whenever deadlines approach.",
+          "Moe has been present through late-night CAD sessions, debugging marathons, research papers, and the development of Laputa OS. While he has never written a line of code, he has an uncanny ability to appear exactly when I need to step away from the screen.",
+          "His daily responsibilities include quality assurance by walking across the keyboard, enforcing mandatory stretch breaks through persistent head-butts, and supervising every workspace he decides belongs to him. Sometimes the best solution to an engineering problem is simply taking a break, petting the cat, and returning with a fresh perspective.",
+        ],
+      },
+    ],
+    category: "PERSONAL",
+    tags: ["MOE", "CAT", "PERSONAL", "LIFE"],
+    relatedGalleryIds: [
+      "moe-in-box",
+      "moe-closeup",
+      "moe-portrait",
+      "moe-sleeping",
+      "moe-outdoors",
+      "moe-wallpaper",
+      "performative-jit-programming",
+    ],
+    featured: false,
+    status: "PUBLISHED",
+    coverAsset: "/assets/pets/moe-landscape.jpeg",
+    coverAlt: "Moe relaxing outdoors",
   },
 ];
 

@@ -352,7 +352,15 @@ export default function ExperienceWindow({
         <div><span>↑ ↓</span>Navigate</div>
         <div><span>← →</span>Category</div>
         <div><span>SPACE</span>Open link</div>
-        <button type="button" onClick={onClose}><span>ESC</span>Close</button>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close Experience archive"
+          data-modal-close="true"
+        >
+          <span>ESC</span>
+          Close
+        </button>
       </footer>
     </section>
   );

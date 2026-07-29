@@ -485,6 +485,7 @@ export default function ContactWindow({
                 tabIndex={-1}
                 autoComplete="off"
                 aria-hidden="true"
+                aria-label="Leave blank"
               />
 
               <header className="messageThread__header">

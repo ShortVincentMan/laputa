@@ -64,12 +64,15 @@ export default function MusicWindow({
   const [selectedId, setSelectedId] =
     useState<string | null>(null);
 
-  const loadSpotify = useCallback(async () => {
+  const loadSpotify = useCallback(async (
+    signal?: AbortSignal
+  ) => {
     try {
       const response = await fetch(
         "/api/spotify",
         {
           cache: "no-store",
+          signal,
         }
       );
 
@@ -97,24 +100,78 @@ export default function MusicWindow({
           : null;
       });
     } catch (error) {
+      if (
+        error instanceof DOMException &&
+        error.name === "AbortError"
+      ) {
+        return;
+      }
+
       console.error(error);
       setLoadState("error");
     }
   }, []);
 
   useEffect(() => {
-    const initialLoad = window.setTimeout(() => {
-      void loadSpotify();
-    }, 0);
+    let interval: number | undefined;
+    let requestController:
+      | AbortController
+      | undefined;
 
-    const interval = window.setInterval(
-      loadSpotify,
-      20_000
+    function poll() {
+      requestController?.abort();
+      requestController =
+        new AbortController();
+      void loadSpotify(
+        requestController.signal
+      );
+    }
+
+    function stopPolling() {
+      if (interval !== undefined) {
+        window.clearInterval(interval);
+        interval = undefined;
+      }
+
+      requestController?.abort();
+      requestController = undefined;
+    }
+
+    function startPolling() {
+      if (
+        document.hidden ||
+        interval !== undefined
+      ) {
+        return;
+      }
+
+      poll();
+      interval = window.setInterval(
+        poll,
+        20_000
+      );
+    }
+
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        stopPolling();
+      } else {
+        startPolling();
+      }
+    }
+
+    startPolling();
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange
     );
 
     return () => {
-      window.clearTimeout(initialLoad);
-      window.clearInterval(interval);
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange
+      );
+      stopPolling();
     };
   }, [loadSpotify]);
 
@@ -415,6 +472,8 @@ export default function MusicWindow({
           <button
             type="button"
             onClick={onClose}
+            aria-label="Close Music activity"
+            data-modal-close="true"
           >
             <kbd>ESC</kbd>
             CLOSE

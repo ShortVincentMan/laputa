@@ -1,6 +1,6 @@
 {
   "name": "laputa",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -25,5 +25,9 @@
     "eslint": "^9",
     "eslint-config-next": "^16.2.10",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "8.5.23",
+    "sharp": "0.35.3"
   }
 }

@@ -13,6 +13,106 @@ type ContactPayload = {
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_REQUEST_BYTES = 32 * 1024;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const RATE_LIMIT_MAX_CLIENTS = 10_000;
+
+type RateLimitRecord = {
+  count: number;
+  resetAt: number;
+};
+
+const rateLimits = new Map<string, RateLimitRecord>();
+
+class RequestBodyTooLargeError extends Error {}
+
+function getClientKey(request: Request) {
+  return (
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip")?.trim() ||
+    "unknown"
+  );
+}
+
+function checkRateLimit(request: Request) {
+  const now = Date.now();
+
+  if (rateLimits.size >= RATE_LIMIT_MAX_CLIENTS) {
+    for (const [key, record] of rateLimits) {
+      if (record.resetAt <= now) {
+        rateLimits.delete(key);
+      }
+    }
+  }
+
+  const key = getClientKey(request);
+  const existing = rateLimits.get(key);
+
+  if (!existing || existing.resetAt <= now) {
+    rateLimits.set(key, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    });
+
+    return null;
+  }
+
+  if (existing.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return Math.max(1, Math.ceil((existing.resetAt - now) / 1000));
+  }
+
+  existing.count += 1;
+  return null;
+}
+
+async function readContactPayload(request: Request): Promise<ContactPayload> {
+  const declaredLength = Number(
+    request.headers.get("content-length")
+  );
+
+  if (
+    Number.isFinite(declaredLength) &&
+    declaredLength > MAX_REQUEST_BYTES
+  ) {
+    throw new RequestBodyTooLargeError();
+  }
+
+  if (!request.body) {
+    return {};
+  }
+
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let receivedBytes = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+
+    if (done) {
+      break;
+    }
+
+    receivedBytes += value.byteLength;
+
+    if (receivedBytes > MAX_REQUEST_BYTES) {
+      await reader.cancel();
+      throw new RequestBodyTooLargeError();
+    }
+
+    chunks.push(value);
+  }
+
+  const body = new Uint8Array(receivedBytes);
+  let offset = 0;
+
+  for (const chunk of chunks) {
+    body.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+
+  return JSON.parse(new TextDecoder().decode(body)) as ContactPayload;
+}
 
 function cleanText(
   value: unknown,
@@ -26,8 +126,25 @@ function cleanText(
 }
 
 export async function POST(request: Request) {
+  const retryAfter = checkRateLimit(request);
+
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Transmission rate limit exceeded. Retry later.",
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(retryAfter),
+        },
+      }
+    );
+  }
+
   try {
-    const body = (await request.json()) as ContactPayload;
+    const body = await readContactPayload(request);
 
     const name = cleanText(body.name, 100);
     const email = cleanText(body.email, 254);
@@ -90,7 +207,7 @@ export async function POST(request: Request) {
         {
           hasApiKey: Boolean(apiKey),
           hasContactEmail: Boolean(contactEmail),
-          fromEmail,
+          hasCustomFromEmail: Boolean(process.env.CONTACT_FROM_EMAIL),
         }
       );
 
@@ -132,9 +249,9 @@ export async function POST(request: Request) {
     if (error) {
       console.error("Resend send error:", {
         name: error.name,
-        message: error.message,
-        fromEmail,
-        contactEmail,
+        ...(process.env.NODE_ENV === "development"
+          ? { message: error.message }
+          : {}),
       });
 
       return NextResponse.json(
@@ -153,8 +270,6 @@ export async function POST(request: Request) {
 
     console.info("Contact transmission accepted:", {
       resendId: data?.id,
-      subject,
-      replyTo: email,
     });
 
     return NextResponse.json({
@@ -162,7 +277,25 @@ export async function POST(request: Request) {
       id: data?.id,
     });
   } catch (error) {
-    console.error("Contact route error:", error);
+    if (error instanceof RequestBodyTooLargeError) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Transmission packet exceeds the 32 KiB limit.",
+        },
+        {
+          status: 413,
+        }
+      );
+    }
+
+    console.error("Contact route error:", {
+      name: error instanceof Error ? error.name : "UnknownError",
+      ...(process.env.NODE_ENV === "development" &&
+      error instanceof Error
+        ? { message: error.message }
+        : {}),
+    });
 
     return NextResponse.json(
       {
@@ -174,8 +307,8 @@ export async function POST(request: Request) {
             : "Invalid transmission packet.",
       },
       {
-        status: 500,
-      }
-    );
+          status: 400,
+        }
+      );
   }
 }

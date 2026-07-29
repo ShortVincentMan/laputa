@@ -45,14 +45,26 @@ function getHashWindow(): WindowType | null {
     : null;
 }
 
-function replaceWindowHash(windowType: WindowType | null) {
+function pushWindowHash(windowType: WindowType | null) {
   const baseUrl =
     window.location.pathname + window.location.search;
+  const nextUrl = windowType
+    ? `${baseUrl}#${windowType}`
+    : baseUrl;
 
-  window.history.replaceState(
+  if (
+    window.location.pathname +
+      window.location.search +
+      window.location.hash ===
+    nextUrl
+  ) {
+    return;
+  }
+
+  window.history.pushState(
     null,
     "",
-    windowType ? `${baseUrl}#${windowType}` : baseUrl
+    nextUrl
   );
 }
 
@@ -201,7 +213,7 @@ export default function HomePage() {
     setProjectTargetId(null);
     setJournalTargetId(null);
     setGalleryTargetId(null);
-    replaceWindowHash(null);
+    pushWindowHash(null);
     restoreFocus();
   }, [restoreFocus]);
 
@@ -211,7 +223,7 @@ export default function HomePage() {
     setJournalTargetId(null);
     setGalleryTargetId(null);
     setActiveWindow(window);
-    replaceWindowHash(window);
+    pushWindowHash(window);
   }, [rememberFocusReturn]);
 
   const openProject = useCallback((projectId: ProjectId) => {
@@ -219,7 +231,7 @@ export default function HomePage() {
     setJournalTargetId(null);
     setGalleryTargetId(null);
     setActiveWindow("projects");
-    replaceWindowHash("projects");
+    pushWindowHash("projects");
   }, []);
 
   const openJournal = useCallback((journalId: string) => {
@@ -227,7 +239,7 @@ export default function HomePage() {
     setJournalTargetId(journalId);
     setGalleryTargetId(null);
     setActiveWindow("journal");
-    replaceWindowHash("journal");
+    pushWindowHash("journal");
   }, []);
 
   const openGallery = useCallback((galleryId: string) => {
@@ -235,7 +247,7 @@ export default function HomePage() {
     setJournalTargetId(null);
     setGalleryTargetId(galleryId);
     setActiveWindow("gallery");
-    replaceWindowHash("gallery");
+    pushWindowHash("gallery");
   }, []);
 
   const openPatches = useCallback(() => {
@@ -279,22 +291,25 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    function syncHashWindow() {
+    function syncHistoryWindow() {
       const hashWindow = getHashWindow();
 
-      if (hashWindow) {
-        setActiveWindow(hashWindow);
-      }
+      setActiveWindow(hashWindow);
+      setProjectTargetId(null);
+      setJournalTargetId(null);
+      setGalleryTargetId(null);
     }
 
-    syncHashWindow();
-    window.addEventListener("hashchange", syncHashWindow);
+    syncHistoryWindow();
+    window.addEventListener("hashchange", syncHistoryWindow);
+    window.addEventListener("popstate", syncHistoryWindow);
 
     return () => {
       window.removeEventListener(
         "hashchange",
-        syncHashWindow
+        syncHistoryWindow
       );
+      window.removeEventListener("popstate", syncHistoryWindow);
     };
   }, []);
 

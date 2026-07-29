@@ -145,6 +145,12 @@ const invalidExternalLinks = externalLinks.filter((href) => {
     return true;
   }
 });
+const unpublishedJournalEntries = journalEntries.filter(
+  (entry) => entry.status !== "PUBLISHED" || entry.body.length === 0
+);
+const projectsWithoutPrimaryAssets = projects.filter(
+  (project) => !project.image
+);
 const failures = [
   ...missingAssets.map(
     (asset) => `Missing or empty asset: ${asset}`
@@ -154,6 +160,14 @@ const failures = [
   ),
   ...invalidExternalLinks.map(
     (href) => `Invalid external link: ${href}`
+  ),
+  ...unpublishedJournalEntries.map(
+    (entry) =>
+      `Unfinished journal entry is included in production data: ${entry.id}`
+  ),
+  ...projectsWithoutPrimaryAssets.map(
+    (project) =>
+      `Project has no primary asset and would render a placeholder: ${project.id}`
   ),
 ];
 
@@ -165,6 +179,9 @@ console.log(
 );
 console.log(
   `Typed external links: ${externalLinks.length}`
+);
+console.log(
+  `Production content records: ${projects.length} projects, ${journalEntries.length} journal entries, ${galleryRecords.length} gallery records`
 );
 
 if (failures.length > 0) {

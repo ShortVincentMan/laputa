@@ -128,9 +128,9 @@ export default function JournalWindow({
           { value: journalEntries.length, label: "LOGS", tone: "cyan" },
           {
             value: journalEntries.filter(
-              (entry) => entry.status === "DRAFT"
+              (entry) => entry.featured
             ).length,
-            label: "ACTIVE",
+            label: "FEATURED",
             tone: "green",
           },
         ]}
@@ -265,21 +265,14 @@ export default function JournalWindow({
             <p className="journalRecord__lead">{selectedEntry.summary}</p>
 
             <div className="journalRecord__body">
-              {selectedEntry.body.length > 0 ? (
-                selectedEntry.body.map((section, index) => (
-                  <section key={`${selectedEntry.id}-section-${index}`}>
-                    {section.heading && <h2>{section.heading}</h2>}
-                    {section.paragraphs.map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
-                    ))}
-                  </section>
-                ))
-              ) : (
-                <div className="journalRecord__pending">
-                  <span>{selectedEntry.status}</span>
-                  <strong>ENTRY RESERVED // COPY NOT YET PUBLISHED</strong>
-                </div>
-              )}
+              {selectedEntry.body.map((section, index) => (
+                <section key={`${selectedEntry.id}-section-${index}`}>
+                  {section.heading && <h2>{section.heading}</h2>}
+                  {section.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </section>
+              ))}
             </div>
 
             <footer className="journalRecord__tags">

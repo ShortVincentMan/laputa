@@ -22,9 +22,15 @@
 
 # misc
 .DS_Store
+__MACOSX/
 *.pem
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # debug
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
