@@ -498,7 +498,7 @@ export const projects: ProjectRecord[] = [
     title: "Laputa OS",
     subtitle: "Interactive engineering portfolio",
     period: "2026 — PRESENT",
-    status: "DEPLOYED",
+    status: "IN DEVELOPMENT",
 
     summary:
       "A Cyberpunk 2077-inspired interactive portfolio built as a fictional operating system.",
