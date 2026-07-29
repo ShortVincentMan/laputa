@@ -100,7 +100,7 @@ const homeMenuPreviews: Record<
     subtitle: "RESEARCH // EMBEDDED // OPERATIONS",
     status: "RECORD READY",
     period: "2024 — PRESENT",
-    image: "/assets/personal/exoskeleton2.jpeg",
+    image: "/assets/projects/timmy-tuffnuckles.jpeg",
   },
 
   about: {

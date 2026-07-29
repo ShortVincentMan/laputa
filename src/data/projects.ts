@@ -13,8 +13,7 @@ export type ProjectId =
   | "laputa-os"
   | "ar-sand-table"
   | "trimtab"
-  | "hollow-purple-board"
-  | "file-cleaner";
+  | "hollow-purple-board";
 
 export type StoredProjectCategory = Exclude<
   ProjectCategory,
@@ -245,7 +244,7 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "EXOSKELETON RESEARCH VISUAL",
-    image: "/assets/personal/exoskeleton2.jpeg",
+    image: "/assets/projects/timmy-tuffnuckles.jpeg",
     imageAlt:
       "Vincent wearing the upper-limb tensegrity exoskeleton prototype during a fit test",
     detailLabel: "RESEARCH // TENSEGRITY EXOSKELETON",
@@ -316,7 +315,7 @@ export const projects: ProjectRecord[] = [
     status: "IN DEVELOPMENT",
 
     summary:
-      "A wearable modular spinal platform combining structural support, distributed batteries, sensing, and future actuator interfaces.",
+      "// WORK IN PROGRESS // A wearable modular spinal platform combining structural support, distributed batteries, sensing, and future telemetry  interfaces. // WORK IN PROGRESS // ",
 
     objective:
       "Create a scalable wearable robotic backbone inspired by human anatomy and Cyberpunk spinal augmentation systems.",
@@ -499,7 +498,7 @@ export const projects: ProjectRecord[] = [
     title: "Laputa OS",
     subtitle: "Interactive engineering portfolio",
     period: "2026 — PRESENT",
-    status: "IN DEVELOPMENT",
+    status: "DEPLOYED",
 
     summary:
       "A Cyberpunk 2077-inspired interactive portfolio built as a fictional operating system.",
@@ -799,30 +798,6 @@ export const projects: ProjectRecord[] = [
     ],
   },
 
-  {
-    id: "file-cleaner",
-    category: "software",
-    title: "File Cleaner Utility",
-    subtitle: "Storage management application",
-    period: "2024",
-    status: "COMPLETED",
-
-    summary:
-      "A utility for identifying unnecessary files and improving local storage organization.",
-
-    objective:
-      "Automate repetitive file-management and storage-cleanup tasks.",
-
-    technologies: [
-      "Python",
-      "File Systems",
-      "Automation",
-      "Git",
-    ],
-
-    assetLabel: "FILE CLEANER SCREENSHOT",
-    detailLabel: "SOFTWARE // FILE CLEANER",
-  },
 ];
 
 export function getVisibleProjects(

@@ -62,6 +62,30 @@ export const experienceRecords: ExperienceRecord[] = [
     ],
   },
   {
+    id: "cal-poly-its",
+    category: "experience",
+    title: "IT Student Assistant",
+    organization: "Cal Poly Information Technology Services",
+    period: "JUL 2026 — PRESENT",
+    location: "San Luis Obispo, CA",
+    status: "ACTIVE",
+    description:
+      "Providing technical support to Cal Poly faculty and staff by diagnosing and resolving hardware, software, and network connectivity issues across Zone B.",
+    details: [
+      "Troubleshoot Windows and macOS hardware, software, peripheral, and network issues.",
+      "Manage service requests through the university ticketing system and document resolutions.",
+      "Support workstation deployment, account assistance, and day-to-day IT operations.",
+      "Escalate complex technical issues while helping maintain reliable campus computing services.",
+    ],
+    technologies: [
+      "Windows",
+      "macOS",
+      "Networking",
+      "Technical Support",
+      "IT Operations",
+    ],
+  },
+  {
     id: "hack4impact-operations",
     category: "experience",
     title: "Director of Finance and Operations",
@@ -219,6 +243,20 @@ export const experienceRecords: ExperienceRecord[] = [
     details: [
       "Maintained a 3.83 cumulative GPA.",
       "Completed first-year Computer Engineering coursework while participating in technical organizations.",
+    ],
+  },
+  {
+    id: "families-care-about-you-scholarship",
+    category: "achievements",
+    title: "Families Care About You Engineering Scholarship",
+    organization: "California Polytechnic State University",
+    period: "2026",
+    status: "COMPLETED",
+    description:
+      "Awarded the Families Care About You Engineering Scholarship in recognition of academic achievement and continued pursuit of an engineering degree.",
+    details: [
+      "Awarded through Cal Poly's College of Engineering scholarship program.",
+      "Recognized for academic performance and commitment to engineering.",
     ],
   },
   {
