@@ -277,6 +277,15 @@ export default function QuickhacksOverlay({
       <div className="quickhacksOverlay__vignette" data-backdrop="true" aria-hidden="true" />
       <div className="quickhacksOverlay__noise" data-backdrop="true" aria-hidden="true" />
 
+      <button
+        type="button"
+        className="quickhacksOverlay__close"
+        onClick={onClose}
+        aria-label="Close quickhacks"
+      >
+        ×
+      </button>
+
       <header className="quickhacksOverlay__ram">
         <div className="quickhacksOverlay__ramMeta">
           <span>RESOURCES // 2284-302</span>

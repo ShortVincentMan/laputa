@@ -192,6 +192,10 @@
   background: linear-gradient(90deg, rgba(3, 8, 12, 0.2), rgba(3, 8, 12, 0.82));
 }
 
+.homeActions {
+  display: contents;
+}
+
 .quickhacksUnlockNotice {
   position: fixed;
   top: 50%;
@@ -269,9 +273,78 @@
       max(0.5rem, env(safe-area-inset-left));
   }
 
-  .quickhacksAction {
+  .homeActions {
+    position: fixed;
     right: max(0.75rem, env(safe-area-inset-right));
     bottom: max(0.75rem, env(safe-area-inset-bottom));
+    left: max(0.75rem, env(safe-area-inset-left));
+    z-index: 650;
+
+    display: flex;
+    align-items: stretch;
+    gap: 0.4rem;
+
+    pointer-events: none;
+  }
+
+  .homeActions > * {
+    position: relative;
+    inset: auto;
+
+    min-width: 0;
+    width: auto;
+    height: 44px;
+    flex: 1 1 0;
+
+    pointer-events: auto;
+  }
+
+  .homeActions :global(.githubPatchButton) {
+    grid-template-columns: 26px minmax(0, 1fr);
+  }
+
+  .homeActions :global(.githubPatchButton__version) {
+    display: none;
+  }
+
+  .homeActions :global(.spotifyHudButton) {
+    grid-template-columns: 30px minmax(0, 1fr);
+  }
+
+  .homeActions :global(.spotifyHudButton__glyph) {
+    display: none;
+  }
+
+  .quickhacksAction {
+    padding: 0;
+    border: 1px solid rgba(83, 225, 238, 0.58);
+    background: linear-gradient(
+      90deg,
+      rgba(3, 27, 31, 0.68),
+      rgba(13, 7, 11, 0.78)
+    );
+  }
+
+  .quickhacksAction :global(.actionKey) {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+
+  .quickhacksAction :global(.actionKey__key) {
+    min-width: 30px;
+    height: 30px;
+    padding-inline: 0.3rem;
+  }
+
+  .homeActions :global(.githubPatchButton__label),
+  .homeActions :global(.spotifyHudButton__label),
+  .quickhacksAction :global(.actionKey__label) {
+    overflow: hidden;
+    font-size: clamp(0.58rem, 2.7vw, 0.76rem);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

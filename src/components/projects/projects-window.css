@@ -432,8 +432,14 @@
 
 .projectsImageViewer__close {
   position: absolute;
-  top: 2rem;
+  top: auto;
   right: 2rem;
+  bottom: 2rem;
+  z-index: 3;
+
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.65rem 0.8rem;
 
   color: var(--journal-cyan);
   background: transparent;
@@ -442,6 +448,17 @@
   font: inherit;
   font-size: 0.7rem;
   letter-spacing: 0.1em;
+}
+
+@media (max-width: 760px) {
+  .projectsImageViewer__close {
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+
+    color: var(--journal-cyan);
+    background: rgba(3, 7, 11, 0.92);
+    border: 1px solid currentColor;
+  }
 }
 
 .projectsImageViewer__label {
@@ -534,10 +551,10 @@
 @media (max-width: 760px) {
   .projectsScreen {
     grid-template-rows:
-      118px
+      var(--mobile-top-hud-height)
       76px
       minmax(0, 1fr)
-      64px;
+      var(--mobile-action-bar-height);
 
     overflow: hidden;
   }

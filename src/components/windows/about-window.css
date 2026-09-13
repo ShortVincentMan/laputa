@@ -594,7 +594,10 @@
 
 @media (max-width: 760px) {
   .characterScreen {
-    grid-template-rows: 118px minmax(0, 1fr) 64px;
+    grid-template-rows:
+      var(--mobile-top-hud-height)
+      minmax(0, 1fr)
+      var(--mobile-action-bar-height);
     overflow: hidden;
   }
 

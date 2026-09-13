@@ -24,6 +24,10 @@
   pointer-events: none;
 }
 
+.quickhacksOverlay__close {
+  display: none;
+}
+
 .quickhacksOverlay__wash {
   z-index: -4;
   background:
@@ -596,6 +600,27 @@
 @media (max-width: 760px) {
   .quickhacksOverlay {
     overflow-y: auto;
+  }
+
+  .quickhacksOverlay__close {
+    position: fixed;
+    top: max(0.75rem, env(safe-area-inset-top));
+    right: max(0.75rem, env(safe-area-inset-right));
+    z-index: 40;
+
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+
+    color: #59e8f3;
+    background: rgba(4, 10, 16, 0.94);
+    border: 1px solid currentColor;
+
+    font: inherit;
+    font-size: 1.5rem;
+    line-height: 1;
   }
 
   .quickhacksOverlay__ram {

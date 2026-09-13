@@ -602,7 +602,10 @@
 
 @media (max-width: 760px) {
   .contactsScreen {
-    grid-template-rows: 118px minmax(0, 1fr) 64px;
+    grid-template-rows:
+      var(--mobile-top-hud-height)
+      minmax(0, 1fr)
+      var(--mobile-action-bar-height);
     overflow: hidden;
   }
 
@@ -779,5 +782,15 @@
 
     font-size: 0.76rem;
     font-weight: 600;
+  }
+}
+
+@media (max-width: 360px) {
+  .contactsScreen .actionBar__controls > :not(:last-child) {
+    display: none;
+  }
+
+  .contactsScreen .actionBar__controls {
+    flex: 0 0 auto;
   }
 }

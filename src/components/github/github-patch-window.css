@@ -70,7 +70,7 @@
 }
 
 /* Only use a dedicated artwork image here.
-   url("/assets/pets/performative-jit-programming.jpeg"). */
+   url("/assets/pets/performative-jit-programming.webp"). */
 .githubPatchWindow__art {
   background:
       url("/assets/pets/performative-jit-programming.webp")
@@ -547,8 +547,17 @@
 }
 
 @media (max-width: 720px) {
+  .githubPatchOverlay {
+    padding:
+      max(0.5rem, env(safe-area-inset-top))
+      max(0.5rem, env(safe-area-inset-right))
+      max(0.5rem, env(safe-area-inset-bottom))
+      max(0.5rem, env(safe-area-inset-left));
+  }
+
   .githubPatchWindow {
-    width: 95vw;
+    width: 100%;
+    max-width: 100%;
     height: 88dvh;
 
     grid-template-columns: 1fr;

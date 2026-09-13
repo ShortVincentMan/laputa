@@ -69,7 +69,23 @@ export default function TopHud({
       return;
     }
 
-    const frame = window.requestAnimationFrame(() => {
+    function alignActiveNavigation() {
+      if (!navigationElement || !activeElement) {
+        return;
+      }
+
+      const navigationBounds = navigationElement.getBoundingClientRect();
+      const activeBounds = activeElement.getBoundingClientRect();
+
+      if (window.matchMedia("(max-width: 760px)").matches) {
+        navigationElement.scrollLeft +=
+          activeBounds.left -
+          navigationBounds.left +
+          activeBounds.width / 2 -
+          navigationElement.clientWidth / 2;
+        return;
+      }
+
       const visibleLeft = navigationElement.scrollLeft;
       const visibleRight =
         visibleLeft + navigationElement.clientWidth;
@@ -83,10 +99,14 @@ export default function TopHud({
         navigationElement.scrollLeft =
           itemRight - navigationElement.clientWidth;
       }
-    });
+    }
+
+    const frame = window.requestAnimationFrame(alignActiveNavigation);
+    window.addEventListener("resize", alignActiveNavigation);
 
     return () => {
       window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", alignActiveNavigation);
     };
   }, [activeNavigationId]);
 

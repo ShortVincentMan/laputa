@@ -833,6 +833,17 @@ export const galleryRecords: GalleryRecord[] = [
     featured: false,
   },
   {
+    id: "moe-wallpaper",
+    title: "MOE // WALLPAPER RECORD",
+    asset: "/assets/pets/moe-wallpaper.jpeg",
+    alt: "Portrait-oriented wallpaper photograph of Moe",
+    category: "PERSONAL",
+    caption: "Feline supervision display capture.",
+    dimensions: { width: 768, height: 1024 },
+    orientation: "portrait",
+    featured: false,
+  },
+  {
     id: "performative-jit-programming",
     title: "MOE // JIT PROGRAMMING",
     asset: "/assets/pets/performative-jit-programming.webp",

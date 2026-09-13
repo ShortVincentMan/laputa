@@ -107,7 +107,6 @@ export default function MusicWindow({
         return;
       }
 
-      console.error(error);
       setLoadState("error");
     }
   }, []);

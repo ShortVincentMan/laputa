@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  type KeyboardEvent as ReactKeyboardEvent,
   useEffect,
   useRef,
   useState,
@@ -197,6 +198,68 @@ export default function MainMenu({
     onNavigate?.(window);
   }
 
+  function handleMenuKeyDown(
+    event: ReactKeyboardEvent<HTMLElement>
+  ) {
+    if (event.key === "Enter" || event.key === " ") {
+      const target = event.target;
+
+      if (
+        target instanceof HTMLButtonElement ||
+        target instanceof HTMLAnchorElement
+      ) {
+        event.preventDefault();
+        target.click();
+      }
+
+      return;
+    }
+
+    if (
+      ![
+        "ArrowDown",
+        "ArrowUp",
+        "Home",
+        "End",
+      ].includes(event.key)
+    ) {
+      return;
+    }
+
+    const menuItems = Array.from(
+      event.currentTarget.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), a[href]'
+      )
+    );
+
+    if (menuItems.length === 0) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const currentIndex = menuItems.findIndex(
+      (item) => item === document.activeElement
+    );
+    let nextIndex = 0;
+
+    if (event.key === "End") {
+      nextIndex = menuItems.length - 1;
+    } else if (event.key === "ArrowUp") {
+      nextIndex =
+        currentIndex <= 0
+          ? menuItems.length - 1
+          : currentIndex - 1;
+    } else if (event.key === "ArrowDown") {
+      nextIndex =
+        currentIndex < 0 || currentIndex === menuItems.length - 1
+          ? 0
+          : currentIndex + 1;
+    }
+
+    menuItems[nextIndex].focus();
+  }
+
   useEffect(() => {
     if (isHomeVariant || !isOpen) {
       return;
@@ -312,6 +375,7 @@ export default function MainMenu({
       <nav
         className="cpNavList"
         aria-label="Primary navigation"
+        onKeyDown={handleMenuKeyDown}
         onMouseLeave={() =>
           setHoveredHomeItem(null)
         }

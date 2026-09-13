@@ -140,7 +140,7 @@
 
 @media (max-width: 760px) {
   .actionBar {
-    min-height: 64px;
+    min-height: var(--mobile-action-bar-height);
     padding:
       0
       max(1rem, env(safe-area-inset-right))

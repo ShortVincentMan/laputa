@@ -461,11 +461,15 @@
 
 @media (max-width: 720px) {
   .creditsScreen {
-    grid-template-rows: 60px minmax(0, 1fr) 50px;
+    grid-template-rows:
+      calc(60px + env(safe-area-inset-top))
+      minmax(0, 1fr)
+      var(--mobile-action-bar-height);
   }
 
   .creditsHeader {
     margin-inline: 1rem;
+    padding-top: env(safe-area-inset-top);
   }
 
   .creditsHeader__protocol,

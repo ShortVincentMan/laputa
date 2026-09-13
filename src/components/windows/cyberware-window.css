@@ -220,7 +220,10 @@
 
 @media (max-width: 700px) {
   .cyberwareMenu {
-    grid-template-rows: 118px minmax(0, 1fr) 64px;
+    grid-template-rows:
+      var(--mobile-top-hud-height)
+      minmax(0, 1fr)
+      var(--mobile-action-bar-height);
   }
 
   .cyberwareWorkspace {
@@ -541,5 +544,82 @@
 
   .slot--legs {
     right: 88px;
+  }
+}
+
+/* Phone layout: turn the desktop body map into a native, scrollable system grid. */
+@media (max-width: 700px) {
+  .cyberwareWorkspace {
+    padding: 0.85rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .cyberwareWorkspace::after,
+  .cyberwareBody,
+  .cyberwareMeter {
+    display: none;
+  }
+
+  .cyberwareStage {
+    position: relative;
+    inset: auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 0.75rem;
+
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    padding-bottom: 1rem;
+
+    transform: none;
+  }
+
+  .cyberwareSystem,
+  .slot--cortex,
+  .slot--operating,
+  .slot--arms,
+  .slot--face,
+  .slot--skeleton,
+  .slot--hands,
+  .slot--nervous,
+  .slot--circulatory,
+  .slot--integumentary,
+  .slot--legs {
+    position: relative;
+    inset: auto;
+
+    width: auto;
+    margin: 0;
+  }
+
+  .cyberwareSystem h2 {
+    min-height: 2.25rem;
+    margin-bottom: 0.4rem;
+
+    font-size: clamp(0.72rem, 3.6vw, 0.95rem);
+    line-height: 1.1;
+    white-space: normal;
+  }
+
+  .cyberwareSystem button {
+    width: 100%;
+    height: clamp(76px, 24vw, 104px);
+    min-height: 76px;
+  }
+
+  .cyberwareSystem small {
+    min-height: 2rem;
+    margin-top: 0.35rem;
+
+    font-size: 0.62rem;
+    line-height: 1.2;
+  }
+
+  .cyberwareSystem__triple span {
+    min-height: 58px;
   }
 }

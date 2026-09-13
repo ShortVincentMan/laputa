@@ -493,6 +493,8 @@ export default function ProjectsWindow({
             type="button"
             className="projectsImageViewer__close"
             onClick={() => setExpandedImage(null)}
+            aria-label="Close image preview"
+            data-modal-close="true"
           >
             ESC CLOSE
           </button>

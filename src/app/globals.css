@@ -1,6 +1,12 @@
 :root {
   --font-ui: "Rajdhani", sans-serif;
   --font-display: "Rajdhani", sans-serif;
+  --mobile-top-hud-height: calc(
+    106px + max(0.75rem, env(safe-area-inset-top))
+  );
+  --mobile-action-bar-height: calc(
+    64px + env(safe-area-inset-bottom)
+  );
 
   --cursor-default:
     url("/assets/cursors/arrow.png") 0 0,
@@ -193,9 +199,10 @@ button:disabled,
   cursor: var(--cursor-up);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 850px) {
   button,
   a {
+    min-width: 44px;
     min-height: 44px;
   }
 }

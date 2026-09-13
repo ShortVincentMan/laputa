@@ -359,7 +359,10 @@
 
 @media (max-width: 760px) {
   .journalScreen {
-    grid-template-rows: 104px minmax(0, 1fr) 52px;
+    grid-template-rows:
+      var(--mobile-top-hud-height)
+      minmax(0, 1fr)
+      var(--mobile-action-bar-height);
   }
 
   .journalWorkspace {

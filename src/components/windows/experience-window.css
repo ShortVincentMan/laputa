@@ -323,16 +323,24 @@
 
 @media (max-width: 720px) {
   .experienceScreen {
-    grid-template-rows: 112px minmax(0, 1fr) 64px;
+    grid-template-rows:
+      var(--mobile-top-hud-height)
+      minmax(0, 1fr)
+      var(--mobile-action-bar-height);
   }
 
 
 
   .experienceArchive {
     display: block;
-    height: auto;
-    min-height: calc(100vh - 90px);
-    padding: 1.5rem 1rem 6rem;
+    height: 100%;
+    min-height: 0;
+    padding: 1.5rem 1rem 2rem;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .experienceIndex {
@@ -346,12 +354,17 @@
   }
 
   .experienceControls {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
+    inset: auto;
+
     justify-content: flex-end;
-    padding: 0.75rem 1rem;
+    min-height: var(--mobile-action-bar-height);
+    padding:
+      0.75rem
+      max(1rem, env(safe-area-inset-right))
+      calc(0.75rem + env(safe-area-inset-bottom))
+      max(1rem, env(safe-area-inset-left));
+
     background: rgba(3, 7, 10, 0.94);
   }
 
@@ -364,7 +377,7 @@
 
 
   .experienceArchive {
-    padding: 1rem 0.75rem 5.5rem;
+    padding: 1rem 0.75rem 1.5rem;
     gap: 1.25rem;
   }
 
@@ -394,7 +407,7 @@
 @media (max-width: 420px) {
 
   .experienceArchive {
-    padding: 0.9rem 0.6rem 5.75rem;
+    padding: 0.9rem 0.6rem 1.25rem;
   }
 
   .experienceIndex__category b {

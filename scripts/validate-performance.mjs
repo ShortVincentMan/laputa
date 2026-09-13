@@ -87,15 +87,7 @@ const patchArtPath = path.join(
   projectRoot,
   "public/assets/pets/performative-jit-programming.webp"
 );
-const sourceArtPath = path.join(
-  projectRoot,
-  "public/assets/pets/performative-jit-programming.jpeg"
-);
-const [patchArt, sourceArt] = await Promise.all([
-  stat(patchArtPath),
-  stat(sourceArtPath),
-]);
-const artReduction = 1 - patchArt.size / sourceArt.size;
+const patchArt = await stat(patchArtPath);
 
 const failures = [];
 
@@ -126,7 +118,7 @@ if (unexpectedPackages.length > 0) {
 console.log(`Initial /home JS: ${formatKiB(initialJsBytes)}`);
 console.log(`On-demand interface chunks: ${lazyChunkCount}`);
 console.log(
-  `Patch artwork: ${formatKiB(patchArt.size)} (${(artReduction * 100).toFixed(1)}% smaller)`
+  `Patch artwork: ${formatKiB(patchArt.size)}`
 );
 console.log("Unused root packages: none");
 

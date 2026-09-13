@@ -373,13 +373,27 @@ export default function HomePage() {
             <TimePanel className="hud-clock" />
           </div>
 
-          <GitHubPatchButton
-            onOpen={openPatches}
-          />
+          <div className={styles.homeActions} aria-label="Portfolio shortcuts">
+            <GitHubPatchButton
+              onOpen={openPatches}
+            />
 
-          <SpotifyHudButton
-            onOpen={() => navigateToWindow("music")}
-          />
+            <SpotifyHudButton
+              onOpen={() => navigateToWindow("music")}
+            />
+
+            {quickhacksUnlocked && !quickhacksOpen && (
+              <div className={styles.quickhacksAction}>
+                <ActionKey
+                  keyLabel="Q"
+                  label="Quickhacks"
+                  onClick={openQuickhacks}
+                  ariaLabel="Open quickhacks"
+                  focusReturnId="quickhacks"
+                />
+              </div>
+            )}
+          </div>
         </>
       )}
 
@@ -455,18 +469,6 @@ export default function HomePage() {
         <GitHubPatchWindow
           onClose={closePatches}
         />
-      )}
-
-      {quickhacksUnlocked && !quickhacksOpen && (
-        <div className={styles.quickhacksAction}>
-          <ActionKey
-            keyLabel="Q"
-            label="Quickhacks"
-            onClick={openQuickhacks}
-            ariaLabel="Open quickhacks"
-            focusReturnId="quickhacks"
-          />
-        </div>
       )}
 
       {showUnlockNotice && (

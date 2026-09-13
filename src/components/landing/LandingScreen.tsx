@@ -91,7 +91,7 @@ export default function LandingScreen() {
             fill
             sizes="210vw"
             quality={70}
-            fetchPriority="low"
+            loading="eager"
             draggable={false}
           />
 
@@ -138,7 +138,7 @@ export default function LandingScreen() {
             fill
             sizes="210vw"
             quality={50}
-            fetchPriority="low"
+            loading="eager"
             draggable={false}
           />
 
