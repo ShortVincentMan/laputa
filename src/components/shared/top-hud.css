@@ -382,11 +382,20 @@ button.topHud__navigationItem:disabled {
 
   .topHud__navigationItem {
     flex: 0 0 auto;
+    justify-content: center;
+    /* Keep tab spacing even; the ::before below keeps a 44px tap target. */
+    min-width: 0;
 
     height: 32px;
 
     font-size: clamp(0.65rem, 1.8vw, 0.82rem);
     font-weight: 600;
+  }
+
+  button.topHud__navigationItem::before {
+    content: "";
+    position: absolute;
+    inset: -6px -11px;
   }
 
   .topHud__navigationGroup {
