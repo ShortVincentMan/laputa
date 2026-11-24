@@ -295,6 +295,10 @@ export const experienceRecords: ExperienceRecord[] = [
     status: "COMPLETED",
     description:
       "My exoskeleton research was featured in the college's summer research highlights.",
+    link: {
+      label: "Read the article",
+      href: "https://ceng.calpoly.edu/news/cal-poly-students-put-summer-research-work",
+    },
   },
   {
     id: "families-care-about-you-scholarship",

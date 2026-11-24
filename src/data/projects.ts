@@ -245,9 +245,9 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "EXOSKELETON RESEARCH VISUAL",
-    image: "/assets/projects/timmy-tuffnuckles.jpeg",
+    image: "/assets/projects/exoskeleton-symposium.jpg",
     imageAlt:
-      "Vincent wearing the upper-limb tensegrity exoskeleton prototype during a fit test",
+      "Vincent wearing the exoskeleton while presenting his poster at the SURP+ Research Poster Symposium",
     detailLabel: "RESEARCH // TENSEGRITY EXOSKELETON",
 
     sections: [
@@ -516,7 +516,7 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "LAPUTA OS INTERFACE CAPTURE",
-    image: "/assets/projects/laputa/laputa.jpeg",
+    image: "/assets/projects/laputa/desktop-projects.jpg",
     imageAlt: "Landing Screen of the Laputa OS portfolio interface",
     detailLabel: "SOFTWARE // LAPUTA OS",
 
@@ -534,12 +534,17 @@ export const projects: ProjectRecord[] = [
         title: "Project Archive",
         description:
           "Projects are organized through typed data records, category filtering, detail views, gallery relationships, and cyberware-style hardware profiles.",
-        image: "/assets/projects/laputa/laputa.jpeg",
+        image: "/assets/projects/laputa/desktop-projects.jpg",
         imageAlt: "Laputa OS project archive interface",
       },
     ],
 
     gallery: [
+      {
+        src: "/assets/projects/laputa/desktop-experience.jpg",
+        alt: "Experience window showing a research record",
+        caption: "Experience window",
+      },
       {
         src: "/assets/projects/laputa/laputa.jpeg",
         alt: "Laputa OS interface during active development",
