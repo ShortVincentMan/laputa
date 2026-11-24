@@ -42,24 +42,31 @@ export const experienceRecords: ExperienceRecord[] = [
     category: "experience",
     title: "Undergraduate Student Researcher",
     organization: "California Polytechnic State University",
-    period: "JUN 2026 — PRESENT",
+    period: "MAY 2026 — PRESENT",
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Researching feedback control of an upper-limb tensegrity exoskeleton for wearable rehabilitation and motion-assistance applications.",
+      "Summer Undergraduate Research Program project: a wearable, cable-driven tensegrity arm that helps bend the elbow.",
     details: [
-      "Integrating IMU-based motion tracking into the exoskeleton control architecture.",
-      "Evaluating muscle activity through EMG sensing and signal analysis.",
-      "Supporting sensor selection, electronics design, testing, and iterative prototype refinement.",
-      "Documenting design decisions and experimental results for continued research.",
+      "Wrote ESP32 firmware in Arduino C++ (PlatformIO) that combines two BNO085 IMUs over UART into a relative elbow angle and runs a 6-state cable controller with calibration and fault states at 100 Hz.",
+      "Designed a 2-layer KiCad PCB (fabricated by OSH Park) for the ESP32, both IMUs, and two A4988 stepper drivers, then brought it up on the worn prototype.",
+      "Ran 18 IMU/EMG trials at 0 and 15 lb loads and traced the limited assist to cable pretension.",
+      "Presented at the Oct 2026 symposium; the project was featured by the College of Engineering.",
+      "Next up: an ML pipeline that classifies motion state from the logged IMU/EMG data.",
     ],
     technologies: [
-      "IMU",
+      "ESP32",
+      "Arduino C++",
+      "PlatformIO",
+      "KiCad",
+      "BNO085 IMU",
       "EMG",
-      "Feedback Control",
-      "Embedded Systems",
-      "Wearable Robotics",
+      "Python",
     ],
+    link: {
+      label: "Open GitHub repo",
+      href: "https://github.com/ShortVincentMan/tensegrity-exoskeleton-public",
+    },
   },
   {
     id: "cal-poly-its",
@@ -70,12 +77,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Providing technical support to Cal Poly faculty and staff by diagnosing and resolving hardware, software, and network connectivity issues across Zone B.",
+      "I fix hardware, software, and network problems for Cal Poly faculty and staff across Zone B.",
     details: [
-      "Troubleshoot Windows and macOS hardware, software, peripheral, and network issues.",
-      "Manage service requests through the university ticketing system and document resolutions.",
-      "Support workstation deployment, account assistance, and day-to-day IT operations.",
-      "Escalate complex technical issues while helping maintain reliable campus computing services.",
+      "Resolved 30+ tickets, ranking #2 of Zone B technicians by volume, with 10+ five-star ratings.",
+      "Troubleshoot Windows and macOS machines, peripherals, and network connections.",
+      "Set up workstations and document each fix in the ticketing system.",
     ],
     technologies: [
       "Windows",
@@ -86,6 +92,23 @@ export const experienceRecords: ExperienceRecord[] = [
     ],
   },
   {
+    id: "hack4impact-tech-lead",
+    category: "experience",
+    title: "Tech Lead (Co-Lead)",
+    organization: "Hack4Impact Cal Poly",
+    period: "AUG 2026 — PRESENT",
+    location: "San Luis Obispo, CA",
+    status: "ACTIVE",
+    description:
+      "Co-leading 10 developers building a platform that replaces the San Luis Coastal Education Foundation's manual volunteer scheduling for 30 fellows across 15 schools.",
+    details: [
+      "Turn the product requirements document into Agile sprints and GitHub issues.",
+      "Run pull-request code reviews and mentor developers.",
+      "Designed the PostgreSQL schema and a Google OR-Tools constraint scheduler that matches volunteers to shifts and minimizes disruption when availability changes.",
+    ],
+    technologies: ["PostgreSQL", "Google OR-Tools", "Next.js", "TypeScript", "Agile"],
+  },
+  {
     id: "hack4impact-operations",
     category: "experience",
     title: "Director of Finance and Operations",
@@ -94,11 +117,10 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Managing organizational operations, financial planning, and internal systems for a student software organization building technology for nonprofit partners.",
+      "I run the chapter's money and logistics so the project teams can focus on building software for nonprofits.",
     details: [
-      "Coordinate financial planning and operational logistics.",
+      "Manage chapter finances, budgeting, reimbursements, and operations logistics for the executive board.",
       "Support project teams and organization-wide initiatives.",
-      "Continue contributing technical experience from the software engineering team.",
     ],
     technologies: ["Operations", "Finance", "Leadership", "Project Management"],
   },
@@ -111,12 +133,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Building a STEM learning platform for Kids First Initiative to expand access to educational content for underserved students.",
+      "I built game modes and the cloud save system for Kids First Initiative's STEM learning platform.",
     details: [
-      "Shipped features across gameplay, interface design, and backend systems.",
-      "Built an end-to-end cloud save system connecting Unity game progress to MongoDB.",
-      "Worked across Unity, C#, Next.js, and MongoDB.",
-      "Contributed to a platform targeting more than 1,000 students.",
+      "Won 1st place out of 15 nonprofit software projects in Hack4Impact Cal Poly's year-long build cycle.",
+      "Engineered two Unity game modes and fixed 25+ cascading gameplay and logic bugs.",
+      "Built a cloud save system with a Next.js REST API and MongoDB so 100+ students pick up where they left off (the platform targets 1,000+).",
     ],
     technologies: ["Unity", "C#", "Next.js", "MongoDB", "Full-Stack"],
     link: {
@@ -129,37 +150,36 @@ export const experienceRecords: ExperienceRecord[] = [
     category: "experience",
     title: "Firmware Developer",
     organization: "Cal Poly Racing",
-    period: "SEP 2025 — PRESENT",
+    period: "SEP 2025 — SEP 2026",
     location: "San Luis Obispo, CA",
-    status: "ACTIVE",
+    status: "COMPLETED",
     description:
-      "Developing embedded firmware and validating electronics for Cal Poly's electric Formula SAE race car.",
+      "Wrote firmware for the sensor CAN board on Cal Poly's electric Formula SAE car.",
     details: [
-      "Develop embedded C++ firmware for vehicle systems.",
-      "Work with CAN bus communication between electronic control modules.",
-      "Use FreeRTOS task scheduling for real-time embedded behavior.",
-      "Assist with soldering, board validation, and electronics integration.",
+      "Developed C++17 FreeRTOS firmware and clock configuration for an STM32H573 (Cortex-M33) sensor board; one image runs as the front or rear node via a hardware ID pin.",
+      "Scheduled 500, 100, and 20 Hz sampling tasks for strain gauges, shock and steering pots, thermistors, current sense, and a pitot sensor across 5 CAN message types.",
+      "Decoupled sampling from transmission with a static 20-deep queue feeding a higher-priority FDCAN TX task (about 600 frames/s, no heap).",
+      "Brought up the aero CAN board after it failed to flash: probed over JTAG, traced it to a wrong resistor value, and reworked it.",
     ],
-    technologies: ["Embedded C++", "CAN Bus", "FreeRTOS", "PCB Validation", "Soldering"],
+    technologies: ["C++17", "FreeRTOS", "STM32", "FDCAN", "JTAG", "Soldering"],
   },
   {
     id: "level-up-msp",
     category: "experience",
-    title: "Technical Support Intern",
+    title: "IT Intern",
     organization: "Level Up MSP",
-    period: "JUN 2024 — AUG 2025",
+    period: "SUMMERS 2024 & 2025",
     location: "San Jose, CA",
     status: "COMPLETED",
     description:
-      "Provided IT engineering and technical support for local businesses across infrastructure, troubleshooting, onboarding, and documentation.",
+      "IT for small and mid-size businesses: automation, troubleshooting, and documentation across dozens of clients.",
     details: [
-      "Configured computers, networks, accounts, and business systems.",
-      "Diagnosed recurring Windows failures and hardware issues.",
-      "Maintained backup servers and supported employee onboarding.",
-      "Migrated company documentation from ITGlue to PerfectWiki.",
-      "Developed automation for documentation-transfer workflows.",
+      "Automated Azure backup monitoring with Python scripts for 25+ business clients, so failed backups got caught sooner.",
+      "Fixed recurring BSOD and kernel failures across 50+ clients through root-cause analysis, taking uptime from days to weeks.",
+      "Migrated company documentation from IT Glue to PerfectWiki and automated the transfer.",
+      "Configured computers, networks, and accounts and supported employee onboarding.",
     ],
-    technologies: ["Windows", "Networking", "ITGlue", "PerfectWiki", "Automation"],
+    technologies: ["Python", "Azure", "Windows", "Networking", "PerfectWiki", "Automation"],
   },
   {
     id: "pilotcity-mentor",
@@ -170,11 +190,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "Bay Area, CA",
     status: "COMPLETED",
     description:
-      "Mentored high school students through engineering projects, internship preparation, and technical presentations.",
+      "I mentored high school students through their engineering projects and pitches.",
     details: [
-      "Provided technical guidance and project-management support.",
-      "Coached students in developing and pitching engineering concepts.",
-      "Provided college, career, and internship guidance.",
+      "Gave technical and project-management help as teams built their projects.",
+      "Coached students on developing and pitching engineering ideas.",
+      "Answered questions about college, careers, and landing internships.",
     ],
     technologies: ["Mentorship", "Engineering Design", "Project Management", "Technical Communication"],
   },
@@ -187,11 +207,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Leandro, CA",
     status: "COMPLETED",
     description:
-      "Developed engineering concepts and gained experience in product design, technical communication, and project execution.",
+      "My first engineering internship: I built a Python app with SQL that cleans up and repairs PC storage, and published it on GitHub.",
     details: [
-      "Worked on engineering and product-development initiatives.",
-      "Developed project concepts and technical presentations.",
-      "Collaborated with mentors and other student engineers.",
+      "Wrote a Python storage-cleanup tool with SQL integration that improved storage efficiency by about 30%.",
+      "Pitched project concepts and presented technical work to mentors.",
+      "Worked alongside other student engineers and industry mentors.",
     ],
     technologies: ["Product Development", "Engineering Design", "Prototyping"],
   },
@@ -204,11 +224,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Pursuing a Bachelor of Science in Computer Engineering with an emphasis on embedded systems, computer architecture, electronics, and software development.",
+      "B.S. in Computer Engineering. I'm focused on embedded systems, digital design, and robotics.",
     details: [
       "Current GPA: 3.83.",
       "Named to the 2025–2026 President's List.",
-      "Coursework includes Data Structures and Algorithms, Computer Organization, and Linear Analysis.",
+      "Coursework: Computer Organization (RISC-V), HDL & Digital Design, Circuit Analysis, System Software, Data Structures.",
       "Active in Hack4Impact, Cal Poly Racing, Nikkei Student Union, VSA, and Lion Dance.",
     ],
     technologies: ["Computer Engineering", "Embedded Systems", "Software", "Electronics"],
@@ -222,7 +242,7 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "Fremont, CA",
     status: "COMPLETED",
     description:
-      "Completed high school with a focus on engineering, athletics, leadership, and community involvement.",
+      "Where I started building things, ran a hardware club, and wrestled.",
     details: [
       "Graduated with a 3.89 GPA.",
       "Founded and led the Hardware & Technology Club.",
@@ -239,11 +259,41 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "2025 — 2026",
     status: "COMPLETED",
     description:
-      "Recognized for high academic performance during the 2025–2026 academic year.",
-    details: [
-      "Maintained a 3.83 cumulative GPA.",
-      "Completed first-year Computer Engineering coursework while participating in technical organizations.",
-    ],
+      "Cal Poly's yearly academic honor for the 2025–2026 year, earned with a 3.83 GPA.",
+  },
+  {
+    id: "uncapher-scholarship",
+    category: "achievements",
+    title: "Keith Uncapher Memorial Computer Engineering Scholarship",
+    organization: "Cal Poly Computer Engineering Department",
+    period: "OCT 2026",
+    status: "COMPLETED",
+    description:
+      "Computer Engineering department scholarship, recognized at the CPE Scholarship Recognition ceremony.",
+  },
+  {
+    id: "hack4impact-first-place",
+    category: "achievements",
+    title: "1st Place, Hack4Impact Cal Poly",
+    organization: "Hack4Impact Cal Poly",
+    period: "2026",
+    status: "COMPLETED",
+    description:
+      "Kids First Initiative placed first out of 15 nonprofit software projects in the chapter's year-long build cycle.",
+  },
+  {
+    id: "coe-feature",
+    category: "achievements",
+    title: "Featured by Cal Poly College of Engineering",
+    organization: "California Polytechnic State University",
+    period: "NOV 2026",
+    status: "COMPLETED",
+    description:
+      "My exoskeleton research was featured in the college's summer research highlights.",
+    link: {
+      label: "Read the article",
+      href: "https://ceng.calpoly.edu/news/cal-poly-students-put-summer-research-work",
+    },
   },
   {
     id: "families-care-about-you-scholarship",
@@ -253,11 +303,7 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "2026",
     status: "COMPLETED",
     description:
-      "Awarded the Families Care About You Engineering Scholarship in recognition of academic achievement and continued pursuit of an engineering degree.",
-    details: [
-      "Awarded through Cal Poly's College of Engineering scholarship program.",
-      "Recognized for academic performance and commitment to engineering.",
-    ],
+      "College of Engineering scholarship for academic performance.",
   },
   {
     id: "pge-scholarship",
@@ -267,7 +313,7 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "MAY 2025",
     status: "COMPLETED",
     description:
-      "Awarded for academic performance, leadership, community involvement, and pursuit of a STEM discipline.",
+      "PG&E Foundation scholarship for students going into STEM, based on academics, leadership, and community work.",
   },
   {
     id: "nahas-scholarship",
@@ -277,7 +323,7 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "JUN 2025",
     status: "COMPLETED",
     description:
-      "Awarded based on academics, community service, and participation in competitive school athletics.",
+      "Awarded for academics, community service, and varsity athletics.",
   },
 ];
 

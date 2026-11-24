@@ -13,7 +13,9 @@ export type ProjectId =
   | "laputa-os"
   | "ar-sand-table"
   | "trimtab"
-  | "hollow-purple-board";
+  | "hollow-purple-board"
+  | "racing-canboard"
+  | "slcef-scheduler";
 
 export type StoredProjectCategory = Exclude<
   ProjectCategory,
@@ -107,15 +109,15 @@ export const projects: ProjectRecord[] = [
     id: "mantis-blades",
     category: "hardware",
     title: "Mantis Blades",
-    subtitle: "Wearable robotic mechanism",
+    subtitle: "Wearable arm blades with motion sensing",
     period: "2024 — 2025",
     status: "COMPLETED",
 
     summary:
-      "A wearable mechanical blade system inspired by the Mantis Blades from Cyberpunk 2077.",
+      "Forearm-mounted blades that deploy on command, inspired by the Mantis Blades from Cyberpunk 2077. An MPU-6050 detects the motion and an Arduino Nano drives the servos.",
 
     objective:
-      "Translate a fictional cyberware concept into a functional mechanical and embedded prototype.",
+      "Turn a piece of fictional cyberware into something I could actually wear and trigger.",
 
     technologies: [
       "Arduino Nano",
@@ -144,7 +146,7 @@ export const projects: ProjectRecord[] = [
         id: "inspiration",
         title: "Inspiration",
         description:
-          "The project began as an attempt to translate the fictional Mantis Blades cyberware into a wearable physical mechanism.",
+          "I started from the game's Mantis Blades and worked out what a wearable, real-world version would need: a forearm mount, a fold-out mechanism, and a way to trigger it.",
         image:
           "/assets/projects/mantis-blades/inspiration.jpg",
         imageAlt:
@@ -154,7 +156,7 @@ export const projects: ProjectRecord[] = [
         id: "mechanical-design",
         title: "Mechanical Design",
         description:
-          "The blade housing, wearable structure, and deployment mechanism were modeled in Fusion 360 before fabrication.",
+          "I modeled the blade housing, forearm mount, and deployment linkage in Fusion 360 before printing anything.",
         image: "/assets/projects/mantis-blades/cad.png",
         imageAlt: "Mantis Blades CAD model",
       },
@@ -162,7 +164,7 @@ export const projects: ProjectRecord[] = [
         id: "fabrication",
         title: "Fabrication",
         description:
-          "The custom components were produced through iterative 3D printing, fitting, assembly, and mechanical testing.",
+          "Every part went through several rounds of 3D printing, test fitting, and reprinting until the mechanism moved cleanly.",
         image:
           "/assets/projects/mantis-blades/fabrication.png",
         imageAlt:
@@ -172,7 +174,7 @@ export const projects: ProjectRecord[] = [
         id: "electronics",
         title: "Electronics",
         description:
-          "An Arduino-based control system connected the motion sensor, servo motors, and power system.",
+          "An Arduino Nano reads the MPU-6050 and drives the servos, with everything mounted on the arm.",
         image:
           "/assets/projects/mantis-blades/electronics.png",
         imageAlt:
@@ -182,7 +184,7 @@ export const projects: ProjectRecord[] = [
         id: "firmware",
         title: "Firmware",
         description:
-          "Embedded C++ processed sensor input and controlled the blade deployment behavior.",
+          "The Arduino C++ firmware reads the IMU and drives the servos to deploy or retract the blades.",
         image: "/assets/projects/mantis-blades/firmware.png",
         imageAlt:
           "Embedded firmware used by the Mantis Blades prototype",
@@ -225,28 +227,29 @@ export const projects: ProjectRecord[] = [
     id: "tensegrity-exoskeleton",
     category: "research",
     title: "Upper-Limb Tensegrity Exoskeleton",
-    subtitle: "Feedback control research",
-    period: "2026 — PRESENT",
+    subtitle: "Firmware, PCB, and testing for a wearable elbow assist",
+    period: "MAY 2026 — PRESENT",
     status: "ACTIVE",
 
     summary:
-      "Researching feedback control for an upper-limb tensegrity exoskeleton using IMU motion tracking and EMG-based muscle evaluation.",
+      "A cable-driven tensegrity arm for the elbow. I wrote the ESP32 firmware that turns two BNO085 IMUs into an elbow angle and drives the cable motors, and designed the 2-layer PCB that runs it.",
 
     objective:
-      "Develop a low-cost, flexible rehabilitation exoskeleton capable of tracking user motion and evaluating muscle effort.",
+      "Build a low-cost, flexible exoskeleton that tracks the arm and helps lift, then use 18 logged IMU/EMG trials to find out why the assist was limited.",
 
     technologies: [
-      "IMU",
+      "ESP32",
+      "Arduino C++",
+      "PlatformIO",
+      "KiCad",
+      "BNO085 IMU",
       "EMG",
-      "Feedback Control",
-      "Embedded Systems",
-      "Wearable Robotics",
     ],
 
     assetLabel: "EXOSKELETON RESEARCH VISUAL",
-    image: "/assets/projects/timmy-tuffnuckles.jpeg",
+    image: "/assets/projects/exoskeleton-symposium.jpg",
     imageAlt:
-      "Vincent wearing the upper-limb tensegrity exoskeleton prototype during a fit test",
+      "Vincent wearing the exoskeleton while presenting his poster at the SURP+ Research Poster Symposium",
     detailLabel: "RESEARCH // TENSEGRITY EXOSKELETON",
 
     sections: [
@@ -254,7 +257,7 @@ export const projects: ProjectRecord[] = [
         id: "prototype",
         title: "Prototype",
         description:
-          "The current research platform uses a lightweight tensegrity-inspired arm structure intended for wearable motion assistance and rehabilitation research.",
+          "The arm is a tensegrity structure: rigid struts held in shape by cables. That keeps it light and flexible, and pulling the cables bends the elbow.",
         image: "/assets/personal/exoskeleton.jpeg",
         imageAlt:
           "Upper-limb tensegrity exoskeleton prototype being worn during early testing",
@@ -263,7 +266,7 @@ export const projects: ProjectRecord[] = [
         id: "fit-testing",
         title: "Fit Testing",
         description:
-          "Wearable fit tests are used to evaluate alignment, comfort, range of motion, and how the structure follows the user during movement.",
+          "I ran fit tests to check alignment, comfort, and range of motion, and whether the arm followed my elbow instead of fighting it.",
         image: "/assets/personal/exoskeleton2.jpeg",
         imageAlt:
           "Wearable fit test of the upper-limb tensegrity exoskeleton",
@@ -272,7 +275,7 @@ export const projects: ProjectRecord[] = [
         id: "arm-assembly",
         title: "Arm Assembly",
         description:
-          "The arm assemblies use tensioned members and cable-driven geometry that can be adjusted as the control and sensing architecture develops.",
+          "Two stepper motors wind the cables on spools. Cable pretension turned out to matter most: the 18 logged trials showed it limited how much the arm could assist.",
         image: "/assets/personal/exoskeletonarms.jpeg",
         imageAlt:
           "Close view of the tensegrity exoskeleton arm assemblies",
@@ -301,7 +304,7 @@ export const projects: ProjectRecord[] = [
       label: "TENSEGRITY EXOSKELETON",
       systemType: "UPPER-LIMB ASSIST SYSTEM",
       description:
-        "Sensor-driven upper-limb exoskeleton research platform using IMU and EMG feedback for rehabilitation control.",
+        "Cable-driven elbow exoskeleton with dual-IMU angle sensing, an ESP32 controller, and a custom PCB.",
     },
     featured: true,
   },
@@ -318,7 +321,7 @@ export const projects: ProjectRecord[] = [
       "// WORK IN PROGRESS // A wearable modular spinal platform combining structural support, distributed batteries, sensing, and future telemetry  interfaces. // WORK IN PROGRESS // ",
 
     objective:
-      "Create a scalable wearable robotic backbone inspired by human anatomy and Cyberpunk spinal augmentation systems.",
+      "Design a wearable, articulated backbone that can carry batteries and electronics without restricting how I move.",
 
     technologies: [
       "CAD",
@@ -339,7 +342,7 @@ export const projects: ProjectRecord[] = [
         id: "vertebral-architecture",
         title: "Vertebral Architecture",
         description:
-          "The platform is organized as a chain of modular vertebrae that provide structure, articulation, and protected space for future power and sensing hardware.",
+          "It's a chain of modular vertebrae. Each one gives structure, a joint, and a protected bay for batteries or sensors later on. So far it's mechanical design and CAD.",
         image: "/assets/projects/spinal-battery.png",
         imageAlt:
           "CAD model of the modular vertebral architecture and articulated joints",
@@ -348,7 +351,7 @@ export const projects: ProjectRecord[] = [
         id: "range-of-motion",
         title: "Range of Motion",
         description:
-          "Joint geometry and mechanical stops are being evaluated to approximate useful spinal motion while preventing unrealistic articulation between modules.",
+          "I'm tuning joint geometry and hard stops so the spine bends like a real one without folding further than a back can.",
         image: "/assets/projects/spinal-battery.png",
         imageAlt:
           "Spinal Battery CAD model annotated with joint angles and range-of-motion measurements",
@@ -378,14 +381,14 @@ export const projects: ProjectRecord[] = [
     category: "software",
     title: "Kids First Initiative STEM Platform",
     subtitle: "Educational game and cloud platform",
-    period: "2025 — PRESENT",
-    status: "ACTIVE",
+    period: "2025 — 2026",
+    status: "COMPLETED",
 
     summary:
-      "A STEM learning platform developed with Hack4Impact for Kids First Initiative.",
+      "A STEM learning platform built with Hack4Impact for Kids First Initiative. It took 1st place out of 15 projects, and 100+ students use it.",
 
     objective:
-      "Expand access to interactive STEM education for students from underserved communities.",
+      "Give kids in underserved schools hands-on STEM activities they can keep coming back to.",
 
     technologies: [
       "Unity",
@@ -406,7 +409,7 @@ export const projects: ProjectRecord[] = [
         id: "learning-platform",
         title: "Learning Platform",
         description:
-          "The platform gives students access to interactive STEM activities while facilitators manage access, classrooms, and progress through a separate interface.",
+          "Students play the activities, and facilitators get a separate view to manage classrooms and track progress.",
         image: "/assets/projects/kfi/landing.png",
         imageAlt:
           "Kids First Initiative platform landing screen with student and facilitator options",
@@ -415,7 +418,7 @@ export const projects: ProjectRecord[] = [
         id: "activity-selection",
         title: "Activity Selection",
         description:
-          "Students choose from guided activities covering matter, fluid systems, and energy concepts.",
+          "Students pick from guided activities on matter, fluid systems, and energy.",
         image: "/assets/projects/kfi/hero.jpeg",
         imageAlt:
           "Kids First Initiative activity selection screen",
@@ -424,7 +427,7 @@ export const projects: ProjectRecord[] = [
         id: "fluid-systems",
         title: "Fluid Systems",
         description:
-          "The pipe activity uses interactive route-building and phase-change mechanics to teach how matter behaves in a system.",
+          "In the pipe activity, students build a route for water and deal with it freezing along the way. I built two of the Unity game modes.",
         image: "/assets/projects/kfi/fluids.png",
         imageAlt:
           "Kids First Initiative pipe activity showing a frozen-water route puzzle",
@@ -433,7 +436,7 @@ export const projects: ProjectRecord[] = [
         id: "energy-systems",
         title: "Energy Systems",
         description:
-          "The energy activity asks students to connect a circuit and transfer power through an interactive visual system.",
+          "In the energy activity, students wire up a circuit to get power where it needs to go.",
         image: "/assets/projects/kfi/gas.png",
         imageAlt:
           "Kids First Initiative energy activity showing connected wires and a power control",
@@ -442,7 +445,7 @@ export const projects: ProjectRecord[] = [
         id: "team",
         title: "Team Recognition",
         description:
-          "The project was developed collaboratively through Hack4Impact for Kids First Initiative.",
+          "Our team took 1st place out of 15 projects in Hack4Impact Cal Poly's year-long build cycle. I also built the cloud save system (Next.js API + MongoDB) so students keep their progress.",
         image: "/assets/projects/kfi/team.jpg",
         imageAlt:
           "Kids First Initiative project team at a presentation and awards event",
@@ -501,10 +504,10 @@ export const projects: ProjectRecord[] = [
     status: "IN DEVELOPMENT",
 
     summary:
-      "A Cyberpunk 2077-inspired interactive portfolio built as a fictional operating system.",
+      "This site. A portfolio built as a fictional operating system, inspired by the menus in Cyberpunk 2077.",
 
     objective:
-      "Present engineering projects through faithful recreations of Cyberpunk menu interfaces.",
+      "Show my projects in a way that feels like exploring a system instead of scrolling a résumé.",
 
     technologies: [
       "Next.js",
@@ -515,7 +518,7 @@ export const projects: ProjectRecord[] = [
     ],
 
     assetLabel: "LAPUTA OS INTERFACE CAPTURE",
-    image: "/assets/projects/laputa/laputa.jpeg",
+    image: "/assets/projects/laputa/desktop-projects.jpg",
     imageAlt: "Landing Screen of the Laputa OS portfolio interface",
     detailLabel: "SOFTWARE // LAPUTA OS",
 
@@ -524,7 +527,7 @@ export const projects: ProjectRecord[] = [
         id: "interface",
         title: "Interface System",
         description:
-          "Laputa recreates Cyberpunk-inspired menu systems as reusable React interfaces while keeping each portfolio section visually distinct.",
+          "Every window, menu, and HUD element is a hand-written React component, with no UI library. Keyboard, mouse, and reduced-motion all work.",
         image: "/assets/projects/laputa/laputa.jpeg",
         imageAlt: "Laputa OS portfolio interface",
       },
@@ -532,13 +535,18 @@ export const projects: ProjectRecord[] = [
         id: "project-archive",
         title: "Project Archive",
         description:
-          "Projects are organized through typed data records, category filtering, detail views, gallery relationships, and cyberware-style hardware profiles.",
-        image: "/assets/projects/laputa/laputa.jpeg",
+          "All the content lives in typed TypeScript records. Scripts in CI check that every image exists, every cross-link is valid, and the page stays under its JavaScript budget.",
+        image: "/assets/projects/laputa/desktop-projects.jpg",
         imageAlt: "Laputa OS project archive interface",
       },
     ],
 
     gallery: [
+      {
+        src: "/assets/projects/laputa/desktop-experience.jpg",
+        alt: "Experience window showing a research record",
+        caption: "Experience window",
+      },
       {
         src: "/assets/projects/laputa/laputa.jpeg",
         alt: "Laputa OS interface during active development",
@@ -558,10 +566,10 @@ export const projects: ProjectRecord[] = [
     status: "COMPLETED",
 
     summary:
-      "An interactive sand table that used depth sensing and projection to display real-time terrain information.",
+      "A sandbox that maps itself. A depth camera reads the sand and a projector paints elevation colors back onto it in real time.",
 
     objective:
-      "Create an educational physical interface for visualizing topography and terrain data.",
+      "Make topography something you can shape with your hands and see change instantly.",
 
     technologies: [
       "Unity",
@@ -582,7 +590,7 @@ export const projects: ProjectRecord[] = [
         id: "terrain-visualization",
         title: "Terrain Visualization",
         description:
-          "A depth camera measured the sand surface while a projector overlaid color-coded terrain information in real time.",
+          "As you move sand, the depth camera picks up the new surface and the projected colors update to match.",
         image: "/assets/projects/ar-sand-table.jpeg",
         imageAlt:
           "Projected elevation colors displayed across the physical sand surface",
@@ -608,10 +616,10 @@ export const projects: ProjectRecord[] = [
     status: "COMPLETED",
 
     summary:
-      "A seven-story coastal structure designed during an architecture fellowship with Eugene Tssui.",
+      "A seven-story coastal building I modeled during an architecture fellowship with Eugene Tssui.",
 
     objective:
-      "Explore organic architecture, sustainable systems, and large-scale digital modeling.",
+      "Learn organic architecture and large-scale 3D modeling from a working architect.",
 
     technologies: [
       "Rhino 3D",
@@ -630,7 +638,7 @@ export const projects: ProjectRecord[] = [
         id: "final-form",
         title: "Final Form",
         description:
-          "The final concept developed into a seven-story coastal structure shaped through organic architectural principles.",
+          "The final design is a seven-story coastal structure shaped by organic architecture, with curves instead of boxes.",
         image: "/assets/projects/trimtab/final-form-render.png",
         imageAlt: "Final form render of the Trimtab architectural study",
       },
@@ -638,7 +646,7 @@ export const projects: ProjectRecord[] = [
         id: "blueprint-setup",
         title: "Reference Setup",
         description:
-          "Blueprint references and aligned construction planes established the scale and primary geometry of the model.",
+          "I lined up the blueprint references on construction planes to lock in the scale and main geometry.",
         image: "/assets/projects/trimtab/blueprint-reference-setup.png",
         imageAlt: "Blueprint reference setup used to model Trimtab",
       },
@@ -646,7 +654,7 @@ export const projects: ProjectRecord[] = [
         id: "form-development",
         title: "Form Development",
         description:
-          "The structure was iterated through layered surface modeling, proportion studies, and organic-form refinement.",
+          "I iterated the form through layered surface modeling and proportion studies.",
         image: "/assets/projects/trimtab/form-development-03.png",
         imageAlt: "Intermediate Trimtab form development model",
       },
@@ -654,7 +662,7 @@ export const projects: ProjectRecord[] = [
         id: "wireframe",
         title: "Multi-View Modeling",
         description:
-          "Multiple orthographic and perspective views were used to evaluate continuity, structure, and overall silhouette.",
+          "I checked continuity and silhouette from multiple orthographic and perspective views.",
         image: "/assets/projects/trimtab/multi-view-wireframe.png",
         imageAlt: "Multi-view wireframe of the Trimtab model",
       },
@@ -713,16 +721,16 @@ export const projects: ProjectRecord[] = [
     status: "COMPLETED",
 
     summary:
-      "A custom PCB designed, programmed, assembled, and soldered by hand.",
+      "A character-shaped ATtiny85 board I designed in KiCad for CSC 123, then hand-soldered and programmed over ISP with an Arduino.",
 
     objective:
-      "Combine electronic design with detailed visual artwork in a functional circuit board.",
+      "Make a board that works as electronics and also looks good as art.",
 
     technologies: [
-      "PCB Design",
+      "KiCad",
+      "ATtiny85",
+      "Arduino as ISP",
       "Soldering",
-      "Embedded Programming",
-      "Circuit Design",
     ],
 
     assetLabel: "HOLLOW PURPLE PCB IMAGE",
@@ -736,7 +744,7 @@ export const projects: ProjectRecord[] = [
         id: "front-layout",
         title: "Front Layout",
         description:
-          "The front copper, silkscreen, component placement, and character artwork were designed as one integrated visual circuit-board composition.",
+          "I laid out the front copper, silkscreen, and parts together with the character art, so the circuit is part of the picture.",
         image: "/assets/projects/gojo/front-kicad.jpeg",
         imageAlt:
           "KiCad front-side layout of the Gojo-inspired custom PCB",
@@ -745,7 +753,7 @@ export const projects: ProjectRecord[] = [
         id: "back-layout",
         title: "Back Layout",
         description:
-          "The reverse side routes the supporting electronics while preserving the custom board silhouette and engraved quote.",
+          "The back carries most of the routing, keeping the custom outline and the quote on the silkscreen clean.",
         image: "/assets/projects/gojo/back-kicad.jpeg",
         imageAlt:
           "KiCad back-side layout of the Gojo-inspired custom PCB",
@@ -754,7 +762,7 @@ export const projects: ProjectRecord[] = [
         id: "assembly",
         title: "Assembly",
         description:
-          "The fabricated board was assembled and soldered by hand, combining surface-mounted components, controls, and addressable lighting.",
+          "I soldered the surface-mount parts by hand and flashed the ATtiny85 over the 2×3 ISP header, using an Arduino as the programmer.",
         image: "/assets/projects/gojo/back-irl.jpeg",
         imageAlt:
           "Back side of the assembled Gojo-inspired custom PCB",
@@ -763,7 +771,7 @@ export const projects: ProjectRecord[] = [
         id: "final-board",
         title: "Final Board",
         description:
-          "The completed PCB combines functional lighting and controls with a character-shaped board outline and illustrated front artwork.",
+          "The finished board lights up and responds to its button, all in a character-shaped outline.",
         image: "/assets/projects/gojo/front-irl.jpeg",
         imageAlt:
           "Front side of the completed Gojo-inspired PCB with illuminated artwork",
@@ -798,6 +806,76 @@ export const projects: ProjectRecord[] = [
     ],
   },
 
+  {
+    id: "racing-canboard",
+    category: "hardware",
+    title: "Formula SAE Sensor CAN Board",
+    subtitle: "FreeRTOS firmware for Cal Poly Racing",
+    period: "SEP 2025 — SEP 2026",
+    status: "COMPLETED",
+    summary:
+      "Firmware for the sensor data board on Cal Poly Racing's electric Formula SAE car. It samples the car's sensors and puts the readings on the CAN bus.",
+    objective:
+      "Read strain gauges, suspension and steering pots, thermistors, current sense, and a pitot sensor at fixed rates without ever blocking the CAN transmit path.",
+    technologies: ["C++17", "FreeRTOS", "STM32H573", "FDCAN", "JTAG"],
+    assetLabel: "CAN BOARD FIRMWARE DIAGRAM",
+    image: "/assets/projects/racing-canboard-diagram.jpg",
+    imageAlt:
+      "Diagram: 500, 100 and 20 Hz sampling tasks feed a static queue drained by a higher-priority FDCAN transmit task",
+    detailLabel: "HARDWARE // SENSOR CAN BOARD",
+    sections: [
+      {
+        id: "tasks",
+        title: "Task Layout",
+        description:
+          "Three sampling tasks run at 500, 100, and 20 Hz and push readings into a static 20-deep queue. A higher-priority FDCAN transmit task drains it, about 600 frames per second across 5 message types, with no heap allocation.",
+      },
+      {
+        id: "one-image",
+        title: "One Image, Two Nodes",
+        description:
+          "The same firmware image runs as the front or rear node. A hardware ID pin picks which sensors and message IDs it uses.",
+      },
+      {
+        id: "bring-up",
+        title: "Board Bring-Up",
+        description:
+          "The aero CAN board wouldn't flash. I probed it over JTAG, traced the problem to a wrong resistor value, and reworked the board by hand.",
+      },
+    ],
+  },
+  {
+    id: "slcef-scheduler",
+    category: "software",
+    title: "SLCEF Volunteer Scheduler",
+    subtitle: "Hack4Impact tech lead project",
+    period: "AUG 2026 — PRESENT",
+    status: "IN DEVELOPMENT",
+    summary:
+      "A platform for the San Luis Coastal Education Foundation that replaces manual volunteer scheduling for 30 fellows across 15 schools. I co-lead the 10-person team.",
+    objective:
+      "Match volunteers to school shifts automatically and reshuffle as little as possible when someone's availability changes.",
+    technologies: ["PostgreSQL", "Google OR-Tools", "Next.js", "TypeScript", "Agile"],
+    assetLabel: "SCHEDULER FLOW DIAGRAM",
+    image: "/assets/projects/slcef-scheduler-diagram.jpg",
+    imageAlt:
+      "Diagram: availability and shift data in PostgreSQL feed an OR-Tools model that minimizes changes to the existing schedule",
+    detailLabel: "SOFTWARE // SLCEF SCHEDULER",
+    sections: [
+      {
+        id: "scheduler",
+        title: "Constraint Scheduler",
+        description:
+          "I designed the PostgreSQL schema and a Google OR-Tools constraint model that assigns volunteers to shifts and minimizes disruption to the existing schedule when availability changes.",
+      },
+      {
+        id: "team",
+        title: "Running the Team",
+        description:
+          "I turn the product requirements document into sprints and GitHub issues, review pull requests, and mentor the developers.",
+      },
+    ],
+  },
 ];
 
 export function getVisibleProjects(

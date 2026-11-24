@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  focusSelectedAfterRender,
+  isNativeActivationTarget,
+} from "@/hooks/keyboardActivation";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -116,13 +120,16 @@ export default function CyberwareWindow({
         case "ArrowUp":
           event.preventDefault();
           moveSelection(-1);
+          focusSelectedAfterRender(".cyberwareSystem.is-active button");
           break;
         case "ArrowRight":
         case "ArrowDown":
           event.preventDefault();
           moveSelection(1);
+          focusSelectedAfterRender(".cyberwareSystem.is-active button");
           break;
         case "Enter":
+          if (isNativeActivationTarget(event.target, ".cyberwareSystem")) return;
           event.preventDefault();
           if (selectedProject) onOpenRecord(selectedProject.id);
           break;

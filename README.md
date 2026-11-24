@@ -1,59 +1,34 @@
 # Laputa OS
 
-Laputa OS is an interactive engineering portfolio, presented as a fictional operating system inspired by the interface language of Cyberpunk 2077.
+**An interactive engineering portfolio built as a fictional operating system.**
+Live at **[vincentrle.dev](https://vincentrle.dev)** · Next.js · React · TypeScript
 
-The application is built with Next.js, React, TypeScript, and custom CSS. It combines a persistent state-driven window shell with data-backed project, experience, journal, gallery, music, contact, credits, and development-activity interfaces.
+![Projects window with the exoskeleton project selected](docs/hero.jpg)
 
-Laputa OS is an original portfolio project. It is not affiliated with, endorsed by, or associated with CD PROJEKT RED. Cyberpunk 2077 and related trademarks belong to their respective owners.
+## Overview
 
-## Release status
+I'm a computer engineering student at Cal Poly, and most of my work is in hardware and firmware. I built Laputa OS so my portfolio would be an engineering project in its own right, not a filled-in template. The interface takes its visual direction from the menus in Cyberpunk 2077.
 
-Version 1.0.0 includes:
+Every window, menu and HUD element is a hand-written React component. All content (projects, experience, gallery, journal) lives in typed data files, so I can update the site without touching the UI.
 
-- Animated landing and main-menu experiences
-- Projects, project details, and Cyberware project mode
-- Experience, About, Contact, Music, Credits, Journal, and Gallery windows
-- GitHub-powered patch records and Spotify activity
-- Quickhacks unlock and persistence
-- Direct section routes with hash-based window state
-- Keyboard, pointer, reduced-motion, responsive, and mobile-zoom behavior
-- Styled 404 and runtime error interfaces
-- Contact-form validation and abuse protection
-- Search, social-preview, sitemap, robots, and web-app metadata
-- Automated content-integrity and performance-budget checks
+![Navigating from the main menu into Projects and Experience](docs/nav.gif)
 
-Skills, Settings, and Vehicle interfaces are intentionally outside the v1.0.0 scope. The resume is provided as a public PDF rather than a separate window.
+## Features
 
-## Architecture
+| Area | What it does |
+| --- | --- |
+| **Window shell** | `/home` keeps the window state. Routes like `/projects` and `/contact` redirect into it with a hash, so each section has a shareable link and the back button still works. |
+| **Typed content** | Projects, experience, gallery and journal entries are TypeScript records in `src/data/`. A validation script checks that every referenced image exists and every cross-link is valid. |
+| **Live data** | The patch-notes window shows recent commits from the GitHub API, and the music panel shows Spotify activity. Both go through server routes, so no tokens reach the browser. |
+| **Contact form** | Server-side validation, a request-size cap, per-IP rate limiting and a honeypot field. Mail is sent through Resend. |
+| **Accessibility** | Arrow keys, Enter and Esc navigation, focus trapping inside open windows, and support for reduced motion. |
+| **Performance budget** | After each build, a script fails if the home page's initial JavaScript exceeds 600 KiB or if heavy windows stop being lazy-loaded. |
 
-```text
-src/
-├── app/          App Router pages, metadata, and API routes
-├── components/   Shared HUD systems and interface windows
-├── data/         Typed portfolio and archive records
-├── emails/       Contact email presentation
-├── hooks/        Interaction, focus, visibility, and shortcut behavior
-└── lib/          External-service adapters
+![Experience window showing a research record](docs/experience.jpg)
 
-public/
-├── assets/       Production images, fonts, and visual references
-└── resume.pdf    Public resume
+## Getting started
 
-scripts/
-├── validate-content.mjs
-└── validate-performance.mjs
-```
-
-The `/home` route owns the persistent window shell. Direct section routes such as `/projects`, `/journal`, and `/contact` redirect into that shell with a matching hash.
-
-Images in `public/assets/reference` are implementation references only and are never rendered as the product interface.
-
-## Local development
-
-Requirements:
-
-- Node.js 20 or newer
-- npm
+Requires Node.js 20 or newer.
 
 ```bash
 git clone https://github.com/ShortVincentMan/laputa.git
@@ -62,39 +37,52 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Then open http://localhost:3000. The site runs without any API keys. Only the contact form, the GitHub feed and the Spotify panel need the environment variables below.
 
-## Environment variables
+### Environment variables
 
-External integrations use server-only environment variables:
+Add these to `.env.local`. None use the `NEXT_PUBLIC_` prefix, so they stay on the server.
 
-```text
-RESEND_API_KEY
-CONTACT_EMAIL
-CONTACT_FROM_EMAIL
-GITHUB_OWNER
-GITHUB_REPO
-GITHUB_BRANCH
-GITHUB_TOKEN
-SPOTIFY_CLIENT_ID
-SPOTIFY_CLIENT_SECRET
-SPOTIFY_REFRESH_TOKEN
-```
+| Variable | Used by | Required |
+| --- | --- | --- |
+| `RESEND_API_KEY`, `CONTACT_EMAIL` | Contact form | Yes |
+| `CONTACT_FROM_EMAIL` | Contact form | No |
+| `GITHUB_OWNER`, `GITHUB_REPO` | Patch-notes feed | Yes |
+| `GITHUB_BRANCH`, `GITHUB_TOKEN` | Patch-notes feed | No |
+| `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN` | Music panel | Yes |
 
-`CONTACT_FROM_EMAIL`, `GITHUB_BRANCH`, and `GITHUB_TOKEN` are optional. No integration credential should use a `NEXT_PUBLIC_` prefix.
+## Checks
 
-## Release checks
+CI runs these on every push and pull request (`.github/workflows/ci.yml`):
 
 ```bash
-npm ci
-npm exec tsc -- --noEmit
-npm run lint
-npm run build
-npm run content:check
-npm run performance:check
-git diff --check
-npm audit
-npm start
+npx tsc --noEmit           # type check
+npm run lint               # ESLint
+npm run content:check      # assets and cross-links
+npm run build              # production build
+npm run performance:check  # JavaScript budget and lazy-loading
 ```
 
-The production site is [laputa-os.vercel.app](https://laputa-os.vercel.app).
+## Project structure
+
+```text
+src/app/          Pages, metadata, and API routes (contact, GitHub, Spotify)
+src/components/   The HUD, menus, and each window
+src/data/         Portfolio content as typed records
+src/hooks/        Focus trapping, keyboard shortcuts, page visibility
+src/lib/          GitHub and Spotify clients
+scripts/          Content-integrity and performance-budget checks
+docs/             README screenshots
+```
+
+`public/assets/reference` contains game screenshots I used as visual references while building the UI.
+
+## Known limitations
+
+- **Rate limiting is in memory.** On Vercel, each serverless instance keeps its own count. That's acceptable for a portfolio, but a production service would use a shared store such as Redis.
+- **No unit tests yet.** Quality checks are currently the type check, lint, the content-integrity script and the performance budget.
+- **Scope.** The Skills, Settings and Vehicle screens were left out of v1 on purpose. The resume is a PDF in `public/` rather than its own window.
+
+---
+
+<sub>Laputa OS is a fan-made portfolio. It is not affiliated with or endorsed by CD PROJEKT RED. Cyberpunk 2077 and related trademarks belong to their respective owners.</sub>

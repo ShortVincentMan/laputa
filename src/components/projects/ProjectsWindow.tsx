@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  focusSelectedAfterRender,
+  isNativeActivationTarget,
+} from "@/hooks/keyboardActivation";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -181,10 +185,12 @@ export default function ProjectsWindow({
         case "ArrowDown":
           event.preventDefault();
           moveSelection(1);
+          focusSelectedAfterRender(".projectsQuestRow.is-selected");
           break;
         case "ArrowUp":
           event.preventDefault();
           moveSelection(-1);
+          focusSelectedAfterRender(".projectsQuestRow.is-selected");
           break;
         case "ArrowLeft":
           event.preventDefault();
@@ -195,6 +201,7 @@ export default function ProjectsWindow({
           moveCategory(1);
           break;
         case "Enter":
+          if (isNativeActivationTarget(event.target, ".projectsQuestList")) return;
           event.preventDefault();
           openSelectedProject();
           break;

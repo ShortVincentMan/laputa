@@ -4,7 +4,7 @@ import type {
 } from "next";
 import "./globals.css";
 
-const SITE_URL = new URL("https://laputa-os.vercel.app");
+const SITE_URL = new URL("https://vincentrle.dev");
 const SITE_DESCRIPTION =
   "Vincent Le's interactive engineering portfolio, presented as the Cyberpunk-inspired Laputa OS.";
 

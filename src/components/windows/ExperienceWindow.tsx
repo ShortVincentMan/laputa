@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  focusSelectedAfterRender,
+  isNativeActivationTarget,
+} from "@/hooks/keyboardActivation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
@@ -110,10 +114,12 @@ export default function ExperienceWindow({
         case "ArrowDown":
           event.preventDefault();
           moveSelection(1);
+          focusSelectedAfterRender(".experienceIndex__record.is-selected");
           break;
         case "ArrowUp":
           event.preventDefault();
           moveSelection(-1);
+          focusSelectedAfterRender(".experienceIndex__record.is-selected");
           break;
         case "ArrowLeft":
           event.preventDefault();
@@ -124,10 +130,12 @@ export default function ExperienceWindow({
           moveCategory(1);
           break;
         case " ":
+          if (isNativeActivationTarget(event.target, ".experienceIndex")) return;
           event.preventDefault();
           toggleCategory(focusedCategory);
           break;
         case "Enter":
+          if (isNativeActivationTarget(event.target, ".experienceIndex")) return;
           if (selectedRecord?.link) {
             event.preventDefault();
             window.open(selectedRecord.link.href, "_blank", "noopener,noreferrer");
