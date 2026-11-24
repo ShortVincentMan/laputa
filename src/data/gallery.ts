@@ -746,7 +746,7 @@ export const galleryRecords: GalleryRecord[] = [
     alt: "Vincent in an Eren Jaeger costume",
     date: "2025",
     category: "PERSONAL",
-    caption: "Armin, Mikasa, on the other side of the sea, are the hoes. We only have 5 minutes till the frat party, we have to go now! Jaeger bomb!",
+    caption: "Eren Jaeger costume, 2025.",
     dimensions: { width: 960, height: 1280 },
     orientation: "portrait",
     featured: false,

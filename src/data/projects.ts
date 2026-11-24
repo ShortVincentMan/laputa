@@ -225,22 +225,23 @@ export const projects: ProjectRecord[] = [
     id: "tensegrity-exoskeleton",
     category: "research",
     title: "Upper-Limb Tensegrity Exoskeleton",
-    subtitle: "Feedback control research",
-    period: "2026 — PRESENT",
+    subtitle: "Firmware, PCB, and testing for a wearable elbow assist",
+    period: "MAY 2026 — PRESENT",
     status: "ACTIVE",
 
     summary:
-      "Researching feedback control for an upper-limb tensegrity exoskeleton using IMU motion tracking and EMG-based muscle evaluation.",
+      "A cable-driven tensegrity arm for the elbow. I wrote the ESP32 firmware that turns two BNO085 IMUs into an elbow angle and drives the cable motors, and designed the 2-layer PCB that runs it.",
 
     objective:
-      "Develop a low-cost, flexible rehabilitation exoskeleton capable of tracking user motion and evaluating muscle effort.",
+      "Build a low-cost, flexible exoskeleton that tracks the arm and helps lift, then use 18 logged IMU/EMG trials to find out why the assist was limited.",
 
     technologies: [
-      "IMU",
+      "ESP32",
+      "Arduino C++",
+      "PlatformIO",
+      "KiCad",
+      "BNO085 IMU",
       "EMG",
-      "Feedback Control",
-      "Embedded Systems",
-      "Wearable Robotics",
     ],
 
     assetLabel: "EXOSKELETON RESEARCH VISUAL",
@@ -378,11 +379,11 @@ export const projects: ProjectRecord[] = [
     category: "software",
     title: "Kids First Initiative STEM Platform",
     subtitle: "Educational game and cloud platform",
-    period: "2025 — PRESENT",
-    status: "ACTIVE",
+    period: "2025 — 2026",
+    status: "COMPLETED",
 
     summary:
-      "A STEM learning platform developed with Hack4Impact for Kids First Initiative.",
+      "A STEM learning platform built with Hack4Impact for Kids First Initiative. It took 1st place out of 15 projects, and 100+ students use it.",
 
     objective:
       "Expand access to interactive STEM education for students from underserved communities.",
@@ -713,16 +714,16 @@ export const projects: ProjectRecord[] = [
     status: "COMPLETED",
 
     summary:
-      "A custom PCB designed, programmed, assembled, and soldered by hand.",
+      "A character-shaped ATtiny85 board I designed in KiCad for CSC 123, then hand-soldered and programmed over ISP with an Arduino.",
 
     objective:
       "Combine electronic design with detailed visual artwork in a functional circuit board.",
 
     technologies: [
-      "PCB Design",
+      "KiCad",
+      "ATtiny85",
+      "Arduino as ISP",
       "Soldering",
-      "Embedded Programming",
-      "Circuit Design",
     ],
 
     assetLabel: "HOLLOW PURPLE PCB IMAGE",
