@@ -101,7 +101,7 @@ export const galleryRecords: GalleryRecord[] = [
     date: "OCT 2026",
     category: "PERSONAL",
     caption: "Computer Engineering Scholarship Recognition, Oct 21, 2026. I received the Keith Uncapher Memorial Scholarship.",
-    dimensions: { width: 1600, height: 941 },
+    dimensions: { width: 2048, height: 1205 },
     orientation: "landscape",
     featured: false,
   },

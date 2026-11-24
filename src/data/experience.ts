@@ -77,12 +77,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Providing technical support to Cal Poly faculty and staff by diagnosing and resolving hardware, software, and network connectivity issues across Zone B.",
+      "I fix hardware, software, and network problems for Cal Poly faculty and staff across Zone B.",
     details: [
-      "Troubleshoot Windows and macOS hardware, software, peripheral, and network issues.",
-      "Manage service requests through the university ticketing system and document resolutions.",
-      "Support workstation deployment, account assistance, and day-to-day IT operations.",
-      "Escalate complex technical issues while helping maintain reliable campus computing services.",
+      "Resolved 30+ tickets, ranking #2 of Zone B technicians by volume, with 10+ five-star ratings.",
+      "Troubleshoot Windows and macOS machines, peripherals, and network connections.",
+      "Set up workstations and document each fix in the ticketing system.",
     ],
     technologies: [
       "Windows",
@@ -118,7 +117,7 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Managing organizational operations, financial planning, and internal systems for a student software organization building technology for nonprofit partners.",
+      "I run the chapter's money and logistics so the project teams can focus on building software for nonprofits.",
     details: [
       "Manage chapter finances, budgeting, reimbursements, and operations logistics for the executive board.",
       "Support project teams and organization-wide initiatives.",
@@ -134,7 +133,7 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Building a STEM learning platform for Kids First Initiative to expand access to educational content for underserved students.",
+      "I built game modes and the cloud save system for Kids First Initiative's STEM learning platform.",
     details: [
       "Won 1st place out of 15 nonprofit software projects in Hack4Impact Cal Poly's year-long build cycle.",
       "Engineered two Unity game modes and fixed 25+ cascading gameplay and logic bugs.",
@@ -173,7 +172,7 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Jose, CA",
     status: "COMPLETED",
     description:
-      "Provided IT engineering and technical support for local businesses across infrastructure, troubleshooting, onboarding, and documentation.",
+      "IT for small and mid-size businesses: automation, troubleshooting, and documentation across dozens of clients.",
     details: [
       "Automated Azure backup monitoring with Python scripts for 25+ business clients, so failed backups got caught sooner.",
       "Fixed recurring BSOD and kernel failures across 50+ clients through root-cause analysis, taking uptime from days to weeks.",
@@ -191,11 +190,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "Bay Area, CA",
     status: "COMPLETED",
     description:
-      "Mentored high school students through engineering projects, internship preparation, and technical presentations.",
+      "I mentored high school students through their engineering projects and pitches.",
     details: [
-      "Provided technical guidance and project-management support.",
-      "Coached students in developing and pitching engineering concepts.",
-      "Provided college, career, and internship guidance.",
+      "Gave technical and project-management help as teams built their projects.",
+      "Coached students on developing and pitching engineering ideas.",
+      "Answered questions about college, careers, and landing internships.",
     ],
     technologies: ["Mentorship", "Engineering Design", "Project Management", "Technical Communication"],
   },
@@ -208,11 +207,11 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Leandro, CA",
     status: "COMPLETED",
     description:
-      "Developed engineering concepts and gained experience in product design, technical communication, and project execution.",
+      "My first engineering internship: I built a Python app with SQL that cleans up and repairs PC storage, and published it on GitHub.",
     details: [
-      "Worked on engineering and product-development initiatives.",
-      "Developed project concepts and technical presentations.",
-      "Collaborated with mentors and other student engineers.",
+      "Wrote a Python storage-cleanup tool with SQL integration that improved storage efficiency by about 30%.",
+      "Pitched project concepts and presented technical work to mentors.",
+      "Worked alongside other student engineers and industry mentors.",
     ],
     technologies: ["Product Development", "Engineering Design", "Prototyping"],
   },
@@ -225,7 +224,7 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "San Luis Obispo, CA",
     status: "ACTIVE",
     description:
-      "Pursuing a Bachelor of Science in Computer Engineering with an emphasis on embedded systems, computer architecture, electronics, and software development.",
+      "B.S. in Computer Engineering. I'm focused on embedded systems, digital design, and robotics.",
     details: [
       "Current GPA: 3.83.",
       "Named to the 2025–2026 President's List.",
@@ -243,7 +242,7 @@ export const experienceRecords: ExperienceRecord[] = [
     location: "Fremont, CA",
     status: "COMPLETED",
     description:
-      "Completed high school with a focus on engineering, athletics, leadership, and community involvement.",
+      "Where I started building things, ran a hardware club, and wrestled.",
     details: [
       "Graduated with a 3.89 GPA.",
       "Founded and led the Hardware & Technology Club.",
@@ -260,11 +259,7 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "2025 — 2026",
     status: "COMPLETED",
     description:
-      "Recognized for high academic performance during the 2025–2026 academic year.",
-    details: [
-      "Maintained a 3.83 cumulative GPA.",
-      "Completed first-year Computer Engineering coursework while participating in technical organizations.",
-    ],
+      "Cal Poly's yearly academic honor for the 2025–2026 year, earned with a 3.83 GPA.",
   },
   {
     id: "uncapher-scholarship",
@@ -308,11 +303,7 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "2026",
     status: "COMPLETED",
     description:
-      "Awarded the Families Care About You Engineering Scholarship in recognition of academic achievement and continued pursuit of an engineering degree.",
-    details: [
-      "Awarded through Cal Poly's College of Engineering scholarship program.",
-      "Recognized for academic performance and commitment to engineering.",
-    ],
+      "College of Engineering scholarship for academic performance.",
   },
   {
     id: "pge-scholarship",
@@ -322,7 +313,7 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "MAY 2025",
     status: "COMPLETED",
     description:
-      "Awarded for academic performance, leadership, community involvement, and pursuit of a STEM discipline.",
+      "PG&E Foundation scholarship for students going into STEM, based on academics, leadership, and community work.",
   },
   {
     id: "nahas-scholarship",
@@ -332,7 +323,7 @@ export const experienceRecords: ExperienceRecord[] = [
     period: "JUN 2025",
     status: "COMPLETED",
     description:
-      "Awarded based on academics, community service, and participation in competitive school athletics.",
+      "Awarded for academics, community service, and varsity athletics.",
   },
 ];
 
