@@ -1,33 +1,34 @@
 # Laputa OS
 
-My portfolio, built as a fake operating system. It's styled after the menus in Cyberpunk 2077, which I've played way too much of. It's live at **[vincentrle.dev](https://vincentrle.dev)**.
+**An interactive engineering portfolio built as a fictional operating system.**
+Live at **[vincentrle.dev](https://vincentrle.dev)** · Next.js · React · TypeScript
 
 ![Projects window with the exoskeleton project selected](docs/hero.jpg)
 
-I'm a computer engineering student at Cal Poly, and most of my work is hardware and firmware. I wanted a portfolio that felt like something I built rather than a template I filled in. So every window, menu and HUD element here is a hand-written React component, and all the content (projects, experience, gallery, journal) lives in typed data files I can update without touching the UI.
+## Overview
 
-![Moving from the main menu into Projects and Experience](docs/nav.gif)
+I'm a computer engineering student at Cal Poly, and most of my work is in hardware and firmware. I built Laputa OS so my portfolio would be an engineering project in its own right, not a filled-in template. The interface takes its visual direction from the menus in Cyberpunk 2077.
 
-## What's in it
+Every window, menu and HUD element is a hand-written React component. All content (projects, experience, gallery, journal) lives in typed data files, so I can update the site without touching the UI.
 
-- **A windowed shell.** `/home` keeps the window state. Routes like `/projects` and `/contact` redirect into it with a hash, so every section has a link you can share and the back button still works.
-- **Typed content.** Projects, experience, gallery and journal entries are TypeScript records in `src/data/`. A script checks that every image they reference actually exists and that cross-links between records are valid.
-- **Live data.** The patch-notes window pulls my latest commits from the GitHub API, and the music button shows what I'm listening to on Spotify. Both go through server routes, so no tokens reach the browser.
-- **A contact form that holds up to spam.** It checks the input on the server, caps the request size, rate-limits by IP, has a honeypot field, and sends mail through Resend.
-- **Keyboard and accessibility.** You can move around with the arrow keys, Enter and Esc. Focus stays inside open windows, and animations turn off if you've set reduced motion.
-- **A performance budget.** After a build, a script fails if the home page's initial JavaScript goes over 600 KiB or if heavy windows stop being lazy-loaded.
+![Navigating from the main menu into Projects and Experience](docs/nav.gif)
 
-![Experience window showing my research record](docs/experience.jpg)
+## Features
 
-## Things I'd do differently / know about
+| Area | What it does |
+| --- | --- |
+| **Window shell** | `/home` keeps the window state. Routes like `/projects` and `/contact` redirect into it with a hash, so each section has a shareable link and the back button still works. |
+| **Typed content** | Projects, experience, gallery and journal entries are TypeScript records in `src/data/`. A validation script checks that every referenced image exists and every cross-link is valid. |
+| **Live data** | The patch-notes window shows recent commits from the GitHub API, and the music panel shows Spotify activity. Both go through server routes, so no tokens reach the browser. |
+| **Contact form** | Server-side validation, a request-size cap, per-IP rate limiting and a honeypot field. Mail is sent through Resend. |
+| **Accessibility** | Arrow keys, Enter and Esc navigation, focus trapping inside open windows, and support for reduced motion. |
+| **Performance budget** | After each build, a script fails if the home page's initial JavaScript exceeds 600 KiB or if heavy windows stop being lazy-loaded. |
 
-- The rate limit lives in memory, so on Vercel each serverless instance keeps its own count. That's fine for a portfolio, but a real product would use a shared store like Redis.
-- There are no unit tests yet. The checks are type checking, lint, the content-integrity script and the performance budget, and they all run in CI on every push.
-- Skills, Settings and Vehicle screens were cut from v1.0 on purpose. My resume is a PDF in `public/` instead of its own window.
+![Experience window showing a research record](docs/experience.jpg)
 
-## Running it
+## Getting started
 
-You need Node 20 or newer.
+Requires Node.js 20 or newer.
 
 ```bash
 git clone https://github.com/ShortVincentMan/laputa.git
@@ -36,42 +37,52 @@ npm ci
 npm run dev
 ```
 
-Then open http://localhost:3000. Everything works without API keys except the contact form, the GitHub feed and Spotify. For those, add these to `.env.local`:
+Then open http://localhost:3000. The site runs without any API keys. Only the contact form, the GitHub feed and the Spotify panel need the environment variables below.
 
-```text
-RESEND_API_KEY, CONTACT_EMAIL, CONTACT_FROM_EMAIL (optional)
-GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH (optional), GITHUB_TOKEN (optional)
-SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
-```
+### Environment variables
 
-None of these use the `NEXT_PUBLIC_` prefix, so they never ship to the browser.
+Add these to `.env.local`. None use the `NEXT_PUBLIC_` prefix, so they stay on the server.
+
+| Variable | Used by | Required |
+| --- | --- | --- |
+| `RESEND_API_KEY`, `CONTACT_EMAIL` | Contact form | Yes |
+| `CONTACT_FROM_EMAIL` | Contact form | No |
+| `GITHUB_OWNER`, `GITHUB_REPO` | Patch-notes feed | Yes |
+| `GITHUB_BRANCH`, `GITHUB_TOKEN` | Patch-notes feed | No |
+| `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN` | Music panel | Yes |
 
 ## Checks
 
+CI runs these on every push and pull request (`.github/workflows/ci.yml`):
+
 ```bash
-npx tsc --noEmit
-npm run lint
-npm run content:check
-npm run build
-npm run performance:check
+npx tsc --noEmit           # type check
+npm run lint               # ESLint
+npm run content:check      # assets and cross-links
+npm run build              # production build
+npm run performance:check  # JavaScript budget and lazy-loading
 ```
 
-These are the same checks CI runs (`.github/workflows/ci.yml`).
-
-## Layout
+## Project structure
 
 ```text
 src/app/          Pages, metadata, and API routes (contact, GitHub, Spotify)
 src/components/   The HUD, menus, and each window
-src/data/         All the portfolio content, as typed records
+src/data/         Portfolio content as typed records
 src/hooks/        Focus trapping, keyboard shortcuts, page visibility
 src/lib/          GitHub and Spotify clients
 scripts/          Content-integrity and performance-budget checks
-docs/             Screenshots for this README
+docs/             README screenshots
 ```
 
-`public/assets/reference` has game screenshots I used as visual references while building the UI.
+`public/assets/reference` contains game screenshots I used as visual references while building the UI.
+
+## Known limitations
+
+- **Rate limiting is in memory.** On Vercel, each serverless instance keeps its own count. That's acceptable for a portfolio, but a production service would use a shared store such as Redis.
+- **No unit tests yet.** Quality checks are currently the type check, lint, the content-integrity script and the performance budget.
+- **Scope.** The Skills, Settings and Vehicle screens were left out of v1 on purpose. The resume is a PDF in `public/` rather than its own window.
 
 ---
 
-Laputa OS is a fan-made portfolio. It isn't affiliated with or endorsed by CD PROJEKT RED. Cyberpunk 2077 and related trademarks belong to their owners.
+<sub>Laputa OS is a fan-made portfolio. It is not affiliated with or endorsed by CD PROJEKT RED. Cyberpunk 2077 and related trademarks belong to their respective owners.</sub>
