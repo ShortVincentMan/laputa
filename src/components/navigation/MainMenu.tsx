@@ -260,6 +260,35 @@ export default function MainMenu({
     menuItems[nextIndex].focus();
   }
 
+  // On the home screen, let arrow keys start menu navigation even before
+  // anything has focus (for example right after the landing screen).
+  useEffect(() => {
+    if (!isHomeVariant) return;
+
+    function handleArrowStart(event: KeyboardEvent) {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      if (document.activeElement && document.activeElement !== document.body) {
+        return;
+      }
+      if (document.querySelector('[role="dialog"]')) return;
+
+      const items = Array.from(
+        document.querySelectorAll<HTMLElement>(
+          '.cpNavList button:not([disabled]), .cpNavList a[href]'
+        )
+      );
+      if (items.length === 0) return;
+
+      event.preventDefault();
+      const target =
+        event.key === "ArrowDown" ? items[0] : items[items.length - 1];
+      target.focus();
+    }
+
+    window.addEventListener("keydown", handleArrowStart);
+    return () => window.removeEventListener("keydown", handleArrowStart);
+  }, [isHomeVariant]);
+
   useEffect(() => {
     if (isHomeVariant || !isOpen) {
       return;

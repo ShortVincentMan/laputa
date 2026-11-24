@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  focusSelectedAfterRender,
+  isNativeActivationTarget,
+} from "@/hooks/keyboardActivation";
+import {
   type FormEvent,
   useCallback,
   useEffect,
@@ -199,6 +203,7 @@ export default function ContactWindow({
         case "S":
           event.preventDefault();
           moveSelection(1);
+          focusSelectedAfterRender(".contactsDirectory__item.is-selected");
           break;
 
         case "ArrowUp":
@@ -206,9 +211,11 @@ export default function ContactWindow({
         case "W":
           event.preventDefault();
           moveSelection(-1);
+          focusSelectedAfterRender(".contactsDirectory__item.is-selected");
           break;
 
         case "Enter":
+          if (isNativeActivationTarget(event.target, ".contactsDirectory")) return;
           event.preventDefault();
           activateSelectedContact();
           break;
