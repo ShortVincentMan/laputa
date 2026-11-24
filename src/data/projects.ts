@@ -13,7 +13,9 @@ export type ProjectId =
   | "laputa-os"
   | "ar-sand-table"
   | "trimtab"
-  | "hollow-purple-board";
+  | "hollow-purple-board"
+  | "racing-canboard"
+  | "slcef-scheduler";
 
 export type StoredProjectCategory = Exclude<
   ProjectCategory,
@@ -804,6 +806,76 @@ export const projects: ProjectRecord[] = [
     ],
   },
 
+  {
+    id: "racing-canboard",
+    category: "hardware",
+    title: "Formula SAE Sensor CAN Board",
+    subtitle: "FreeRTOS firmware for Cal Poly Racing",
+    period: "SEP 2025 — SEP 2026",
+    status: "COMPLETED",
+    summary:
+      "Firmware for the sensor data board on Cal Poly Racing's electric Formula SAE car. It samples the car's sensors and puts the readings on the CAN bus.",
+    objective:
+      "Read strain gauges, suspension and steering pots, thermistors, current sense, and a pitot sensor at fixed rates without ever blocking the CAN transmit path.",
+    technologies: ["C++17", "FreeRTOS", "STM32H573", "FDCAN", "JTAG"],
+    assetLabel: "CAN BOARD FIRMWARE DIAGRAM",
+    image: "/assets/projects/racing-canboard-diagram.jpg",
+    imageAlt:
+      "Diagram: 500, 100 and 20 Hz sampling tasks feed a static queue drained by a higher-priority FDCAN transmit task",
+    detailLabel: "HARDWARE // SENSOR CAN BOARD",
+    sections: [
+      {
+        id: "tasks",
+        title: "Task Layout",
+        description:
+          "Three sampling tasks run at 500, 100, and 20 Hz and push readings into a static 20-deep queue. A higher-priority FDCAN transmit task drains it, about 600 frames per second across 5 message types, with no heap allocation.",
+      },
+      {
+        id: "one-image",
+        title: "One Image, Two Nodes",
+        description:
+          "The same firmware image runs as the front or rear node. A hardware ID pin picks which sensors and message IDs it uses.",
+      },
+      {
+        id: "bring-up",
+        title: "Board Bring-Up",
+        description:
+          "The aero CAN board wouldn't flash. I probed it over JTAG, traced the problem to a wrong resistor value, and reworked the board by hand.",
+      },
+    ],
+  },
+  {
+    id: "slcef-scheduler",
+    category: "software",
+    title: "SLCEF Volunteer Scheduler",
+    subtitle: "Hack4Impact tech lead project",
+    period: "AUG 2026 — PRESENT",
+    status: "IN DEVELOPMENT",
+    summary:
+      "A platform for the San Luis Coastal Education Foundation that replaces manual volunteer scheduling for 30 fellows across 15 schools. I co-lead the 10-person team.",
+    objective:
+      "Match volunteers to school shifts automatically and reshuffle as little as possible when someone's availability changes.",
+    technologies: ["PostgreSQL", "Google OR-Tools", "Next.js", "TypeScript", "Agile"],
+    assetLabel: "SCHEDULER FLOW DIAGRAM",
+    image: "/assets/projects/slcef-scheduler-diagram.jpg",
+    imageAlt:
+      "Diagram: availability and shift data in PostgreSQL feed an OR-Tools model that minimizes changes to the existing schedule",
+    detailLabel: "SOFTWARE // SLCEF SCHEDULER",
+    sections: [
+      {
+        id: "scheduler",
+        title: "Constraint Scheduler",
+        description:
+          "I designed the PostgreSQL schema and a Google OR-Tools constraint model that assigns volunteers to shifts and minimizes disruption to the existing schedule when availability changes.",
+      },
+      {
+        id: "team",
+        title: "Running the Team",
+        description:
+          "I turn the product requirements document into sprints and GitHub issues, review pull requests, and mentor the developers.",
+      },
+    ],
+  },
 ];
 
 export function getVisibleProjects(

@@ -1,6 +1,6 @@
 export const BUILD = {
-  display: "v1.0.1",
-  semver: "1.0.1",
-  date: "2026-09-13",
-  title: "Career Fair Prep",
+  display: "v1.1.0",
+  semver: "1.1.0",
+  date: "2026-11-24",
+  title: "Resume Refresh",
 } as const;
